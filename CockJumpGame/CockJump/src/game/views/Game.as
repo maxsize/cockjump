@@ -18,6 +18,7 @@ package game.views
 	import game.views.scene.GameScene;
 	
 	import starling.core.Starling;
+	import starling.display.DisplayObject;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.textures.Texture;
@@ -62,8 +63,10 @@ package game.views
 		{
 			TypedMovieCreator.register("Platform", StaticPlatform);
 			TypedMovieCreator.register("Scene1", GameScene);
+			TypedMovieCreator.register("Cock", Cock);
+			
 			var creator:GameMovieCreator = new GameMovieCreator(lib);
-			var movie:Movie = creator.createMovie("Scene1");
+			var movie:BaseView = creator.createMovie("Scene1") as BaseView;
 			addChild(movie);
 		}
 	}

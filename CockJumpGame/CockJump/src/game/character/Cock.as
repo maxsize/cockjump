@@ -13,6 +13,7 @@ package game.character
 	import game.core.Settings;
 	
 	import starling.display.MovieClip;
+	import starling.display.Quad;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.TouchEvent;
@@ -40,6 +41,8 @@ package game.character
 		override protected function init():void
 		{
 			new DragDropController().add(this, null, null, onRelease);
+			var q:Quad = new Quad(10, 10, 0);
+			addChild(q);
 		}
 		
 		private function onRelease(e:TouchEvent):void
@@ -50,7 +53,7 @@ package game.character
 		private function drop():void
 		{
 			var ani:DropAnimation = new DropAnimation();
-			ani.init(0, 240, 1);
+			ani.init(0, 60, 200);
 			ani.start(this);
 			dispatchEvent(new Event("drop", false, ani));
 		}

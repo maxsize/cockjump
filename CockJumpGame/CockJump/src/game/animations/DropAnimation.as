@@ -35,6 +35,7 @@ package game.animations
 		{
 			var s:Number = speed + (accerate * time * time) / 2;
 			speed = speed + time * accerate;
+			trace(speed);
 			if (speed > maxSpeed)
 			{
 				speed = maxSpeed;

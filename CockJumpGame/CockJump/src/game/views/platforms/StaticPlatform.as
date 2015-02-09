@@ -22,6 +22,12 @@ package game.views.platforms
 			return rectangle.contains(x, y);
 		}
 		
+		public function hittestWith(target:Object):Boolean
+		{
+			var rec:Rectangle = new Rectangle(target.x, target.y, target.width, target.height);
+			return rectangle.intersects(rec);
+		}
+		
 		override protected function init():void
 		{
 			getRectangle();
