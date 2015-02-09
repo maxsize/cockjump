@@ -21,17 +21,17 @@ package game.views
 	import starling.textures.TextureAtlas;
 	import starling.utils.AssetManager;
 	
-	public class Scene extends BaseView
+	public class Scene extends Sprite
 	{
 		private static var instance:Scene;
 		
 		private var _assetManager:AssetManager;
 		private var _map:MapVO;
 		
-		public function Scene(src :MovieMold, frameRate :Number, library :Library)
+		public function Scene()
 		{
-			super(src, frameRate, library);
 			instance = this;
+			init();
 		}
 		
 		public function get map():MapVO
@@ -49,7 +49,7 @@ package game.views
 			return instance;
 		}
 		
-		override protected function init():void
+		protected function init():void
 		{
 			var loader:FlumpLoader = FlumpLoader.create("/assets/PNG/test.zip");
 			loader.load(onLoad);
