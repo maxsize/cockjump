@@ -1,12 +1,16 @@
 package game.core
 {
-	import starling.display.Sprite;
+	import flump.display.Library;
+	import flump.display.Movie;
+	import flump.mold.MovieMold;
+	
 	import starling.events.Event;
 
-	public class BaseView extends Sprite
+	public class BaseView extends Movie
 	{
-		public function BaseView()
+		public function BaseView(src :MovieMold, frameRate :Number, library :Library)
 		{
+			super(src, frameRate, library);
 			addEventListener(Event.ADDED_TO_STAGE, onAdded);
 		}
 		

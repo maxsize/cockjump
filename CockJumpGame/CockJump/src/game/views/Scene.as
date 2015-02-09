@@ -1,9 +1,10 @@
-package game.scene
+package game.views
 {
 	import data.MapVO;
 	
 	import flump.display.Library;
 	import flump.display.Movie;
+	import flump.mold.MovieMold;
 	
 	import game.character.Cock;
 	import game.controller.Direction;
@@ -27,9 +28,9 @@ package game.scene
 		private var _assetManager:AssetManager;
 		private var _map:MapVO;
 		
-		public function Scene()
+		public function Scene(src :MovieMold, frameRate :Number, library :Library)
 		{
-			super();
+			super(src, frameRate, library);
 			instance = this;
 		}
 		

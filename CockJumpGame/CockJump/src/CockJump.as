@@ -5,7 +5,7 @@ package
 	import flash.display.StageScaleMode;
 	import flash.geom.Rectangle;
 	
-	import game.scene.Scene;
+	import game.views.Scene;
 	
 	import starling.core.Starling;
 	import starling.display.DisplayObjectContainer;

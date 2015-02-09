@@ -2,7 +2,7 @@ package game.controller.view
 {
 	import game.controller.Controller;
 	import game.core.BaseView;
-	import game.scene.Scene;
+	import game.views.Scene;
 	
 	import starling.display.Image;
 	import starling.display.Quad;

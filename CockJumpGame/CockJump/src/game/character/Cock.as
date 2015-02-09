@@ -13,7 +13,7 @@ package game.character
 	import game.controller.event.MoveEvent;
 	import game.core.BaseView;
 	import game.core.Settings;
-	import game.scene.Scene;
+	import game.views.Scene;
 	
 	import starling.core.Starling;
 	import starling.display.MovieClip;
