@@ -3,9 +3,10 @@ package game.resource.creators
 	import flash.utils.Dictionary;
 	
 	import flump.display.Library;
-	import flump.display.Movie;
 	import flump.display.MovieCreator;
 	import flump.mold.MovieMold;
+	
+	import game.core.BaseView;
 	
 	import starling.display.DisplayObject;
 	
@@ -34,7 +35,7 @@ package game.resource.creators
 			var clazz:Class = dic[id];
 			if (clazz == null)
 			{
-				clazz = Movie;
+				clazz = BaseView;
 			}
 			return clazz;
 		}

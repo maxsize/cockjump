@@ -5,6 +5,8 @@ package game.views.scene
 	
 	import game.core.BaseView;
 	
+	import starling.events.Event;
+	
 	public class GameScene extends BaseView
 	{
 		public function GameScene(src:MovieMold, frameRate:Number, library:Library)
@@ -14,7 +16,10 @@ package game.views.scene
 		
 		override protected function init():void
 		{
-			
+		}
+		
+		private function onEF(e:Event):void
+		{
 		}
 	}
 }

@@ -1,0 +1,18 @@
+{
+  "importDir": "",
+  "exports": [
+    {
+      "format": "JSONZip",
+      "name": "PNG",
+      "additionalScaleFactors": [],
+      "textureBorder": 1,
+      "scale": 1,
+      "maxAtlasSize": 2048,
+      "optimize": "Memory",
+      "quality": "best",
+      "scaleFactorsString": "",
+      "description": "'PNG' (JSONZip, 100%)"
+    }
+  ],
+  "exportDir": "../src/assets"
+}
