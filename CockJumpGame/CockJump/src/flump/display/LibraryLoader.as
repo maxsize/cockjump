@@ -10,6 +10,8 @@ import flump.executor.Executor;
 import flump.executor.Future;
 import flump.mold.LibraryMold;
 
+import game.resource.creators.factories.GameCreatorFactory;
+
 import react.Signal;
 
 /**
@@ -168,7 +170,7 @@ public class LibraryLoader
 
     public function get creatorFactory () :CreatorFactory {
         if (_creatorFactory == null) {
-            _creatorFactory = new CreatorFactoryImpl();
+            _creatorFactory = new GameCreatorFactory();
         }
         return _creatorFactory;
     }

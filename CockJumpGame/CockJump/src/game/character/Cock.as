@@ -13,7 +13,7 @@ package game.character
 	import game.controller.event.MoveEvent;
 	import game.core.BaseView;
 	import game.core.Settings;
-	import game.views.Scene;
+	import game.views.Game;
 	
 	import starling.core.Starling;
 	import starling.display.MovieClip;
@@ -86,7 +86,7 @@ package game.character
 		{
 			var yp:int = getPos();
 			var xp:int = getPos("x");
-			var map:MapVO = Scene.Instance.map;
+			var map:MapVO = Game.Instance.map;
 			var walkable:Boolean = map.getWalkable(xp, yp);
 			
 			if (walkable)
@@ -106,7 +106,7 @@ package game.character
 		{
 			var xp:int = getPos("x");
 			var yp:int = getPos();
-			var map:MapVO = Scene.Instance.map;
+			var map:MapVO = Game.Instance.map;
 			var walkable:Boolean = map.getWalkable(xp, yp);
 			return !walkable;
 		}
@@ -116,7 +116,7 @@ package game.character
 			var walkable:Boolean = false;
 			var xp:int = getPos("x");
 			var yp:int = getPos();
-			var map:MapVO = Scene.Instance.map;
+			var map:MapVO = Game.Instance.map;
 			while (!walkable)
 			{
 				yp++;
@@ -142,7 +142,7 @@ package game.character
 			pilot = new Sprite();
 			addChild(pilot);
 			
-			var tex:Vector.<Texture> = Scene.Instance.assetManager.getTextures("chickChar_");
+			var tex:Vector.<Texture> = Game.Instance.assetManager.getTextures("chickChar_");
 			movie = new MovieClip(tex, 6);
 			movie.currentFrame = 1;
 			movie.stop();

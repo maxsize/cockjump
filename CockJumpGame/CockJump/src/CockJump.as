@@ -5,7 +5,7 @@ package
 	import flash.display.StageScaleMode;
 	import flash.geom.Rectangle;
 	
-	import game.views.Scene;
+	import game.views.Game;
 	
 	import starling.core.Starling;
 	import starling.display.DisplayObjectContainer;
@@ -29,7 +29,7 @@ package
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
 			Starling.multitouchEnabled = true;
-			star = new Starling(Scene, stage, new Rectangle(0, 0, 2048, 1538));
+			star = new Starling(Game, stage, new Rectangle(0, 0, 2048, 1538));
 			star.addEventListener(Event.ROOT_CREATED, onRootCreated);
 			star.start();
 			
@@ -44,7 +44,7 @@ package
 		
 		private function initGame():void
 		{
-			var container:DisplayObjectContainer = Scene.Instance;
+			var container:DisplayObjectContainer = Game.Instance;
 		}
 	}
 }

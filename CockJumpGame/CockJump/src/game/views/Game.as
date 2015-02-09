@@ -12,7 +12,10 @@ package game.views
 	import game.controller.view.MoveButton;
 	import game.core.BaseView;
 	import game.resource.creators.GameMovieCreator;
+	import game.resource.creators.TypedMovieCreator;
 	import game.resource.loaders.FlumpLoader;
+	import game.views.platforms.StaticPlatform;
+	import game.views.scene.GameScene;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -21,14 +24,14 @@ package game.views
 	import starling.textures.TextureAtlas;
 	import starling.utils.AssetManager;
 	
-	public class Scene extends Sprite
+	public class Game extends Sprite
 	{
-		private static var instance:Scene;
+		private static var instance:Game;
 		
 		private var _assetManager:AssetManager;
 		private var _map:MapVO;
 		
-		public function Scene()
+		public function Game()
 		{
 			instance = this;
 			init();
@@ -44,7 +47,7 @@ package game.views
 			return _assetManager;
 		}
 
-		public static function get Instance():Scene
+		public static function get Instance():Game
 		{
 			return instance;
 		}
@@ -57,6 +60,8 @@ package game.views
 		
 		private function onLoad(lib:Library):void
 		{
+			TypedMovieCreator.register("Platform", StaticPlatform);
+			TypedMovieCreator.register("Scene1", GameScene);
 			var creator:GameMovieCreator = new GameMovieCreator(lib);
 			var movie:Movie = creator.createMovie("Scene1");
 			addChild(movie);

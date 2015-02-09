@@ -2,7 +2,7 @@ package game.controller.view
 {
 	import game.controller.Controller;
 	import game.core.BaseView;
-	import game.views.Scene;
+	import game.views.Game;
 	
 	import starling.display.Image;
 	import starling.display.Quad;
@@ -39,7 +39,7 @@ package game.controller.view
 		
 		protected function initUI():void
 		{
-			var tex:Texture = Scene.Instance.assetManager.getTexture("btnRight");
+			var tex:Texture = Game.Instance.assetManager.getTexture("btnRight");
 			img = new Image(tex);
 			addChild(img);
 			
