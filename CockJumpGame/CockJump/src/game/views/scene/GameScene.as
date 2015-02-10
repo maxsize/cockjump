@@ -1,10 +1,14 @@
 package game.views.scene
 {
+	import flash.geom.Rectangle;
+	
 	import flump.display.Library;
 	import flump.mold.MovieMold;
 	
-	import game.animations.DropAnimation;
+	import game.animations.IAnimation;
+	import game.character.Cock;
 	import game.core.BaseView;
+	import game.hittest.DropHitTester;
 	import game.views.platforms.IPlatform;
 	
 	import starling.display.DisplayObject;
@@ -12,7 +16,7 @@ package game.views.scene
 	
 	public class GameScene extends BaseView
 	{
-		private var cock:DisplayObject;
+		private var cock:Cock;
 		private var platforms:Vector.<IPlatform>;
 		
 		public function GameScene(src:MovieMold, frameRate:Number, library:Library)
@@ -22,8 +26,8 @@ package game.views.scene
 		
 		override protected function init():void
 		{
-			cock = blindQuery("cock");
-			cock.addEventListener("drop", onDrop);
+			cock = blindQuery("cock") as Cock;
+			cock.addEventListener(Cock.EVENT_DROP, onDrop);
 			
 			platforms = new Vector.<IPlatform>();
 			for (var i:int = 0; i < numChildren; i++)
@@ -38,34 +42,14 @@ package game.views.scene
 		
 		private function onDrop(e:Event):void
 		{
-			addCheck(e.data as DropAnimation);
+			new DropHitTester().add(cock, platforms, onHit, e);
 		}
 		
-		private function addCheck(ani:DropAnimation):void
+		private function onHit(p:IPlatform, e:Event):void
 		{
-			addEventListener(Event.ENTER_FRAME, onEnterFrame);
-			
-			function onEnterFrame(e:Event):void
-			{
-				var hit:Boolean = doCheck();
-				if (hit)
-				{
-					removeEventListener(e.type, onEnterFrame);
-					ani.stop();
-				}
-			}
-		}
-		
-		private function doCheck():Boolean
-		{
-			for each(var p:IPlatform in platforms)
-			{
-				if (p.hittestWith(cock))
-				{
-					return true;
-				}
-			}
-			return false;
+			cock.y = p.rectangle.y - cock.height;
+			(e.data as IAnimation).stop();
+			cock.landOn(p);
 		}
 	}
 }

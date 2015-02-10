@@ -1,10 +1,7 @@
 package game.animations
 {
-	import starling.core.Starling;
-
-	public class DropAnimation implements IAnimation
+	public class DropAnimation extends BaseAnimation
 	{
-		private var target:Object;
 		private var accerate:Number;
 		private var maxSpeed:Number;
 		private var speed:Number = 0;
@@ -20,22 +17,10 @@ package game.animations
 			this.accerate = accerate;
 		}
 		
-		public function start(target:Object):void
-		{
-			this.target = target;
-			Starling.juggler.add(this);
-		}
-		
-		public function stop():void
-		{
-			Starling.juggler.remove(this);
-		}
-		
-		public function advanceTime(time:Number):void
+		override public function advanceTime(time:Number):void
 		{
 			var s:Number = speed + (accerate * time * time) / 2;
 			speed = speed + time * accerate;
-			trace(speed);
 			if (speed > maxSpeed)
 			{
 				speed = maxSpeed;
