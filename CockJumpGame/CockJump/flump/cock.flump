@@ -1,18 +1,18 @@
 {
-  "importDir": "",
   "exports": [
     {
       "format": "JSONZip",
-      "name": "PNG",
-      "additionalScaleFactors": [],
-      "textureBorder": 1,
-      "scale": 1,
-      "maxAtlasSize": 2048,
       "optimize": "Memory",
+      "textureBorder": 1,
+      "maxAtlasSize": 2048,
+      "name": "PNG",
+      "scale": 1,
+      "additionalScaleFactors": [],
       "quality": "best",
-      "scaleFactorsString": "",
-      "description": "'PNG' (JSONZip, 100%)"
+      "description": "'PNG' (JSONZip, 100%)",
+      "scaleFactorsString": ""
     }
   ],
-  "exportDir": "../src/assets"
+  "exportDir": "../../CockAssets/assets/PNG",
+  "importDir": ""
 }
