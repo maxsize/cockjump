@@ -80,7 +80,7 @@ package game.character
 		private function jump():void
 		{
 			var ani:JumpAnimation = new JumpAnimation();
-			ani.init(24, -100);
+			ani.init(16, -50);
 			ani.addEventListener(JumpAnimation.REVERSE, onReverse);
 			ani.start(this);
 			if (horizonAni)
