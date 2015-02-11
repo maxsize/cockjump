@@ -4,6 +4,7 @@ package game.views
 	import flash.utils.ByteArray;
 	
 	import flump.display.Library;
+	import flump.display.Text;
 	
 	import game.character.Cock;
 	import game.conf.GlobalSettings;
@@ -51,6 +52,7 @@ package game.views
 			TypedMovieCreator.register("Scene1", GameScene);
 			TypedMovieCreator.register("Cock", Cock);
 			TypedMovieCreator.register("MainUI", MainUI);
+			TypedMovieCreator.register("Text", Text);
 		}
 		
 		private function onConfig(bytes:ByteArray):void

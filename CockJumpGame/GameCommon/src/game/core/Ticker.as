@@ -104,7 +104,7 @@ package game.core
 			{
 				obj = temp.pop();
 				key = keyTemp.pop();
-				(key as Function).apply(null, obj.args);
+//				(key as Function).apply(null, obj.args);
 			}
 		}
 		

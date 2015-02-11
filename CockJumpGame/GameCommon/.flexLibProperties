@@ -5,6 +5,7 @@
     <classEntry path="game.resource.loaders.MultiLookupLoader"/>
     <classEntry path="game.views.ui.MainUI"/>
     <classEntry path="game.conf.GlobalSettings"/>
+    <classEntry path="flump.display.Text"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
