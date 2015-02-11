@@ -8,6 +8,7 @@ package game.views.ui
 	import flump.display.Movie;
 	import flump.mold.MovieMold;
 	
+	import game.conf.GlobalSettings;
 	import game.controller.GenericController;
 	import game.core.BaseView;
 	import game.resource.creators.GameMovieCreator;
@@ -38,7 +39,7 @@ package game.views.ui
 		
 		private function onPress(e:*):void
 		{
-			var file:File = new File("/Users/Nicole/git/CockJumpGame/CockAssets/assets/scene/PNG/");
+			var file:File = new File(GlobalSettings.DATA_ROOT).resolvePath("scene/PNG/");
 			file.addEventListener(Event.SELECT, onSelect);
 			file.browse();
 		}
@@ -47,7 +48,7 @@ package game.views.ui
 		{
 			event.currentTarget.removeEventListener(Event.SELECT, onSelect);
 			var f:File = event.target as File;
-			var root:File = new File("/Users/Nicole/git/CockJumpGame/CockAssets/assets/");
+			var root:File = new File(GlobalSettings.DATA_ROOT);
 			var relative:String = root.getRelativePath(f);
 			var loader:FlumpLoader = new FlumpLoader(relative);
 			new MultiLookupLoader().addResource(loader).load(onLoad, null, null);

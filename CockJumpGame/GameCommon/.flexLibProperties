@@ -4,6 +4,7 @@
     <classEntry path="game.core.AIRUtils"/>
     <classEntry path="game.resource.loaders.MultiLookupLoader"/>
     <classEntry path="game.views.ui.MainUI"/>
+    <classEntry path="game.conf.GlobalSettings"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

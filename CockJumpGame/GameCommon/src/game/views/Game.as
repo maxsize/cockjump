@@ -1,11 +1,16 @@
 package game.views
 {
+	import flash.filesystem.File;
+	import flash.utils.ByteArray;
+	
 	import flump.display.Library;
 	
 	import game.character.Cock;
+	import game.conf.GlobalSettings;
 	import game.core.BaseView;
 	import game.resource.creators.GameMovieCreator;
 	import game.resource.creators.TypedMovieCreator;
+	import game.resource.loaders.FileLoader;
 	import game.resource.loaders.FlumpLoader;
 	import game.resource.loaders.MultiLookupLoader;
 	import game.views.platforms.StaticPlatform;
@@ -39,13 +44,23 @@ package game.views
 		
 		protected function init():void
 		{
-			MultiLookupLoader.init();
-			MultiLookupLoader.enableLookup("/Users/Nicole/git/CockJumpGame/CockAssets/assets/");
+			var fl:FileLoader = FileLoader.create(File.applicationDirectory.resolvePath("embed/global.json").nativePath);
+			fl.load(onConfig);
 			
 			TypedMovieCreator.register("Platform", StaticPlatform);
 			TypedMovieCreator.register("Scene1", GameScene);
 			TypedMovieCreator.register("Cock", Cock);
 			TypedMovieCreator.register("MainUI", MainUI);
+		}
+		
+		private function onConfig(bytes:ByteArray):void
+		{
+			var str:String = bytes.readUTFBytes(bytes.bytesAvailable);
+			var json:Object = JSON.parse(str);
+			GlobalSettings.init(json);
+			
+			MultiLookupLoader.init();
+			MultiLookupLoader.enableLookup(GlobalSettings.DATA_ROOT);
 			
 			var loader:FlumpLoader = FlumpLoader.create("/ui/PNG/ui_main.zip");
 			new MultiLookupLoader().addResource(loader).load(onLoadUI, null, null);
