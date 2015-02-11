@@ -8,16 +8,21 @@ package game.resource.loaders
 
 	public class FlumpLoader extends BaseLoader
 	{
-		private var url:String;
+		private var _url:String;
 		
 		public function FlumpLoader(url:String)
 		{
-			this.url = url;
+			this._url = url;
 		}
 		
 		public static function create(url:String):FlumpLoader
 		{
 			return new FlumpLoader(url);
+		}
+		
+		override public function get url():String
+		{
+			return _url;
 		}
 		
 		override protected function onLoad():void
@@ -28,6 +33,7 @@ package game.resource.loaders
 		private function loadZip():void
 		{
 			var loader:FileLoader = FileLoader.create(url);
+			loader.addRoot(root);
 			loader.load(onLoadFile);
 		}
 		

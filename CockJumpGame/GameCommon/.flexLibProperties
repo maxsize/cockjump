@@ -2,6 +2,8 @@
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
     <classEntry path="game.core.AIRUtils"/>
+    <classEntry path="game.resource.loaders.MultiLookupLoader"/>
+    <classEntry path="game.views.ui.MainUI"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

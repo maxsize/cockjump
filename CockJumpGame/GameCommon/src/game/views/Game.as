@@ -7,8 +7,10 @@ package game.views
 	import game.resource.creators.GameMovieCreator;
 	import game.resource.creators.TypedMovieCreator;
 	import game.resource.loaders.FlumpLoader;
+	import game.resource.loaders.MultiLookupLoader;
 	import game.views.platforms.StaticPlatform;
 	import game.views.scene.GameScene;
+	import game.views.ui.MainUI;
 	
 	import starling.display.Sprite;
 	import starling.utils.AssetManager;
@@ -37,19 +39,23 @@ package game.views
 		
 		protected function init():void
 		{
-			var loader:FlumpLoader = FlumpLoader.create("/Users/Nicole/git/CockJumpGame/CockAssets/assets/PNG/test.zip");
-			loader.load(onLoad);
-		}
-		
-		private function onLoad(lib:Library):void
-		{
+			MultiLookupLoader.init();
+			MultiLookupLoader.enableLookup("/Users/Nicole/git/CockJumpGame/CockAssets/assets/");
+			
 			TypedMovieCreator.register("Platform", StaticPlatform);
 			TypedMovieCreator.register("Scene1", GameScene);
 			TypedMovieCreator.register("Cock", Cock);
+			TypedMovieCreator.register("MainUI", MainUI);
 			
+			var loader:FlumpLoader = FlumpLoader.create("/ui/PNG/ui_main.zip");
+			new MultiLookupLoader().addResource(loader).load(onLoadUI, null, null);
+		}
+		
+		private function onLoadUI(lib:Library):void
+		{
 			var creator:GameMovieCreator = new GameMovieCreator(lib);
-			var movie:BaseView = creator.createMovie("Scene1") as BaseView;
-			addChild(movie);
+			var ui:BaseView = creator.createMovie("MainUI") as BaseView;
+			addChild(ui);
 		}
 	}
 }

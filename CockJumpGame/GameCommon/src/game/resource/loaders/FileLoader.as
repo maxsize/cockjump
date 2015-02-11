@@ -1,24 +1,27 @@
 package game.resource.loaders
 {
+	CONFIG::WEB
+		{
 	import flash.events.Event;
+	import flash.net.URLRequest;
+		}
 	import flash.filesystem.File;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
-	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
 	
 	import game.core.AIRUtils;
 
 	public class FileLoader extends BaseLoader
 	{
-		private var url:String;
+		private var _url:String;
 		private var dataFormat:String;
 
 		private var loader:URLLoader;
 		
 		public function FileLoader(url:String, dataFormat:String = URLLoaderDataFormat.BINARY)
 		{
-			this.url = url;
+			this._url = url;
 			this.dataFormat = dataFormat;
 		}
 		
@@ -27,11 +30,16 @@ package game.resource.loaders
 			return new FileLoader(url);
 		}
 		
+		override public function get url():String
+		{
+			return _url;
+		}
+		
 		CONFIG::WEB
 		{
 			override protected function onLoad():void
 			{
-				var req:URLRequest = new URLRequest(url);
+				var req:URLRequest = new URLRequest(realURL);
 				loader = new URLLoader(req);
 				loader.dataFormat = dataFormat;
 				loader.addEventListener(Event.COMPLETE, onComplete);
@@ -48,7 +56,7 @@ package game.resource.loaders
 		CONFIG::AIR
 		override protected function onLoad():void
 		{
-			var file:File = new File(url);
+			var file:File = new File(realURL);
 			var bytes:ByteArray = AIRUtils.readFile(file);
 			applyFunc(onSuccess, bytes);
 		}
