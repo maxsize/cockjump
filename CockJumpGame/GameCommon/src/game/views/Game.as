@@ -34,7 +34,7 @@ package game.views
 
 		public static function get Instance():Game
 		{
-			return instance;
+			return instance;//
 		}
 		
 		protected function init():void
