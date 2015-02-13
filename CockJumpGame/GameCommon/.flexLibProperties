@@ -6,6 +6,11 @@
     <classEntry path="game.views.ui.MainUI"/>
     <classEntry path="game.conf.GlobalSettings"/>
     <classEntry path="flump.display.Text"/>
+    <classEntry path="game.views.ui.feathers.FeathersMovie"/>
+    <classEntry path="game.views.ui.feathers.List"/>
+    <classEntry path="game.views.ui.SceneList"/>
+    <classEntry path="game.views.collect.Star"/>
+    <classEntry path="game.core.GlobalEventDispatcher"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

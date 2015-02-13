@@ -57,6 +57,11 @@ package game.resource.loaders
 		override protected function onLoad():void
 		{
 			var file:File = new File(realURL);
+			if (!file.exists)
+			{
+				applyFunc(onFail);
+				return;
+			}
 			var bytes:ByteArray = AIRUtils.readFile(file);
 			applyFunc(onSuccess, bytes);
 		}

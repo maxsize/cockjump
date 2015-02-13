@@ -19,7 +19,7 @@ package game.resource.loaders
 		{
 			CONFIG::AIR
 			{
-				lookups.push(File.applicationDirectory.resolvePath("Data").nativePath);
+				lookups.push(File.applicationDirectory.resolvePath("assets").nativePath);
 			}
 			CONFIG::WEB
 			{

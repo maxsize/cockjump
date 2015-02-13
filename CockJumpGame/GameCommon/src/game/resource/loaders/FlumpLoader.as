@@ -34,7 +34,12 @@ package game.resource.loaders
 		{
 			var loader:FileLoader = FileLoader.create(url);
 			loader.addRoot(root);
-			loader.load(onLoadFile);
+			loader.load(onLoadFile, null, onZipFail);
+		}
+		
+		private function onZipFail():void
+		{
+			applyFunc(onFail);
 		}
 		
 		private function onLoadFile(bytes:ByteArray):void

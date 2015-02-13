@@ -3,20 +3,25 @@ package game.views
 	import flash.filesystem.File;
 	import flash.utils.ByteArray;
 	
+	import feathers.themes.MetalWorksMobileTheme;
+	
 	import flump.display.Library;
 	import flump.display.Text;
 	
 	import game.character.Cock;
 	import game.conf.GlobalSettings;
 	import game.core.BaseView;
+	import game.core.ClassRegister;
 	import game.resource.creators.GameMovieCreator;
 	import game.resource.creators.TypedMovieCreator;
 	import game.resource.loaders.FileLoader;
 	import game.resource.loaders.FlumpLoader;
 	import game.resource.loaders.MultiLookupLoader;
+	import game.views.collect.Star;
 	import game.views.platforms.StaticPlatform;
 	import game.views.scene.GameScene;
 	import game.views.ui.MainUI;
+	import game.views.ui.SceneList;
 	
 	import starling.display.Sprite;
 	import starling.utils.AssetManager;
@@ -45,14 +50,19 @@ package game.views
 		
 		protected function init():void
 		{
+			new MetalWorksMobileTheme();
+			ClassRegister.init();
+			
 			var fl:FileLoader = FileLoader.create(File.applicationDirectory.resolvePath("embed/global.json").nativePath);
 			fl.load(onConfig);
 			
 			TypedMovieCreator.register("Platform", StaticPlatform);
+			TypedMovieCreator.register("Star", Star);
 			TypedMovieCreator.register("Scene1", GameScene);
 			TypedMovieCreator.register("Cock", Cock);
 			TypedMovieCreator.register("MainUI", MainUI);
 			TypedMovieCreator.register("Text", Text);
+			TypedMovieCreator.register("SceneList", SceneList);
 		}
 		
 		private function onConfig(bytes:ByteArray):void

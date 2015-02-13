@@ -15,12 +15,14 @@ package game.views.ui
 	import game.resource.loaders.FlumpLoader;
 	import game.resource.loaders.MultiLookupLoader;
 	import game.views.Game;
+	import game.views.ui.feathers.List;
 	
 	import starling.core.Starling;
 	
 	public class MainUI extends BaseView
 	{
 		private var button:Movie;
+		private var list:List;
 		
 		public function MainUI(src:MovieMold, frameRate:Number, library:Library)
 		{
@@ -30,6 +32,7 @@ package game.views.ui
 		override protected function init():void
 		{
 			button = blindQuery("startButton") as Movie;
+			list = blindQuery("list") as List;
 			new GenericController().add(button, onPress, null, null);
 			
 			var star:flash.display.Stage = Starling.current.nativeStage;
@@ -39,17 +42,17 @@ package game.views.ui
 		
 		private function onPress(e:*):void
 		{
-			var file:File = new File(GlobalSettings.DATA_ROOT).resolvePath("scene/PNG/");
-			file.addEventListener(Event.SELECT, onSelect);
-			file.browse();
+			if (list.selectedItem == null)
+			{
+				return;
+			}
+			var file:String = list.selectedItem.file;
+			onSelect(file);
 		}
 		
-		protected function onSelect(event:Event):void
+		protected function onSelect(f:String):void
 		{
-			event.currentTarget.removeEventListener(Event.SELECT, onSelect);
-			var f:File = event.target as File;
-			var root:File = new File(GlobalSettings.DATA_ROOT);
-			var relative:String = root.getRelativePath(f);
+			var relative:String = "scene/PNG/" + f;
 			var loader:FlumpLoader = new FlumpLoader(relative);
 			new MultiLookupLoader().addResource(loader).load(onLoad, null, null);
 		}

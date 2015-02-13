@@ -1,5 +1,6 @@
 package game.core
 {
+	import flash.filesystem.File;
 
 	public class Utils
 	{
@@ -19,6 +20,21 @@ package game.core
 				c++;
 			}
 			return c;
+		}
+		
+		public static function getFilesInFolder(file:File):Array
+		{
+			if (!file.exists || !file.isDirectory)
+			{
+				return [];
+			}
+			var arr:Array = file.getDirectoryListing();
+			var relative:Array = [];
+			for each(var f:File in arr)
+			{
+				relative.push(file.getRelativePath(f));
+			}
+			return relative;
 		}
 	}
 }

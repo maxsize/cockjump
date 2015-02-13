@@ -1,6 +1,7 @@
 package game.resource.creators
 {
 	import flash.utils.Dictionary;
+	import flash.utils.getDefinitionByName;
 	
 	import flump.display.Library;
 	import flump.display.MovieCreator;
@@ -13,6 +14,7 @@ package game.resource.creators
 	public class TypedMovieCreator extends MovieCreator
 	{
 		private static var dic:Dictionary = new Dictionary();
+		private static const FEATHER_PREFIX:String = "Feathers_";
 		
 		public function TypedMovieCreator(mold:MovieMold, frameRate:Number=60)
 		{
@@ -35,9 +37,24 @@ package game.resource.creators
 			var clazz:Class = dic[id];
 			if (clazz == null)
 			{
+				var feather:String = getFeatherMovie(id);
+				if (feather)
+				{
+					return getDefinitionByName("game.views.ui.feathers::" + feather) as Class;
+				}
 				clazz = BaseView;
 			}
 			return clazz;
+		}
+		
+		private function getFeatherMovie(id:String):String
+		{
+			if (id.indexOf(FEATHER_PREFIX) == 0)
+			{
+				var name:String = id.split("_")[1];
+				return name;
+			}
+			return null;
 		}
 	}
 }
