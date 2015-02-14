@@ -1,10 +1,5 @@
 package game.resource.loaders
 {
-	CONFIG::WEB
-		{
-	import flash.events.Event;
-	import flash.net.URLRequest;
-		}
 	import flash.filesystem.File;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
@@ -35,10 +30,9 @@ package game.resource.loaders
 			return _url;
 		}
 		
-		CONFIG::WEB
-		{
-			override protected function onLoad():void
+			/*override protected function onLoad():void
 			{
+				Game.debug("web: ");
 				var req:URLRequest = new URLRequest(realURL);
 				loader = new URLLoader(req);
 				loader.dataFormat = dataFormat;
@@ -50,13 +44,11 @@ package game.resource.loaders
 				loader.removeEventListener(Event.COMPLETE, onComplete);
 				var bytes:ByteArray = loader.data;
 				applyFunc(onSuccess, bytes);
-			}
-		}
+			}*/
 		
-		CONFIG::AIR
 		override protected function onLoad():void
 		{
-			var file:File = new File(realURL);
+			var file:File = realURL;
 			if (!file.exists)
 			{
 				applyFunc(onFail);

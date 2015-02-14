@@ -5,7 +5,6 @@ package game.core
 	import flash.filesystem.FileStream;
 	import flash.utils.ByteArray;
 
-	CONFIG::AIR
 	public class AIRUtils
 	{
 		public static function readFile(file:File):ByteArray

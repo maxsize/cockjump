@@ -250,7 +250,7 @@
 			    <!--See the Adobe AIR documentation for more information about setting Google Android permissions-->
 			    <!--删除 android.permission.INTERNET 权限将导致无法调试设备上的应用程序-->
 			    <uses-permission android:name="android.permission.INTERNET"/>
-			    <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>-->
+			    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 			    <!--<uses-permission android:name="android.permission.READ_PHONE_STATE"/>-->
 			    <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>-->
 			    <!--应同时切换 DISABLE_KEYGUARD 和 WAKE_LOCK 权限，才能访问 AIR

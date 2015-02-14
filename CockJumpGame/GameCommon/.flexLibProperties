@@ -11,6 +11,7 @@
     <classEntry path="game.views.ui.SceneList"/>
     <classEntry path="game.views.collect.Star"/>
     <classEntry path="game.core.GlobalEventDispatcher"/>
+    <classEntry path="game.core.Device"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -1,6 +1,10 @@
 package game.views
 {
+	import flash.events.UncaughtErrorEvent;
 	import flash.filesystem.File;
+	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFormat;
 	import flash.utils.ByteArray;
 	
 	import feathers.themes.MetalWorksMobileTheme;
@@ -10,8 +14,10 @@ package game.views
 	
 	import game.character.Cock;
 	import game.conf.GlobalSettings;
+	import game.core.AIRUtils;
 	import game.core.BaseView;
 	import game.core.ClassRegister;
+	import game.core.Device;
 	import game.resource.creators.GameMovieCreator;
 	import game.resource.creators.TypedMovieCreator;
 	import game.resource.loaders.FileLoader;
@@ -23,6 +29,7 @@ package game.views
 	import game.views.ui.MainUI;
 	import game.views.ui.SceneList;
 	
+	import starling.core.Starling;
 	import starling.display.Sprite;
 	import starling.utils.AssetManager;
 	
@@ -31,6 +38,8 @@ package game.views
 		private static var instance:Game;
 		
 		private var _assetManager:AssetManager;
+
+		private static var txt:TextField;
 		
 		public function Game()
 		{
@@ -50,19 +59,42 @@ package game.views
 		
 		protected function init():void
 		{
+			var storage:File = File.applicationStorageDirectory.resolvePath("assets");
+			debug(storage.url);
 			new MetalWorksMobileTheme();
 			ClassRegister.init();
 			
-			var fl:FileLoader = FileLoader.create(File.applicationDirectory.resolvePath("embed/global.json").nativePath);
-			fl.load(onConfig);
+			var globalFile:File = File.applicationDirectory.resolvePath("embed/global.json");
+			var readFile:ByteArray = AIRUtils.readFile(globalFile);
+			onConfig(readFile);
 			
 			TypedMovieCreator.register("Platform", StaticPlatform);
 			TypedMovieCreator.register("Star", Star);
-			TypedMovieCreator.register("Scene1", GameScene);
+			TypedMovieCreator.register("Scene", GameScene);
 			TypedMovieCreator.register("Cock", Cock);
 			TypedMovieCreator.register("MainUI", MainUI);
 			TypedMovieCreator.register("Text", Text);
 			TypedMovieCreator.register("SceneList", SceneList);
+		}
+		
+		public static function debug(msg:String):void
+		{
+			if (txt == null)
+			{
+				txt = new TextField();
+				txt.defaultTextFormat = new TextFormat("Verdana", 24, 0xFFFFFF);
+				txt.autoSize = TextFieldAutoSize.LEFT;
+				Starling.current.nativeStage.addChild(txt);
+				Starling.current.nativeStage.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, 
+					function onError(e:Error):void
+					{
+						txt.appendText("\n");
+						txt.appendText(e.errorID + ", " + e.message + "\n");
+						txt.appendText(e.getStackTrace());
+					}
+				);
+			}
+			txt.appendText(msg + "\n");
 		}
 		
 		private function onConfig(bytes:ByteArray):void
@@ -72,9 +104,17 @@ package game.views
 			GlobalSettings.init(json);
 			
 			MultiLookupLoader.init();
-			MultiLookupLoader.enableLookup(GlobalSettings.DATA_ROOT);
+			if (Device.isDesktop)
+			{
+				MultiLookupLoader.enableLookup(new File(GlobalSettings.DATA_ROOT));
+			}
+			else
+			{
+				var storage:File = File.applicationStorageDirectory.resolvePath("assets");
+				MultiLookupLoader.enableLookup(storage);
+			}
 			
-			var loader:FlumpLoader = FlumpLoader.create("/ui/PNG/ui_main.zip");
+			var loader:FlumpLoader = FlumpLoader.create("ui/PNG/ui_main.zip");
 			new MultiLookupLoader().addResource(loader).load(onLoadUI, null, null);
 		}
 		

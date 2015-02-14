@@ -1,12 +1,16 @@
 package game.resource.loaders
 {
+	import flash.filesystem.File;
+	
+	import game.views.Game;
+
 	internal class BaseLoader implements ILoader
 	{
 		protected var onSuccess:Function;
 		protected var onProgress:Function;
 		protected var onFail:Function;
 		protected var params:Array;
-		protected var root:String = "";
+		protected var root:File;
 		
 		public function BaseLoader()
 		{
@@ -22,7 +26,7 @@ package game.resource.loaders
 			onLoad();
 		}
 		
-		public function addRoot(root:String):void
+		public function addRoot(root:File):void
 		{
 			this.root = root;
 		}
@@ -32,9 +36,9 @@ package game.resource.loaders
 			return null;
 		}
 		
-		protected function get realURL():String
+		protected function get realURL():File
 		{
-			return root + url;
+			return root.resolvePath(url);
 		}
 		
 		protected function onLoad():void

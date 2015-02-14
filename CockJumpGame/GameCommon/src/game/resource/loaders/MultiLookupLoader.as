@@ -17,17 +17,17 @@ package game.resource.loaders
 		
 		public static function init():void
 		{
-			CONFIG::AIR
+//			CONFIG::AIR
 			{
-				lookups.push(File.applicationDirectory.resolvePath("assets").nativePath);
+				lookups.push(File.applicationDirectory.resolvePath("assets"));
 			}
-			CONFIG::WEB
+			/*CONFIG::WEB
 			{
 				lookups.push("");	//todo
-			}
+			}*/
 		}
 		
-		public static function enableLookup(root:String):void
+		public static function enableLookup(root:File):void
 		{
 			lookups.push(root);
 		}
@@ -44,7 +44,7 @@ package game.resource.loaders
 			super.onMultiLoadSuccess(result);
 		}
 		
-		override protected function onMultiLoadFailure(error:Error):void
+		override protected function onMultiLoadFailure(error:Error = null):void
 		{
 			index--;
 			if (index < 0)

@@ -122,7 +122,7 @@ package game.resource
 			loadMultiple();
 		}
 		
-		protected function onMultiLoadFailure(error:Error):void
+		protected function onMultiLoadFailure(error:Error = null):void
 		{
 			multiLoadFailures.push(error);
 			multiLoadResults[currentLoader.url] = error;
