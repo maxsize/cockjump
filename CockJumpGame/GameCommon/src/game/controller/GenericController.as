@@ -74,9 +74,12 @@ package game.controller
 			Utils.applyFunc(onPress, e);
 		}
 		
-		private function onRemove():void
+		private function onRemove(e:Event):void
 		{
-			dispose();
+			if (e.currentTarget == target)
+			{
+				dispose();
+			}
 		}
 		
 		protected function dispose():void

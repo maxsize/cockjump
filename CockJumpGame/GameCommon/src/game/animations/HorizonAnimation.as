@@ -3,11 +3,13 @@ package game.animations
 	import flash.geom.Rectangle;
 	
 	import game.controller.Direction;
+	import game.views.platforms.IPlatform;
 
 	public class HorizonAnimation extends BaseAnimation
 	{
 		private var direction:int;
 		private var speed:Number;
+		private var platform:IPlatform;
 		private var bound:Rectangle;
 		
 		public function HorizonAnimation()
@@ -15,10 +17,11 @@ package game.animations
 			super();
 		}
 		
-		public function init(speed:Number, bound:Rectangle, direction:int = Direction.RIGHT):void
+		public function init(speed:Number, platform:IPlatform, direction:int = Direction.RIGHT):void
 		{
 			this.speed = speed;
-			this.bound = bound;
+			this.platform = platform;
+			bound = platform.rectangle;
 			this.direction = direction;
 		}
 		
@@ -27,9 +30,9 @@ package game.animations
 			direction = direction == Direction.LEFT ? Direction.RIGHT:Direction.LEFT;
 		}
 		
-		public function update(bound:Rectangle):void
+		public function update(platform:IPlatform):void
 		{
-			this.bound = bound;
+			this.platform = platform;
 		}
 		
 		override public function advanceTime(time:Number):void
@@ -42,13 +45,17 @@ package game.animations
 		
 		private function checkBound():void
 		{
-			if (bound == null)
+			if (platform == null)
 			{
 				return;
 			}
+			if (platform)
+			{
+				target.y = platform.rectangle.y - target.height;
+			}
 			if (direction == Direction.LEFT)
 			{
-				if (target.x < bound.x)
+				if (target.x < platform.rectangle.x)
 				{
 //					target.x = bound.x;
 					direction = Direction.RIGHT;
@@ -56,7 +63,7 @@ package game.animations
 			}
 			else
 			{
-				if (target.x + target.width > bound.right)
+				if (target.x + target.width > platform.rectangle.right)
 				{
 //					target.x = bound.right - target.width;
 					direction = Direction.LEFT;

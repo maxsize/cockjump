@@ -18,43 +18,65 @@ package game.views
 	import game.core.BaseView;
 	import game.core.ClassRegister;
 	import game.core.Device;
+	import game.managers.PlatformManager;
 	import game.resource.creators.GameMovieCreator;
 	import game.resource.creators.TypedMovieCreator;
-	import game.resource.loaders.FileLoader;
 	import game.resource.loaders.FlumpLoader;
 	import game.resource.loaders.MultiLookupLoader;
 	import game.views.collect.Star;
+	import game.views.platforms.BridgePlatform;
 	import game.views.platforms.StaticPlatform;
 	import game.views.scene.GameScene;
 	import game.views.ui.MainUI;
 	import game.views.ui.SceneList;
 	
 	import starling.core.Starling;
+	import starling.display.DisplayObject;
+	import starling.display.Quad;
 	import starling.display.Sprite;
-	import starling.utils.AssetManager;
 	
 	public class Game extends Sprite
 	{
 		private static var instance:Game;
-		
-		private var _assetManager:AssetManager;
-
 		private static var txt:TextField;
+		
+		private var container:Sprite;
+		private var overlay:Sprite;
+
+		private var ui:BaseView;
 		
 		public function Game()
 		{
 			instance = this;
+			initOverlay();
 			init();
 		}
 		
-		public function get assetManager():AssetManager
+		private function initOverlay():void
 		{
-			return _assetManager;
+			container = new Sprite();
+			overlay = new Sprite();
+			super.addChild(container);
+			super.addChild(overlay);
+			var quad:Quad = new Quad(Starling.current.stage.stageWidth, Starling.current.stage.stageHeight, 0);
+			quad.alpha = 0;
+			overlay.addChild(quad);
+			overlay.touchable = false;
 		}
-
+		
 		public static function get Instance():Game
 		{
 			return instance;//
+		}
+		
+		override public function addChild(child:DisplayObject):DisplayObject
+		{
+			return container.addChild(child);
+		}
+		
+		override public function removeChild(child:DisplayObject, dispose:Boolean=false):DisplayObject
+		{
+			return container.removeChild(child, dispose);
 		}
 		
 		protected function init():void
@@ -75,6 +97,9 @@ package game.views
 			TypedMovieCreator.register("MainUI", MainUI);
 			TypedMovieCreator.register("Text", Text);
 			TypedMovieCreator.register("SceneList", SceneList);
+			TypedMovieCreator.register("BridgePlatform", BridgePlatform);
+			
+			PlatformManager.instance.init();
 		}
 		
 		public static function debug(msg:String):void
@@ -121,8 +146,15 @@ package game.views
 		private function onLoadUI(lib:Library):void
 		{
 			var creator:GameMovieCreator = new GameMovieCreator(lib);
-			var ui:BaseView = creator.createMovie("MainUI") as BaseView;
+			ui = creator.createMovie("MainUI") as BaseView;
 			addChild(ui);
+		}
+		
+		public function startGame(movie:BaseView):void
+		{
+			addChild(movie);
+			removeChild(ui);
+//			overlay.touchable = true;
 		}
 	}
 }

@@ -23,6 +23,7 @@ package game.hittest
 			var p:IPlatform = doCheck();
 			if (p)
 			{
+				trace((p as Object).name);
 				Starling.juggler.remove(this);
 				if (params && params.length > 0)
 				{
@@ -53,7 +54,9 @@ package game.hittest
 				}
 				else
 				{
+					Starling.juggler.remove(this);
 					Utils.applyFunc(callback, p);
+					dispose();
 				}
 			}
 		}
@@ -72,12 +75,24 @@ package game.hittest
 		{
 			for each(var p:IPlatform in platforms)
 			{
+				if (p == target.ignore)
+				{
+					continue;
+				}
 				if (p.hittestWith(target))
 				{
 					return p;
 				}
 			}
 			return null;
+		}
+		
+		private function dispose():void
+		{
+			platforms = null;
+			target = null;
+			callback = null;
+			params = null;
 		}
 	}
 }

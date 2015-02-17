@@ -12,6 +12,9 @@
     <classEntry path="game.views.collect.Star"/>
     <classEntry path="game.core.GlobalEventDispatcher"/>
     <classEntry path="game.core.Device"/>
+    <classEntry path="game.controller.GestureController"/>
+    <classEntry path="game.managers.PlatformManager"/>
+    <classEntry path="game.managers.SingletonManager"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

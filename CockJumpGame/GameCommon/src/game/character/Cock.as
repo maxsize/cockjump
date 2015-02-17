@@ -11,15 +11,16 @@ package game.character
 	import game.animations.DropAnimation;
 	import game.animations.HorizonAnimation;
 	import game.animations.JumpAnimation;
-	import game.controller.DragDropController;
-	import game.controller.GenericController;
+	import game.controller.GestureController;
 	import game.core.BaseView;
 	import game.core.GlobalEventDispatcher;
+	import game.views.Game;
 	import game.views.platforms.IPlatform;
+	
+	import org.gestouch.gestures.SwipeGesture;
 	
 	import starling.display.MovieClip;
 	import starling.events.Event;
-	import starling.events.TouchEvent;
 	
 	public class Cock extends BaseView implements ICollision
 	{
@@ -36,6 +37,9 @@ package game.character
 		private var horizonAni:HorizonAnimation;
 		private var rebornPosition:Point;
 
+		private var swipe:GestureController;
+		private var enableSwipe:Boolean;
+
 		public function Cock(src :MovieMold, frameRate :Number, library :Library)
 		{
 			super(src, frameRate, library);
@@ -51,6 +55,11 @@ package game.character
 			return _rectangle;
 		}
 		
+		public function get ignore():IPlatform
+		{
+			return platform;
+		}
+		
 		public function get body():Rectangle
 		{
 			if (_body)
@@ -64,13 +73,14 @@ package game.character
 		override protected function init():void
 		{
 //			new DragDropController().add(this, null, null, onRelease);
-			new GenericController().add(this, onPress, null, null);
+			swipe = GestureController.enableSwipe(Game.Instance, onSwipe);
+			
 			_rectangle = new Rectangle(0, 0, width, 10);	//for landing check
 			_body = new Rectangle(0, 0, width, height);	//for landing check
 			rebornPosition = new Point(x, y);
-			drop();
 			
 			GlobalEventDispatcher.dispatcher.dispatchEvent(new Event(GlobalEventDispatcher.COCK_INIT, false, this));
+			drop();
 		}
 		
 		public function landOn(platform:IPlatform):void
@@ -79,19 +89,30 @@ package game.character
 			if (horizonAni == null)
 			{
 				horizonAni = new HorizonAnimation();
-				horizonAni.init(200, platform.rectangle.clone());
+				horizonAni.init(200, platform);
 				horizonAni.start(this);
 			}
-			horizonAni.update(platform.rectangle.clone());
+			horizonAni.update(platform);
+			enableSwipe = true;
 		}
 		
-		private function onPress(e:TouchEvent):void
+		private function onSwipe(gesture:SwipeGesture):void
 		{
-			jump();
+			if (!enableSwipe)
+				return;
+			if (gesture.offsetY >= 6)
+			{
+				drop();
+			}
+			else if (gesture.offsetY <= -6)
+			{
+				jump();
+			}
 		}
 		
 		private function jump():void
 		{
+			platform = null;
 			var ani:JumpAnimation = new JumpAnimation();
 			ani.init(16, -50);
 			ani.addEventListener(JumpAnimation.REVERSE, onReverse);
@@ -101,6 +122,7 @@ package game.character
 			{
 				horizonAni.update(null);	//disable bound check
 			}
+			enableSwipe = false;
 		}
 		
 		private function onDead(e:Event):void
@@ -113,7 +135,13 @@ package game.character
 		private function onReverse(e:Event):void
 		{
 			e.target.removeEventListener(e.type, onReverse);
-			dispatchEvent(new Event(EVENT_DROP, false, e.target));
+			startDrop(e.target);
+		}
+		
+		private function startDrop(data:Object):void
+		{
+			enableSwipe = false;
+			dispatchEvent(new Event(EVENT_DROP, false, data));
 		}
 		
 		private function reborn():void
@@ -125,10 +153,14 @@ package game.character
 		
 		private function drop():void
 		{
+			if (horizonAni)
+			{
+				horizonAni.update(null);
+			}
 			var ani:DropAnimation = new DropAnimation();
 			ani.init(0, 60, 200);
 			ani.start(this);
-			dispatchEvent(new Event(EVENT_DROP, false, ani));
+			startDrop(ani);
 		}
 	}
 }

@@ -10,6 +10,7 @@ package game.views.collect
 	import game.character.ICollision;
 	import game.core.BaseView;
 	import game.core.GlobalEventDispatcher;
+	import game.views.platforms.IPlatform;
 	
 	import starling.events.Event;
 	
@@ -36,6 +37,11 @@ package game.views.collect
 		public function get rectangle():Rectangle
 		{
 			return _rect;
+		}
+		
+		public function get ignore():IPlatform
+		{
+			return null;
 		}
 		
 		override public function advanceTime(dt:Number):void

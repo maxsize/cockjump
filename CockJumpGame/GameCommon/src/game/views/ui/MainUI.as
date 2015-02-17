@@ -60,10 +60,8 @@ package game.views.ui
 		private function onLoad(lib:Library):void
 		{
 			var creator:GameMovieCreator = new GameMovieCreator(lib);
-			var movie:BaseView = creator.createMovie("Scene1") as BaseView;
-			Game.Instance.addChild(movie);
-			
-			this.removeFromParent(true);
+			var movie:BaseView = creator.createMovie("Scene") as BaseView;
+			Game.Instance.startGame(movie);
 		}
 	}
 }
