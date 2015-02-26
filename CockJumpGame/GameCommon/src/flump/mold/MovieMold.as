@@ -3,7 +3,11 @@
 
 package flump.mold {
 
+import flash.geom.Rectangle;
+
 import flump.display.Movie;
+
+import game.core.Utils;
 
 /** @private */
 public class MovieMold
@@ -11,11 +15,14 @@ public class MovieMold
     public var id :String;
     public var layers :Vector.<LayerMold> = new <LayerMold>[];
     public var labels :Vector.<Vector.<String>>;
+	public var scale9Grid:Rectangle;
 
     public static function fromJSON (o :Object) :MovieMold {
         const mold :MovieMold = new MovieMold();
         mold.id = require(o, "id");
         for each (var layer :Object in require(o, "layers")) mold.layers.push(LayerMold.fromJSON(layer));
+		if (o.scale9Grid)
+			mold.scale9Grid = Utils.getRect(o.scale9Grid);
         return mold;
     }
 
@@ -67,6 +74,10 @@ public class MovieMold
             id: id,
             layers: layers
         };
+		if (scale9Grid)
+		{
+			json.scale9Grid = scale9Grid.toString();
+		}
         return json;
     }
 

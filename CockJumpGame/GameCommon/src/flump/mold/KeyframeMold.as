@@ -35,6 +35,8 @@ public class KeyframeMold
 
     /** Tween easing. Only valid if tweened==true. */
     public var ease :Number = 0;
+	
+	public var customData:Object;
 
     public static function fromJSON (o :Object) :KeyframeMold {
         const mold :KeyframeMold = new KeyframeMold();
@@ -50,6 +52,7 @@ public class KeyframeMold
         extractField(o, mold, "ease");
         extractField(o, mold, "tweened");
         extractField(o, mold, "label");
+		extractField(o, mold, "customData");
         return mold;
     }
 

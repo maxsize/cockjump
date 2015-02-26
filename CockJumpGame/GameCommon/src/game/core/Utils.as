@@ -1,6 +1,7 @@
 package game.core
 {
 	import flash.filesystem.File;
+	import flash.geom.Rectangle;
 
 	public class Utils
 	{
@@ -35,6 +36,18 @@ package game.core
 				relative.push(file.getRelativePath(f));
 			}
 			return relative;
+		}
+		
+		public static function getRect(jsonStr:String):Rectangle
+		{
+			var rect:Rectangle = new Rectangle();
+			jsonStr = jsonStr.replace("(", "").replace(")", "");
+			var arr:Array = jsonStr.split(",");
+			rect.x = Number(arr[0].split("=")[1]);
+			rect.y = Number(arr[1].split("=")[1]);
+			rect.width = Number(arr[2].split("=")[1]);
+			rect.height = Number(arr[3].split("=")[1]);
+			return rect;
 		}
 	}
 }

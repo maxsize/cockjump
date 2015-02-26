@@ -4,6 +4,7 @@ package game.views.platforms
 	import flump.display.Movie;
 	import flump.mold.MovieMold;
 	
+	import game.character.ICollision;
 	import game.controller.GenericController;
 	
 	import starling.events.TouchEvent;
@@ -27,6 +28,28 @@ package game.views.platforms
 			labelPassed.connect(onLabelPassed);
 			playTo(LABEL_DOWN);
 			addListeners();
+		}
+		
+		override public function hittest(x:Number, y:Number):Boolean
+		{
+			return mIsDown ? super.hittest(x, y) : false;
+		}
+		
+		override public function hittestWith(target:ICollision):Boolean
+		{
+			return mIsDown ? super.hittestWith(target) : false;
+		}
+		
+		override public function stop():Movie
+		{
+			this.touchable = true;
+			return super.stop();
+		}
+		
+		override public function playTo(position:Object):Movie
+		{
+			this.touchable = false;
+			return super.playTo(position);
 		}
 		
 		private function addListeners():void
@@ -54,18 +77,6 @@ package game.views.platforms
 			{
 				stop();
 			}
-		}
-		
-		override public function stop():Movie
-		{
-			this.touchable = true;
-			return super.stop();
-		}
-		
-		override public function playTo(position:Object):Movie
-		{
-			this.touchable = false;
-			return super.playTo(position);
 		}
 	}
 }

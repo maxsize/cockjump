@@ -60,7 +60,7 @@ internal class Loader {
         const loaded :FZipFile = _zip.removeFileAt(_zip.getFileCount() - 1);
         const name :String = loaded.filename;
         if (name == LibraryLoader.LIBRARY_LOCATION) {
-            const jsonString :String = loaded.content.readUTFBytes(loaded.content.length);
+            var jsonString :String = loaded.content.readUTFBytes(loaded.content.length);
             _lib = LibraryMold.fromJSON(JSON.parse(jsonString));
             _libLoader.libraryMoldLoaded.emit(_lib);
         } else if (name.indexOf(PNG, name.length - PNG.length) != -1) {

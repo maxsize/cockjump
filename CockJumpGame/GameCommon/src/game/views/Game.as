@@ -29,6 +29,7 @@ package game.views
 	import game.views.scene.GameScene;
 	import game.views.ui.MainUI;
 	import game.views.ui.SceneList;
+	import game.views.ui.feathers.Scale9Image;
 	
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
@@ -98,6 +99,7 @@ package game.views
 			TypedMovieCreator.register("Text", Text);
 			TypedMovieCreator.register("SceneList", SceneList);
 			TypedMovieCreator.register("BridgePlatform", BridgePlatform);
+			TypedMovieCreator.register("Scale9Image", Scale9Image);
 			
 			PlatformManager.instance.init();
 		}

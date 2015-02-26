@@ -15,6 +15,7 @@
     <classEntry path="game.controller.GestureController"/>
     <classEntry path="game.managers.PlatformManager"/>
     <classEntry path="game.managers.SingletonManager"/>
+    <classEntry path="game.views.ui.feathers.Scale9Image"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
