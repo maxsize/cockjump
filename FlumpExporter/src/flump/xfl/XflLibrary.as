@@ -231,7 +231,7 @@ public class XflLibrary
 
     public function parseLibraryFile (fileData :ByteArray, path :String) :void {
         const xml :XML = Util.bytesToXML(fileData);
-        if (xml.name().localName != "DOMSymbolItem") {
+        if (xml.name().localName != "DOMSymbolItem" && xml.name().localName != "DOMComponentItem") {
             addTopLevelError(ParseError.DEBUG,
                 "Skipping file since its root element isn't DOMSymbolItem");
             return;

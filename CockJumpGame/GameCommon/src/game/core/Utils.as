@@ -13,6 +13,38 @@ package game.core
 			}
 		}
 		
+		public static function updateVariable(name:String, component:Object, data:Object):void
+		{
+			if (component.hasOwnProperty(name) && data.hasOwnProperty(name))
+			{
+				component[name] = data[name];
+			}
+		}
+		
+		public static function initComponent(component:Object, data:Object):void
+		{
+			for (var key:String in data)
+			{
+				if (key == key.toUpperCase())
+				{
+					//is const
+					updateVariable(key, component, data);
+				}
+			}
+		}
+		
+		public static function updateComponent(component:Object, data:Object):void
+		{
+			for (var key:String in data)
+			{
+				if (key != key.toUpperCase())
+				{
+					//is variable
+					updateVariable(key, component, data);
+				}
+			}
+		}
+		
 		public static function getObjectLength(value:Object):int
 		{
 			var c:int = 0;

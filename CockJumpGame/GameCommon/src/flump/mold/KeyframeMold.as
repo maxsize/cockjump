@@ -82,6 +82,7 @@ public class KeyframeMold
             if (!visible) json.visible = visible;
             if (!tweened) json.tweened = tweened;
             if (ease != 0) json.ease = round(ease);
+			if (customData != null) json.customData = customData;
         }
         if (label != null) json.label = label;
         return json;

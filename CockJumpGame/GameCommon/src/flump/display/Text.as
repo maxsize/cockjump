@@ -3,20 +3,48 @@ package flump.display
 	import flump.mold.MovieMold;
 	
 	import game.core.Ticker;
+	import game.core.Utils;
 	
 	import starling.core.Starling;
 	import starling.text.TextField;
 	
-	public class Text extends Movie
+	public class Text extends Movie implements IComponent
 	{
 		private var cacheHeight:Number;
 		private var cacheWidth:Number;
+		private var _label:String;
+
+		private var txt:TextField;
 		
 		public function Text(src:MovieMold, frameRate:Number, library:Library)
 		{
 			super(src, frameRate, library);
 			super.updateFrame(0, 0);	//apply scale and everything
 			Ticker.add(tick, 1);
+		}
+		
+		public function get label():String
+		{
+			return _label;
+		}
+
+		public function set label(value:String):void
+		{
+			var changed:Boolean = (value != _label);
+			_label = value;
+			if (changed && txt)
+				txt.text = value;
+		}
+
+		public function updateVariables(customData:Object):void
+		{
+			//update custom data
+			Utils.updateComponent(this, customData);
+		}
+		
+		public function initConsts(customData:Object):void
+		{
+			Utils.initComponent(this, customData);
 		}
 		
 		override protected function updateFrame(newFrame:int, dt:Number):void
@@ -32,7 +60,7 @@ package flump.display
 			Starling.juggler.remove(this);
 			var format:FontFormat = extract(name);
 			
-			var txt:TextField;
+			
 			if (format.hasFormat)
 			{
 				txt = new TextField(cacheWidth, cacheHeight, format.label, format.fontFamily, format.fontSize, format.color);
@@ -70,6 +98,7 @@ package flump.display
 			}
 			return f;
 		}
+		
 	}
 }
 

@@ -54,6 +54,11 @@ internal class Layer
                 _displays[ii] = display;
                 display.visible = false;
                 _movie.addChild(display);
+				
+				if (display is IComponent)
+				{
+					(display as IComponent).initConsts(kf.customData);
+				}
             }
             _currentDisplay = _displays[0];
             _currentDisplay.visible = true;
@@ -93,7 +98,8 @@ internal class Layer
             _keyframeIdx++;
             _needsKeyframeUpdate = true;
         }
-
+		
+		const kf :KeyframeMold = _keyframes[_keyframeIdx];
         if (_needsKeyframeUpdate) {
             // Swap in the proper DisplayObject for this keyframe.
             const disp :DisplayObject = _displays[_keyframeIdx];
@@ -107,10 +113,14 @@ internal class Layer
                 _currentDisplay = disp;
                 _currentDisplay.name = _name;
             }
+			
+			if (_currentDisplay is IComponent)
+			{
+				(_currentDisplay as IComponent).updateVariables(kf.customData);
+			}
         }
         _needsKeyframeUpdate = false;
 
-        const kf :KeyframeMold = _keyframes[_keyframeIdx];
         const layer :DisplayObject = _currentDisplay;
         if (_keyframeIdx == _keyframes.length - 1 || kf.index == frame || !kf.tweened) {
             layer.x = kf.x;
