@@ -33,7 +33,9 @@ package game.views.platforms
 		public function set style(value:String):void
 		{
 			_style = value;
-			goTo(value);
+			var frame:int = getFrameForLabel(value);
+			if (frame >= 0)
+				goTo(value);
 		}
 
 		public function updateVariables(customData:Object):void

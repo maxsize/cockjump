@@ -19,6 +19,7 @@ package game.character
 	
 	import org.gestouch.gestures.SwipeGesture;
 	
+	import starling.core.Starling;
 	import starling.display.MovieClip;
 	import starling.events.Event;
 	
@@ -73,7 +74,7 @@ package game.character
 		override protected function init():void
 		{
 //			new DragDropController().add(this, null, null, onRelease);
-			swipe = GestureController.enableSwipe(Game.Instance, onSwipe);
+			swipe = GestureController.enableSwipe(Starling.current.nativeStage, onSwipe);
 			
 			_rectangle = new Rectangle(0, 0, width, 10);	//for landing check
 			_body = new Rectangle(0, 0, width, height);	//for landing check

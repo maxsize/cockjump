@@ -2,7 +2,7 @@
 <application xmlns="http://ns.adobe.com/air/application/16.0">
     <id>flump</id>
     <filename>Flump</filename>
-    <versionNumber>0.1</versionNumber>
+    <versionNumber>0.2</versionNumber>
 
 
     <!-- Settings for the application's initial window. Required. -->

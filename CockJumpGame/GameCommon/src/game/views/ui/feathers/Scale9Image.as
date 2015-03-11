@@ -11,6 +11,8 @@ package game.views.ui.feathers
 	
 	public class Scale9Image extends FeathersMovie
 	{
+		private const IMG_NAME:String = "texture";
+		
 		private var mold:MovieMold;
 		
 		public function Scale9Image(src:MovieMold, frameRate:Number, library:Library)
@@ -25,12 +27,13 @@ package game.views.ui.feathers
 			cacheHeight = height;
 			scaleX = scaleY = 1;
 			var img:Image;
-			while (numChildren > 0)
+			/*while (numChildren > 0)
 			{
 				var c:DisplayObject = removeChildAt(0);
 				if (c is Image)
 					img = c as Image;
-			}
+			}*/
+			img = blindQuery(IMG_NAME) as Image;
 			if (img)
 			{
 				var scale9Tex:Scale9Textures = new Scale9Textures(img.texture, mold.scale9Grid);

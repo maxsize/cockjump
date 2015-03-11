@@ -58,6 +58,7 @@ internal class Layer
 				if (display is IComponent)
 				{
 					(display as IComponent).initConsts(kf.customData);
+					(display as IComponent).updateVariables(kf.customData);
 				}
             }
             _currentDisplay = _displays[0];

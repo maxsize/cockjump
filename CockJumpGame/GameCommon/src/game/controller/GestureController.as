@@ -1,14 +1,17 @@
 package game.controller
 {
+	import flash.display.DisplayObject;
+	
 	import org.gestouch.core.Gestouch;
 	import org.gestouch.events.GestureEvent;
+	import org.gestouch.extensions.native.NativeDisplayListAdapter;
+	import org.gestouch.extensions.native.NativeTouchHitTester;
 	import org.gestouch.extensions.starling.StarlingDisplayListAdapter;
 	import org.gestouch.extensions.starling.StarlingTouchHitTester;
 	import org.gestouch.gestures.SwipeGesture;
 	import org.gestouch.input.NativeInputAdapter;
 	
 	import starling.core.Starling;
-	import starling.display.DisplayObject;
 
 	public class GestureController
 	{
@@ -30,9 +33,14 @@ package game.controller
 		{
 			if (initialized)
 				return;
-			Gestouch.inputAdapter = new NativeInputAdapter(Starling.current.nativeStage);
+			/*Gestouch.inputAdapter = new NativeInputAdapter(Starling.current.nativeStage);
 			Gestouch.addDisplayListAdapter(DisplayObject, new StarlingDisplayListAdapter());
-			Gestouch.addTouchHitTester(new StarlingTouchHitTester(Starling.current), -1);
+			Gestouch.addTouchHitTester(new StarlingTouchHitTester(Starling.current), -1);*/
+			
+			Gestouch.inputAdapter = new NativeInputAdapter(Starling.current.nativeStage);
+			Gestouch.addDisplayListAdapter(DisplayObject, new NativeDisplayListAdapter());
+			Gestouch.addTouchHitTester(new NativeTouchHitTester(Starling.current.nativeStage), -1);
+			
 			initialized = true;
 		}
 		
