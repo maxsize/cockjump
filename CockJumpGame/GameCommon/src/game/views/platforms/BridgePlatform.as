@@ -4,7 +4,6 @@ package game.views.platforms
 	import flump.display.Movie;
 	import flump.mold.MovieMold;
 	
-	import game.character.ICollision;
 	import game.controller.GenericController;
 	
 	import starling.events.TouchEvent;
@@ -15,6 +14,7 @@ package game.views.platforms
 		private static const LABEL_DOWN:String = "down";
 		private static const LABEL_GOINGUP:String = "goingUp";
 		private static const LABEL_GOINGDOWN:String = "goingDown";
+		
 		private var mIsDown:Boolean;
 		
 		public function BridgePlatform(src:MovieMold, frameRate:Number, library:Library)
@@ -30,14 +30,9 @@ package game.views.platforms
 			addListeners();
 		}
 		
-		override public function hittest(x:Number, y:Number):Boolean
+		public function get isDown():Boolean
 		{
-			return mIsDown ? super.hittest(x, y) : false;
-		}
-		
-		override public function hittestWith(target:ICollision):Boolean
-		{
-			return mIsDown ? super.hittestWith(target) : false;
+			return mIsDown;
 		}
 		
 		override public function stop():Movie

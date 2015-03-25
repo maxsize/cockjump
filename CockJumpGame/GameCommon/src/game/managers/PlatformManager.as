@@ -29,25 +29,18 @@ package game.managers
 			GlobalEventDispatcher.dispatcher.addEventListener(GlobalEventDispatcher.PLATFORM_INIT, onPmInit);
 		}
 		
-		private function register(platform:IPlatform):void
+		public function removePlatform(platform:IPlatform):void
 		{
-			this.platforms.push(platform);
-			platform.addEventListener(Event.REMOVED_FROM_STAGE, onPmRemoved);
-		}
-		
-		private function onPmRemoved(e:Event):void
-		{
-			e.target.removeEventListener(e.type, onPmRemoved);
-			removePlatform(e.target as IPlatform);
-		}
-		
-		private function removePlatform(target:IPlatform):void
-		{
-			var index:int = platforms.indexOf(target);
+			var index:int = platforms.indexOf(platform);
 			if (index >= 0)
 			{
 				platforms.splice(index, 1);
 			}
+		}
+		
+		private function register(platform:IPlatform):void
+		{
+			this.platforms.push(platform);
 		}
 		
 		private function onCockInit(e:Event):void

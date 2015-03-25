@@ -15,8 +15,16 @@
     <classEntry path="game.controller.GestureController"/>
     <classEntry path="game.managers.PlatformManager"/>
     <classEntry path="game.managers.SingletonManager"/>
-    <classEntry path="game.views.ui.feathers.Scale9Image"/>
+    <classEntry path="game.views.ui.feathers.Scale9ImageWrapper"/>
     <classEntry path="flump.display.IComponent"/>
+    <classEntry path="max.runtime.behaviors.IBehavior"/>
+    <classEntry path="max.runtime.behaviors.Behavior"/>
+    <classEntry path="max.runtime.behaviors.DisplayObjectBehavior"/>
+    <classEntry path="max.runtime.behaviors.BehaviorFactory"/>
+    <classEntry path="max.runtime.behaviors.BehaviorMapper"/>
+    <classEntry path="max.runtime.behaviors.PlatformBehavior"/>
+    <classEntry path="max.runtime.behaviors.CharacterBehavior"/>
+    <classEntry path="max.runtime.behaviors.BridgePlatformBehavior"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -2,10 +2,12 @@ package game.views
 {
 	import flash.events.UncaughtErrorEvent;
 	import flash.filesystem.File;
+	import flash.net.registerClassAlias;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	import flash.utils.ByteArray;
+	import flash.utils.getDefinitionByName;
 	
 	import feathers.themes.MetalWorksMobileTheme;
 	
@@ -29,7 +31,8 @@ package game.views
 	import game.views.scene.GameScene;
 	import game.views.ui.MainUI;
 	import game.views.ui.SceneList;
-	import game.views.ui.feathers.Scale9Image;
+	import game.views.ui.feathers;
+	import game.views.ui.feathers.Scale9ImageWrapper;
 	
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
@@ -99,7 +102,8 @@ package game.views
 			TypedMovieCreator.register("Text", Text);
 			TypedMovieCreator.register("SceneList", SceneList);
 			TypedMovieCreator.register("BridgePlatform", BridgePlatform);
-			TypedMovieCreator.register("Scale9Image", Scale9Image);
+			
+			registerClassAlias("Scale9ImageWrapper", Scale9ImageWrapper);
 			
 			PlatformManager.instance.init();
 		}

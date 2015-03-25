@@ -1,0 +1,44 @@
+package max.runtime.behaviors
+{
+	import flash.utils.Dictionary;
+
+	public class BehaviorFactory
+	{
+		private static var mapping:Dictionary = new Dictionary();
+		
+		public function BehaviorFactory()
+		{
+		}
+		
+		/**
+		 * Register behavior
+		 * @param name name we're gonna use in flash pro
+		 * @param clazz mapped behavior class
+		 * 
+		 */		
+		public static function register(name:String, clazz:Class):void
+		{
+			mapping[name] = clazz;
+		}
+		
+		public static function create(data:Object, host:Object):Vector.<IBehavior>
+		{
+			var clazz:Class;
+			var behavior:IBehavior;
+			var result:Vector.<IBehavior> = new Vector.<IBehavior>();
+			for (var key:String in data)
+			{
+				clazz = mapping[key];
+				if (clazz != null && data[key] == true)
+				{
+					//make sure key is mapped as a behavior and it's enabled from flash
+					behavior = new clazz();
+					behavior.setupParams(data);
+					behavior.init(host);
+					result.push(behavior);
+				}
+			}
+			return result;
+		}
+	}
+}
