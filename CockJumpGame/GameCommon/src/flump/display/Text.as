@@ -8,7 +8,7 @@ package flump.display
 	import starling.core.Starling;
 	import starling.text.TextField;
 	
-	public class Text extends Movie implements IComponent
+	public class Text extends Movie
 	{
 		private var cacheHeight:Number;
 		private var cacheWidth:Number;
@@ -34,17 +34,6 @@ package flump.display
 			_label = value;
 			if (changed && txt)
 				txt.text = value;
-		}
-
-		public function updateVariables(customData:Object):void
-		{
-			//update custom data
-			Utils.updateComponent(this, customData);
-		}
-		
-		public function initConsts(customData:Object):void
-		{
-			Utils.initComponent(this, customData);
 		}
 		
 		override protected function updateFrame(newFrame:int, dt:Number):void

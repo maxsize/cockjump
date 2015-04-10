@@ -15,15 +15,5 @@ package max.runtime.behaviors
 		{
 			return host.isDown;
 		}
-
-		override public function hittest(x:Number, y:Number):Boolean
-		{
-			return mIsDown ? super.hittest(x, y) : false;
-		}
-		
-		override public function hittestWith(target:ICollision):Boolean
-		{
-			return mIsDown ? super.hittestWith(target) : false;
-		}
 	}
 }

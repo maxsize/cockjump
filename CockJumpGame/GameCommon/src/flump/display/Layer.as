@@ -57,13 +57,7 @@ package flump.display {
 					display.visible = false;
 					_movie.addChild(display);
 					
-					if (display is IComponent)
-					{
-						(display as IComponent).initConsts(kf.customData);
-						(display as IComponent).updateVariables(kf.customData);
-					}
-					
-					initBehaviors(kf.customData);
+					initBehaviors(kf.customData, display);
 				}
 				_currentDisplay = _displays[0];
 				_currentDisplay.visible = true;
@@ -117,11 +111,6 @@ package flump.display {
 					}
 					_currentDisplay = disp;
 					_currentDisplay.name = _name;
-				}
-				
-				if (_currentDisplay is IComponent)
-				{
-					(_currentDisplay as IComponent).updateVariables(kf.customData);
 				}
 			}
 			_needsKeyframeUpdate = false;
@@ -202,9 +191,9 @@ package flump.display {
 		// name of the layer
 		protected var _name :String;
 		
-		private function initBehaviors(customData:Object):void
+		private function initBehaviors(customData:Object, host:DisplayObject):void
 		{
-			BehaviorFactory.create(customData, this);
+			BehaviorFactory.create(customData, host);
 		}
 	}
 }

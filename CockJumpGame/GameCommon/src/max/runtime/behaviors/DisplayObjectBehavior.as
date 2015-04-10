@@ -29,6 +29,19 @@ package max.runtime.behaviors
 			host.addEventListener(Event.REMOVED_FROM_STAGE, onRemoved);
 		}
 		
+		protected function extract():Object
+		{
+			var obj:Object = 
+				{
+					x:host.x,
+					y:host.y,
+					width:host.width,
+					height:host.height,
+					view:host
+				}
+			return obj;
+		}
+		
 		private function onAdded(e:Event):void
 		{
 			host.removeEventListener(Event.ADDED_TO_STAGE, onAdded);

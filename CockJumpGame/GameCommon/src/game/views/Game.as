@@ -1,51 +1,53 @@
 package game.views
 {
-	import flash.events.UncaughtErrorEvent;
-	import flash.filesystem.File;
-	import flash.net.registerClassAlias;
-	import flash.text.TextField;
-	import flash.text.TextFieldAutoSize;
-	import flash.text.TextFormat;
-	import flash.utils.ByteArray;
-	import flash.utils.getDefinitionByName;
-	
-	import feathers.themes.MetalWorksMobileTheme;
-	
-	import flump.display.Library;
-	import flump.display.Text;
-	
-	import game.character.Cock;
-	import game.conf.GlobalSettings;
-	import game.core.AIRUtils;
-	import game.core.BaseView;
-	import game.core.ClassRegister;
-	import game.core.Device;
-	import game.managers.PlatformManager;
-	import game.resource.creators.GameMovieCreator;
-	import game.resource.creators.TypedMovieCreator;
-	import game.resource.loaders.FlumpLoader;
-	import game.resource.loaders.MultiLookupLoader;
-	import game.views.collect.Star;
-	import game.views.platforms.BridgePlatform;
-	import game.views.platforms.StaticPlatform;
-	import game.views.scene.GameScene;
-	import game.views.ui.MainUI;
-	import game.views.ui.SceneList;
-	import game.views.ui.feathers;
-	import game.views.ui.feathers.Scale9ImageWrapper;
-	
-	import starling.core.Starling;
-	import starling.display.DisplayObject;
-	import starling.display.Quad;
-	import starling.display.Sprite;
-	
-	public class Game extends Sprite
+import citrus.core.starling.StarlingState;
+import citrus.physics.box2d.Box2D;
+
+import feathers.themes.MetalWorksMobileTheme;
+
+import flash.display.Shape;
+
+import flash.events.UncaughtErrorEvent;
+import flash.filesystem.File;
+import flash.text.TextField;
+import flash.text.TextFieldAutoSize;
+import flash.text.TextFormat;
+import flash.utils.ByteArray;
+
+import flump.display.Library;
+import flump.display.Text;
+
+import game.character.Cock;
+import game.conf.GlobalSettings;
+import game.core.AIRUtils;
+import game.core.BaseView;
+import game.core.ClassRegister;
+import game.core.Device;
+import game.resource.creators.GameMovieCreator;
+import game.resource.creators.TypedMovieCreator;
+import game.resource.loaders.FlumpLoader;
+import game.resource.loaders.MultiLookupLoader;
+import game.views.collect.Star;
+import game.views.platforms.BridgePlatform;
+import game.views.platforms.StaticPlatform;
+import game.views.scene.GameScene;
+import game.views.ui.MainUI;
+import game.views.ui.SceneList;
+
+import max.runtime.behaviors.BehaviorMapper;
+
+import starling.core.Starling;
+import starling.display.DisplayObject;
+import starling.display.Quad;
+import starling.display.Sprite;
+import starling.events.Event;
+
+public class Game extends StarlingState
 	{
 		private static var instance:Game;
 		private static var txt:TextField;
 		
 		private var container:Sprite;
-		private var overlay:Sprite;
 
 		private var ui:BaseView;
 		
@@ -53,19 +55,24 @@ package game.views
 		{
 			instance = this;
 			initOverlay();
-			init();
 		}
 		
 		private function initOverlay():void
 		{
 			container = new Sprite();
-			overlay = new Sprite();
 			super.addChild(container);
-			super.addChild(overlay);
-			var quad:Quad = new Quad(Starling.current.stage.stageWidth, Starling.current.stage.stageHeight, 0);
-			quad.alpha = 0;
-			overlay.addChild(quad);
-			overlay.touchable = false;
+
+			/*var btn:flash.display.Sprite = new flash.display.Sprite();
+			btn.graphics.beginFill(0xFF0000, 1);
+			btn.graphics.drawRect(0, 0, 100, 50);
+			btn.graphics.endFill();
+			btn.x = Starling.current.nativeStage.stageWidth - btn.width;
+			Starling.current.nativeStage.addChild(btn);
+
+			btn.addEventListener("click", onClick);*/
+
+			var quad:Quad = new Quad(100, 100);
+			container.addChild(quad);
 		}
 		
 		public static function get Instance():Game
@@ -83,8 +90,14 @@ package game.views
 			return container.removeChild(child, dispose);
 		}
 		
-		protected function init():void
+		override public function initialize():void
 		{
+			super.initialize();
+
+			var physics:Box2D = new Box2D("box2d");
+			physics.visible = false;
+			add(physics);
+
 			var storage:File = File.applicationStorageDirectory.resolvePath("assets");
 			debug(storage.url);
 			new MetalWorksMobileTheme();
@@ -103,9 +116,7 @@ package game.views
 			TypedMovieCreator.register("SceneList", SceneList);
 			TypedMovieCreator.register("BridgePlatform", BridgePlatform);
 			
-			registerClassAlias("Scale9ImageWrapper", Scale9ImageWrapper);
-			
-			PlatformManager.instance.init();
+			BehaviorMapper.mapAllBehaviors();
 		}
 		
 		public static function debug(msg:String):void
@@ -117,11 +128,11 @@ package game.views
 				txt.autoSize = TextFieldAutoSize.LEFT;
 				Starling.current.nativeStage.addChild(txt);
 				Starling.current.nativeStage.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, 
-					function onError(e:Error):void
+					function onError(e:UncaughtErrorEvent):void
 					{
 						txt.appendText("\n");
-						txt.appendText(e.errorID + ", " + e.message + "\n");
-						txt.appendText(e.getStackTrace());
+						txt.appendText(e.error.errorID + ", " + e.error.message + "\n");
+						txt.appendText(e.error.getStackTrace());
 					}
 				);
 			}
@@ -160,7 +171,16 @@ package game.views
 		{
 			addChild(movie);
 			removeChild(ui);
-//			overlay.touchable = true;
 		}
+
+		public function back():void
+		{
+			removeChildren();
+			addChild(ui);
+		}
+
+	private function onClick(e:*):void {
+		back();
 	}
+}
 }

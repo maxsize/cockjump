@@ -1,25 +1,23 @@
-<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <application xmlns="http://ns.adobe.com/air/application/16.0">
-    <id>flump</id>
-    <filename>Flump</filename>
-    <versionNumber>0.2</versionNumber>
-
-
-    <!-- Settings for the application's initial window. Required. -->
-    <initialWindow>
-        <renderMode>direct</renderMode>
-        <!-- The main SWF or HTML file of the application. Required. -->
-        <!-- Note: In Flash Builder, the SWF reference is set automatically. -->
-        <content>Flump.swf</content>
-        <autoOrients>false</autoOrients>
-        <fullScreen>false</fullScreen>
-        <visible>false</visible>
-    </initialWindow>
-
-	<icon>
-		<image16x16>icons/icon_16.png</image16x16>
-		<image32x32>icons/icon_32.png</image32x32>
-		<image48x48>icons/icon_48.png</image48x48>
-		<image128x128>icons/icon_128.png</image128x128>
-	</icon>
+  <id>flump</id>
+  <filename>Flump</filename>
+  <versionNumber>0.2</versionNumber>
+  <!-- Settings for the application's initial window. Required. -->
+  <initialWindow>
+    <renderMode>direct</renderMode>
+    <!-- The main SWF or HTML file of the application. Required. -->
+    <!-- Note: In Flash Builder, the SWF reference is set automatically. -->
+    <content>Flump.swf</content>
+    <autoOrients>false</autoOrients>
+    <fullScreen>false</fullScreen>
+    <visible>false</visible>
+  </initialWindow>
+  <icon>
+    <image16x16>icons/icon_16.png</image16x16>
+    <image32x32>icons/icon_32.png</image32x32>
+    <image48x48>icons/icon_48.png</image48x48>
+    <image128x128>icons/icon_128.png</image128x128>
+  </icon>
 </application>
+
