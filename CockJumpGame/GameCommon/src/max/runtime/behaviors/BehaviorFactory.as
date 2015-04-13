@@ -2,6 +2,8 @@ package max.runtime.behaviors
 {
 	import flash.utils.Dictionary;
 
+	import flump.mold.KeyframeMold;
+
 	public class BehaviorFactory
 	{
 		private static var mapping:Dictionary = new Dictionary();
@@ -21,7 +23,7 @@ package max.runtime.behaviors
 			mapping[name] = clazz;
 		}
 		
-		public static function create(data:Object, host:Object):Vector.<IBehavior>
+		public static function create(data:Object, keyframes:Vector.<KeyframeMold>, host:Object):Vector.<IBehavior>
 		{
 			var clazz:Class;
 			var behavior:IBehavior;
@@ -33,7 +35,7 @@ package max.runtime.behaviors
 				{
 					//make sure key is mapped as a behavior and it's enabled from flash
 					behavior = new clazz();
-					behavior.setupParams(data);
+					behavior.setupParams(data, keyframes);
 					behavior.init(host);
 					result.push(behavior);
 				}

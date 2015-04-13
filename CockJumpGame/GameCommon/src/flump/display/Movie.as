@@ -359,7 +359,7 @@ public class Movie extends Sprite
     /** @private */
     protected var _playTime :Number, _duration :Number;
     /** @private */
-    protected var _layers :Vector.<Layer>;
+    private var _layers :Vector.<Layer>;
     /** @private */
     protected var _numFrames :int;
     /** @private */
@@ -380,6 +380,10 @@ public class Movie extends Sprite
     private static const STOPPED :int = 0;
     private static const PLAYING_CHILDREN_ONLY :int = 1;
     private static const PLAYING :int = 2;
+
+    public function get layers ():Vector.<Layer> {
+        return _layers;
+    }
 }
 }
 

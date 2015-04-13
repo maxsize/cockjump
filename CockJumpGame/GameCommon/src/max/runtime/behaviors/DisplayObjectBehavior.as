@@ -44,7 +44,6 @@ package max.runtime.behaviors
 		
 		private function onAdded(e:Event):void
 		{
-			host.removeEventListener(Event.ADDED_TO_STAGE, onAdded);
 			onViewInit();
 		}
 		
@@ -55,6 +54,7 @@ package max.runtime.behaviors
 		
 		override protected function dispose():void
 		{
+			host.removeEventListener(Event.ADDED_TO_STAGE, onAdded);
 			host.removeEventListener(Event.REMOVED_FROM_STAGE, onRemoved);
 			super.dispose();
 		}

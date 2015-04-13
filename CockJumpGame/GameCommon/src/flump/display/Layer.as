@@ -56,9 +56,9 @@ package flump.display {
 					_displays[ii] = display;
 					display.visible = false;
 					_movie.addChild(display);
-					
-					initBehaviors(kf.customData, display);
 				}
+				if (_keyframes.length > 0)
+					initBehaviors(_keyframes[0].customData, _keyframes, display);
 				_currentDisplay = _displays[0];
 				_currentDisplay.visible = true;
 			}
@@ -176,7 +176,7 @@ package flump.display {
 			return resultRect;
 		}
 		
-		protected var _keyframes :Vector.<KeyframeMold>;
+		private var _keyframes :Vector.<KeyframeMold>;
 		protected var _numFrames :int;
 		// Stores this layer's DisplayObjects indexed by keyframe.
 		protected var _displays :Vector.<DisplayObject>;
@@ -191,9 +191,13 @@ package flump.display {
 		// name of the layer
 		protected var _name :String;
 		
-		private function initBehaviors(customData:Object, host:DisplayObject):void
+		private function initBehaviors(customData:Object, keyframes:Vector.<KeyframeMold>, host:DisplayObject):void
 		{
-			BehaviorFactory.create(customData, host);
+			BehaviorFactory.create(customData, keyframes, host);
+		}
+
+		public function get keyframes ():Vector.<KeyframeMold> {
+			return _keyframes;
 		}
 	}
 }

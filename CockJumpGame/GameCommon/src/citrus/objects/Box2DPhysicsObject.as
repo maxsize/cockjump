@@ -126,7 +126,8 @@ package citrus.objects {
 				b2CircleShape(_shape).SetRadius(_radius);
 			} else {
 				_shape = new b2PolygonShape();
-				b2PolygonShape(_shape).SetAsBox(_width / 2, _height / 2);
+				//b2PolygonShape(_shape).SetAsBox(_width / 2, _height / 2);
+				b2PolygonShape(_shape).SetAsBox(_width, _height);
 			}
 		}
 		

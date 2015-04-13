@@ -1,21 +1,26 @@
 package max.runtime.behaviors
 {
+	import flump.mold.KeyframeMold;
+
 	public class Behavior implements IBehavior
 	{
 		private static var DOLLAR:String = "$";
-		protected var host:Object;
-		
+
+		protected var _host:Object;
+		protected var keyframes:Vector.<KeyframeMold>;
+
 		public function Behavior()
 		{
 		}
 		
 		public function init(host:Object):void
 		{
-			this.host = host;
+			this._host = host;
 		}
 		
-		public function setupParams(data:Object):void
+		public function setupParams(data:Object, keyframes:Vector.<KeyframeMold>):void
 		{
+			this.keyframes = keyframes;
 			for (var key:String in data)
 			{
 				if (key.charAt(0) == DOLLAR)
@@ -27,6 +32,11 @@ package max.runtime.behaviors
 				}
 			}
 		}
+
+		protected function get host():Object
+		{
+			return _host;
+		}
 		
 		/**
 		 * always call super.dispose() at the last line.
@@ -34,7 +44,7 @@ package max.runtime.behaviors
 		 */		
 		protected function dispose():void
 		{
-			host = null;
+			_host = null;
 		}
 	}
 }

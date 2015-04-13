@@ -154,7 +154,7 @@ public class b2PolygonShape extends b2Shape
 	{
 		m_vertexCount = 4;
 		Reserve(4);
-		m_vertices[0].Set(-hx, -hy);
+		/*m_vertices[0].Set(-hx, -hy);
 		m_vertices[1].Set( hx, -hy);
 		m_vertices[2].Set( hx,  hy);
 		m_vertices[3].Set(-hx,  hy);
@@ -162,7 +162,17 @@ public class b2PolygonShape extends b2Shape
 		m_normals[1].Set(1.0, 0.0);
 		m_normals[2].Set(0.0, 1.0);
 		m_normals[3].Set(-1.0, 0.0);
-		m_centroid.SetZero();
+		m_centroid.SetZero();*/
+
+		m_vertices[0].Set( 0, 0);
+		m_vertices[1].Set(hx, 0);
+		m_vertices[2].Set(hx, hy);
+		m_vertices[3].Set( 0, hy);
+		m_normals[0].Set(0.0, 0.0);
+		m_normals[1].Set(1.0, 0.0);
+		m_normals[2].Set(1.0, 1.0);
+		m_normals[3].Set(0.0, 1.0);
+		m_centroid.Set(hx / 2, hy / 2);
 	}
 	
 	public static function AsBox(hx:Number, hy:Number):b2PolygonShape

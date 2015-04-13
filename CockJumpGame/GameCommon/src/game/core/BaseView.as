@@ -1,5 +1,7 @@
 package game.core
 {
+	import flash.geom.Point;
+
 	import flump.display.Library;
 	import flump.display.Movie;
 	import flump.display.Text;
@@ -38,6 +40,17 @@ package game.core
 				}
 			}
 			return target;
+		}
+
+		public function localToParent(p:Point):Point
+		{
+			if (!parent)
+			{
+				throw new Error("Parent is null!");
+			}
+			p = localToGlobal(p);
+			p = parent.globalToLocal(p);
+			return p;
 		}
 		
 		private function onAdded(e:Event):void
