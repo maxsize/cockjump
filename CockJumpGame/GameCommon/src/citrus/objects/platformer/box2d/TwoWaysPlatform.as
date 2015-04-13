@@ -3,6 +3,11 @@
  */
 package citrus.objects.platformer.box2d
 {
+	import flash.geom.Point;
+	import flash.utils.getTimer;
+
+	import max.runtime.behaviors.utils.B2dMath;
+
 	public class TwoWaysPlatform extends OneWayPlatform
 	{
 		private var _forward:Boolean = true;
@@ -38,6 +43,20 @@ package citrus.objects.platformer.box2d
 					_currentIndex = 1;
 				}
 			}
+		}
+
+		override protected function getSpeed ():void
+		{
+			var curt:int = _forward ? _currentIndex - 1:_currentIndex + 1;
+			var next:int = _currentIndex;
+			var current:Point = keyPoints[curt];
+			var destina:Point = keyPoints[next];
+			var dis:Number = B2dMath.getDistance(current, destina);
+			var cIndex:int = keyIndices[curt];
+			var dIndex:int = keyIndices[next];
+			var t:Number = Math.abs(cIndex - dIndex) * (1000 / frameRate);
+
+			speed = B2dMath.getSpeedByDistance(dis, t);
 		}
 	}
 }

@@ -47,9 +47,9 @@ package citrus.objects.platformer.box2d
 		 */
 		[Inspectable(defaultValue="11")]
 		public var jumpHeight:Number = 11;
-		
+
 		/**
-		 * This is the amount of "float" that the hero has when the player holds the jump button while jumping. 
+		 * This is the amount of "float" that the hero has when the player holds the jump button while jumping.
 		 */
 		[Inspectable(defaultValue="0.3")]
 		public var jumpAcceleration:Number = 0.3;

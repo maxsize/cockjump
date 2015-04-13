@@ -11,18 +11,22 @@ package citrus.objects.platformer.box2d
 
 	import flash.geom.Point;
 
+	import max.runtime.behaviors.utils.B2dMath;
+
 	public class OneWayPlatform extends Platform
 	{
 		public var looping:Boolean = true;
 		public var enabled:Boolean = true;
 		public var speed:Number = 1;
 		public var waitForPassenger:Boolean = false;
+		public var keyIndices:Vector.<int>;
+		public var frameRate:int;
 
 		protected var _currentIndex:int = 1;
 		protected var _boxKeyPoints:Vector.<Point>;
 		protected var _passengers:Vector.<b2Body>;
-		private var _keyPoints:Vector.<Point>;
 		private var _idle:Boolean = false;
+		private var _keyPoints:Vector.<Point>;
 
 		public function OneWayPlatform (name:String, params:Object = null)
 		{
@@ -31,6 +35,12 @@ package citrus.objects.platformer.box2d
 			_endContactCallEnabled = true;
 			_passengers = new Vector.<b2Body>();
 			super(name, params);
+		}
+
+		override public function setParams (object:Object, params:Object):void
+		{
+			super.setParams(object, params);
+			getSpeed();
 		}
 
 		public function set keyPoints (value:Vector.<Point>):void
@@ -84,6 +94,7 @@ package citrus.objects.platformer.box2d
 
 					//Destination is very close. Switch the travelling direction
 					gotoNext();
+					getSpeed();
 
 					//prevent bodies to fall if they are on a edge.
 					var passenger:b2Body;
@@ -106,6 +117,18 @@ package citrus.objects.platformer.box2d
 					passenger.SetLinearVelocity(passengerVelocity);
 				}
 			}
+		}
+
+		protected function getSpeed ():void
+		{
+			var current:Point = keyPoints[_currentIndex - 1];
+			var destina:Point = keyPoints[_currentIndex];
+			var dis:Number = B2dMath.getDistance(current, destina);
+			var cIndex:int = keyIndices[_currentIndex - 1];
+			var dIndex:int = keyIndices[_currentIndex];
+			var t:Number = Math.abs(cIndex - dIndex) * (1000 / frameRate);
+
+			speed = B2dMath.getSpeedByDistance(dis, t);
 		}
 
 		protected function gotoNext ():void

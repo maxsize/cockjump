@@ -384,6 +384,10 @@ public class Movie extends Sprite
     public function get layers ():Vector.<Layer> {
         return _layers;
     }
+
+    public function get frameRate ():Number {
+        return _frameRate;
+    }
 }
 }
 

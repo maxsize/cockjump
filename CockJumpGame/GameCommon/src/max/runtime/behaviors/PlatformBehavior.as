@@ -14,6 +14,8 @@ package max.runtime.behaviors
 
 	import game.views.Game;
 
+	import max.runtime.behaviors.utils.B2dMath;
+
 	public class PlatformBehavior extends DisplayObjectBehavior
 	{
 		public var $twoWays:Boolean = false;	//define platform is one way or two ways
@@ -38,6 +40,8 @@ package max.runtime.behaviors
 
 				var e:Object = extract();
 				e.keyPoints = getPoints(keyframes);
+				e.keyIndices = getIndices(keyframes);
+				e.frameRate = movie.frameRate;
 				e.loopint = $looping;
 				e.waitForPassenger = $waitForPassenger;
 				e.x = e.keyPoints[0].x;
@@ -58,6 +62,16 @@ package max.runtime.behaviors
 
 //			platform.registration = "topLeft";
 			Game.Instance.add(platform);
+		}
+
+		private function getIndices (keyframes:Vector.<KeyframeMold>):Vector.<int>
+		{
+			var v:Vector.<int> = new Vector.<int>(keyframes.length);
+			for (var i:int = 0; i < keyframes.length; i++)
+			{
+				v[i] = keyframes[i].index;
+			}
+			return v;
 		}
 
 		private function getPoints (keyframes:Vector.<KeyframeMold>):Vector.<Point>
