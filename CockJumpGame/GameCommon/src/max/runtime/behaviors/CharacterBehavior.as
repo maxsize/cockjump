@@ -4,6 +4,12 @@ package max.runtime.behaviors
 
 	import game.views.Game;
 
+	/**
+	 * ### TODO ###
+	 * 1. separate input from Hero.
+	 * 2. implement touch screen input (gesture).
+	 * 3. Hero should move automatically on platforms.
+	 */
 	public class CharacterBehavior extends DisplayObjectBehavior
 	{
 		public var $maxVelocity:Number;
