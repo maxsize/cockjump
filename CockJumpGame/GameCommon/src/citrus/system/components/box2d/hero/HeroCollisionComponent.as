@@ -84,7 +84,7 @@ package citrus.system.components.box2d.hero {
 				if (collisionAngle > 45 && collisionAngle < 135 || collisionAngle == -90 || collider is Crate)
 				{
 					//we don't want the Hero to be set up as onGround if it touches a cloud.
-					if (collider is Platform && (collider as Platform).oneWay && collisionAngle == -90)
+					if (collider is Platform && (collider as Platform).topCollideOnly && collisionAngle == -90)
 						return;
 					
 					_viewComponent.groundContacts.push(collider.body.GetFixtureList());

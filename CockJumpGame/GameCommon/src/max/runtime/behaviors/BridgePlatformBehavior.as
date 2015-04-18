@@ -10,10 +10,5 @@ package max.runtime.behaviors
 		{
 			super();
 		}
-		
-		public function get mIsDown():Boolean
-		{
-			return host.isDown;
-		}
 	}
 }

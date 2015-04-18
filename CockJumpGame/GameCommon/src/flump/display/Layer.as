@@ -9,6 +9,7 @@ package flump.display {
 	import flump.mold.LayerMold;
 	
 	import max.runtime.behaviors.BehaviorFactory;
+	import max.runtime.behaviors.entity.IEntity;
 	
 	import starling.animation.IAnimatable;
 	import starling.display.DisplayObject;
@@ -193,7 +194,8 @@ package flump.display {
 		
 		private function initBehaviors(customData:Object, keyframes:Vector.<KeyframeMold>, host:DisplayObject):void
 		{
-			BehaviorFactory.create(customData, keyframes, host);
+			if (host is IEntity)
+				BehaviorFactory.create(customData, keyframes, host as IEntity);
 		}
 
 		public function get keyframes ():Vector.<KeyframeMold> {

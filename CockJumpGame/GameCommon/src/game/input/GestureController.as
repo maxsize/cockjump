@@ -1,7 +1,9 @@
-package game.controller
+package game.input
 {
 	import flash.display.DisplayObject;
-	
+
+	import max.runtime.behaviors.Behavior;
+
 	import org.gestouch.core.Gestouch;
 	import org.gestouch.events.GestureEvent;
 	import org.gestouch.extensions.native.NativeDisplayListAdapter;
@@ -16,20 +18,19 @@ package game.controller
 	public class GestureController
 	{
 		private static var initialized:Boolean;
-		
+
 		private var swipe:SwipeGesture;
-		private var callback:Function;
 		private var target:Object;
+		private var adaptor:SwipeAdaptor;
 		
-		public function GestureController(target:Object, callback:Function)
+		public function GestureController(target:Object)
 		{
 			this.target = target;
-			this.callback = callback;
 			swipe = new SwipeGesture(target);
 			swipe.addEventListener(GestureEvent.GESTURE_RECOGNIZED, onSwipe);
 		}
 		
-		public static function init():void
+		private static function initGesture():void
 		{
 			if (initialized)
 				return;
@@ -44,25 +45,26 @@ package game.controller
 			initialized = true;
 		}
 		
-		public static function enableSwipe(target:Object, callback:Function):GestureController
+		public static function enableSwipe(target:Object):SwipeAdaptor
 		{
-			init();
-			var gc:GestureController = new GestureController(target, callback);
-			return gc;
+			initGesture();
+			var gc:GestureController = new GestureController(target);
+			gc.adaptor = new SwipeAdaptor();
+			return gc.adaptor;
 		}
 		
-		public function release():void
+		public function dispose():void
 		{
 			swipe.removeEventListener(GestureEvent.GESTURE_RECOGNIZED, onSwipe);
-			target = null;
 			swipe = null;
-			callback = null;
+			target = null;
+			adaptor.dispose();
 		}
 		
 		protected function onSwipe(event:GestureEvent):void
 		{
 			var gesture:SwipeGesture = event.target as SwipeGesture;
-			callback(gesture);
+			adaptor.handle(gesture);
 		}
 	}
 }

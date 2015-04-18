@@ -1,5 +1,8 @@
 package max.runtime.behaviors
 {
+	import max.runtime.behaviors.entity.IEntity;
+	
+	import starling.core.Starling;
 	import starling.display.DisplayObject;
 	import starling.events.Event;
 
@@ -10,7 +13,7 @@ package max.runtime.behaviors
 			super();
 		}
 		
-		override public function init(host:Object):void
+		override public function init(host:IEntity):void
 		{
 			if (!host is DisplayObject)
 			{
@@ -18,7 +21,7 @@ package max.runtime.behaviors
 			}
 			super.init(host);
 			
-			if (host.stage)
+			if ((host as DisplayObject).stage)
 			{
 				onViewInit();
 			}
@@ -44,15 +47,16 @@ package max.runtime.behaviors
 		
 		private function onAdded(e:Event):void
 		{
+			//Starling.juggler.delayCall(onViewInit, 0.01);
 			onViewInit();
 		}
-		
+
 		private function onRemoved(e:Event):void
 		{
 			dispose();
 		}
-		
-		override protected function dispose():void
+
+		override public function dispose():void
 		{
 			host.removeEventListener(Event.ADDED_TO_STAGE, onAdded);
 			host.removeEventListener(Event.REMOVED_FROM_STAGE, onRemoved);

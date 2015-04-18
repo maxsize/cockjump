@@ -1,19 +1,24 @@
 package max.runtime.behaviors
 {
 	import flump.mold.KeyframeMold;
+	
+	import game.core.Utils;
+	
+	import max.runtime.behaviors.entity.IEntity;
 
 	public class Behavior implements IBehavior
 	{
 		private static var DOLLAR:String = "$";
 
-		protected var _host:Object;
 		protected var keyframes:Vector.<KeyframeMold>;
+		private var _host:IEntity;
+		private var _name:String;
 
 		public function Behavior()
 		{
 		}
 		
-		public function init(host:Object):void
+		public function init(host:IEntity):void
 		{
 			this._host = host;
 		}
@@ -32,8 +37,15 @@ package max.runtime.behaviors
 				}
 			}
 		}
+		
+		public function get name():String
+		{
+			if (!_name)
+				_name = Utils.getClassName(this).split("::")[1];
+			return _name;
+		}
 
-		protected function get host():Object
+		public function get host():IEntity
 		{
 			return _host;
 		}
@@ -42,7 +54,7 @@ package max.runtime.behaviors
 		 * always call super.dispose() at the last line.
 		 * 
 		 */		
-		protected function dispose():void
+		public function dispose():void
 		{
 			_host = null;
 		}

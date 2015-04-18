@@ -132,7 +132,7 @@ internal class b2PositionSolverManifold
 					clipPointX = cc.bodyA.m_xf.position.x + (tMat.col1.x * tVec.x + tMat.col2.x * tVec.y);
 					clipPointY = cc.bodyA.m_xf.position.y + (tMat.col1.y * tVec.x + tMat.col2.y * tVec.y);
 					m_separations[i] = (clipPointX - planePointX) * m_normal.x + (clipPointY - planePointY) * m_normal.y - cc.radius;
-					m_points[i].Set(clipPointX, clipPointY);
+					//m_points[i].Set(clipPointX, clipPointY);
 				}
 				
 				// Ensure normal points from A to B

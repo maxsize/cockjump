@@ -1,26 +1,23 @@
 package max.runtime.behaviors
 {
-	import citrus.objects.platformer.box2d.MovingPlatform;
+	import flash.geom.Point;
+	
 	import citrus.objects.platformer.box2d.OneWayPlatform;
 	import citrus.objects.platformer.box2d.Platform;
 	import citrus.objects.platformer.box2d.TwoWaysPlatform;
-
-	import flash.geom.Point;
-
+	
 	import flump.display.Movie;
 	import flump.mold.KeyframeMold;
-
+	
 	import game.core.BaseView;
-
 	import game.views.Game;
-
-	import max.runtime.behaviors.utils.B2dMath;
 
 	public class PlatformBehavior extends DisplayObjectBehavior
 	{
 		public var $twoWays:Boolean = false;	//define platform is one way or two ways
 		public var $looping:Boolean = true;	//for OneWayPlatform
 		public var $waitForPassenger:Boolean = false;	//wait for passenger to move
+		public var $topCollideOnly:Boolean = false;
 
 		public function PlatformBehavior()
 		{
@@ -31,14 +28,16 @@ package max.runtime.behaviors
 		{
 			var movie:BaseView = host as BaseView;
 			var platform:Platform;
-
+			
+			var e:Object = extract();
+			e.topCollideOnly = $topCollideOnly;
+			
 			if (keyframes.length > 1)
 			{
 				//platform is moving
 				(movie.parent as Movie).goTo(Movie.FIRST_FRAME);
 				(movie.parent as Movie).stop();
 
-				var e:Object = extract();
 				e.keyPoints = getPoints(keyframes);
 				e.keyIndices = getIndices(keyframes);
 				e.frameRate = movie.frameRate;
@@ -57,7 +56,7 @@ package max.runtime.behaviors
 			}
 			else
 			{	//static platform
-				platform = new Platform(host.name, extract());
+				platform = new Platform(host.name, e);
 			}
 
 //			platform.registration = "topLeft";

@@ -2,6 +2,7 @@ package game.core
 {
 	import flash.filesystem.File;
 	import flash.geom.Rectangle;
+	import flash.utils.getQualifiedClassName;
 
 	public class Utils
 	{
@@ -80,6 +81,12 @@ package game.core
 			rect.width = Number(arr[2].split("=")[1]);
 			rect.height = Number(arr[3].split("=")[1]);
 			return rect;
+		}
+		
+		public static function getClassName(obj:Object):String
+		{
+			var str:String = getQualifiedClassName(obj);
+			return str;
 		}
 	}
 }

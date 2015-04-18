@@ -1,7 +1,12 @@
 package citrus.physics.box2d {
 
+	import flash.geom.Rectangle;
+	
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.Contacts.b2Contact;
+	
+	import citrus.objects.Box2DPhysicsObject;
+	import citrus.objects.platformer.box2d.Robot;
 	
 	/**
 	 * This class provides some useful Box2D functions.
@@ -63,6 +68,22 @@ package citrus.physics.box2d {
 			a.x *= b.x;
 			a.y *= b.y;
 			return a;
+		}
+		
+		static public function fitSides(robot:Robot, wall:Box2DPhysicsObject):void
+		{
+			var bounds:Rectangle = robot.bounds;
+			if (bounds.bottom > wall.y)
+			{//means side collide
+				if (bounds.right < wall.x)
+				{//robot at left side
+					robot.x = wall.x - robot.width/2;
+				}
+				else if (bounds.left > wall.x + wall.width)
+				{//robot at right side
+					robot.x = wall.x + wall.width + robot.width / 2;
+				}
+			}
 		}
 	}
 }

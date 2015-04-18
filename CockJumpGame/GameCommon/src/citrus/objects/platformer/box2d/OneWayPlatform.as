@@ -3,14 +3,14 @@
  */
 package citrus.objects.platformer.box2d
 {
-	import Box2D.Common.Math.b2Vec2;
-	import Box2D.Dynamics.Contacts.b2Contact;
-	import Box2D.Dynamics.b2Body;
-
-	import citrus.physics.box2d.Box2DUtils;
-
 	import flash.geom.Point;
-
+	
+	import Box2D.Common.Math.b2Vec2;
+	import Box2D.Dynamics.b2Body;
+	import Box2D.Dynamics.Contacts.b2Contact;
+	
+	import citrus.physics.box2d.Box2DUtils;
+	
 	import max.runtime.behaviors.utils.B2dMath;
 
 	public class OneWayPlatform extends Platform
@@ -31,6 +31,7 @@ package citrus.objects.platformer.box2d
 		public function OneWayPlatform (name:String, params:Object = null)
 		{
 			updateCallEnabled = true;
+			_preContactCallEnabled = true;
 			_beginContactCallEnabled = true;
 			_endContactCallEnabled = true;
 			_passengers = new Vector.<b2Body>();
@@ -113,10 +114,16 @@ package citrus.objects.platformer.box2d
 
 					passengerVelocity = passenger.GetLinearVelocity();
 					// we don't change x velocity because of the friction!
-					passengerVelocity.y += velocity.y;
+					passengerVelocity.y = velocity.y;
 					passenger.SetLinearVelocity(passengerVelocity);
 				}
 			}
+		}
+		
+		public function takeOff(body:b2Body):void
+		{
+			var index:int = _passengers.indexOf(body);
+			_passengers.splice(index, 1);
 		}
 
 		protected function getSpeed ():void

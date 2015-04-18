@@ -357,7 +357,7 @@ package citrus.objects.platformer.box2d
 			var other:IBox2DPhysicsObject = Box2DUtils.CollisionGetOther(this, contact);
 			
 			var heroTop:Number = y;
-			var objectBottom:Number = other.y + (other.height / 2);
+			var objectBottom:Number = other.y + other.height;
 			
 			if (objectBottom < heroTop)
 				contact.SetEnabled(false);

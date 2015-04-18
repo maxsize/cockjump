@@ -10,6 +10,9 @@ import flash.geom.Rectangle;
 import flump.mold.LayerMold;
 import flump.mold.MovieMold;
 
+import max.runtime.behaviors.IBehavior;
+import max.runtime.behaviors.entity.IEntity;
+
 import react.Signal;
 
 import starling.animation.IAnimatable;
@@ -34,7 +37,7 @@ import starling.utils.MatrixUtil;
  * @see Library and LibraryLoader to create instances of Movie.
  */
 public class Movie extends Sprite
-    implements IAnimatable
+    implements IAnimatable, IEntity
 {
     /** A label fired by all movies when entering their first frame. */
     public static const FIRST_FRAME :String = "flump.movie.FIRST_FRAME";
@@ -380,6 +383,7 @@ public class Movie extends Sprite
     private static const STOPPED :int = 0;
     private static const PLAYING_CHILDREN_ONLY :int = 1;
     private static const PLAYING :int = 2;
+    private var behaviors:Vector.<IBehavior>;
 
     public function get layers ():Vector.<Layer> {
         return _layers;
@@ -388,6 +392,49 @@ public class Movie extends Sprite
     public function get frameRate ():Number {
         return _frameRate;
     }
+	
+	public function addBehavior(behavior:IBehavior):void
+	{
+		if (!behaviors)
+		{
+			behaviors = new Vector.<IBehavior>();
+		}
+		behaviors.push(behavior);
+	}
+	
+	public function removeAllBehavior():void
+	{
+		if (!behaviors)
+			return;
+		while (behaviors.length)
+		{
+			disposeBehavior(behaviors.pop());
+		}
+	}
+	
+	public function removeBehavior(behavior:IBehavior):void
+	{
+		var index:int = behaviors.indexOf(behavior);
+		if (index >= 0)
+			behaviors.splice(index, 1);
+		disposeBehavior(behavior);
+	}
+	
+	public function getBehavior(name:String):IBehavior
+	{
+		for (var i:int = 0; i < behaviors.length; i++)
+		{
+			if (behaviors[i].name == name)
+				return behaviors[i];
+		}
+		return null;
+	}
+	
+	private function disposeBehavior(behavior:IBehavior):void
+	{
+		behavior.dispose();
+	}
+	
 }
 }
 

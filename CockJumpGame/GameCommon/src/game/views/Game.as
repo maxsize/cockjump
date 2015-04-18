@@ -64,16 +64,6 @@ package game.views
 			return instance;//
 		}
 
-		override public function addChild(child:DisplayObject):DisplayObject
-		{
-			return container.addChild(child);
-		}
-
-		override public function removeChild(child:DisplayObject, dispose:Boolean=false):DisplayObject
-		{
-			return container.removeChild(child, dispose);
-		}
-
 		override public function initialize():void
 		{
 			super.initialize();
