@@ -172,7 +172,7 @@
     <classEntry path="citrus.objects.complex.box2dstarling.Pool"/>
     <classEntry path="citrus.objects.complex.box2dstarling.Rope"/>
     <classEntry path="citrus.objects.platformer.box2d.Cannon"/>
-    <classEntry path="citrus.objects.platformer.box2d.Coin"/>
+    <classEntry path="citrus.objects.platformer.box2d.Collectable"/>
     <classEntry path="citrus.objects.platformer.box2d.Crate"/>
     <classEntry path="citrus.objects.platformer.box2d.Enemy"/>
     <classEntry path="citrus.objects.platformer.box2d.Hero"/>
@@ -717,6 +717,7 @@
     <classEntry path="max.runtime.behaviors.entity.IEntity"/>
     <classEntry path="citrus.objects.platformer.box2d.WallPlatform"/>
     <classEntry path="max.runtime.behaviors.WallPlatformBehavior"/>
+    <classEntry path="game.core.ResizeHandler"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -24,11 +24,11 @@ package citrus.objects.platformer.box2d
 		public var slideSpeed:Number = 0.75;
 		public var wall:IBox2DPhysicsObject;
 		public var wallToEnable:IBox2DPhysicsObject;
+		public var friction:Number = 0.75;
 
 		private var platform:Platform;
 		private var leftBound:Number;
 		private var rightBound:Number;
-		private var _friction:Number = 0.75;
 		private var _onContact:Signal;
 		
 		private var _bounds:Rectangle = new Rectangle();
@@ -56,19 +56,10 @@ package citrus.objects.platformer.box2d
 		{
 			return _onContact;
 		}
-
-		public function get friction ():Number {
-			return _friction;
-		}
-
-		public function set friction (value:Number):void {
-			_friction = value;
-		}
 		
 		public function jump(jumpHeight:Number):void
 		{
 			var velocity:b2Vec2;
-			
 			if (!wall)
 			{
 				if (!_jumping)
@@ -91,30 +82,15 @@ package citrus.objects.platformer.box2d
 				velocity = body.GetLinearVelocity();
 				if (!_jumping)
 				{
-					velocity.y = -jumpHeight;
-					y -= 0.1;
-					if (platform && platform is OneWayPlatform)
-					{
-						(platform as OneWayPlatform).takeOff(body);
-					}
-					platform = null;	//not contacted
-					updateBounds(true);
-					_jumping = true;
-					_falling = false;
+					climb(jumpHeight, velocity);
 				}
 				else
 				{
-					var side:int = bounds.left < wall.x ? -1:1;
-					velocity.x = speed * side;
-					velocity.y = -jumpHeight;
-					_inverted = side < 0;
-					wallToEnable = wall;
-					wall.body.SetActive(false);
-					wall = null;
+					rebound(jumpHeight, velocity);
 				}
 			}
 		}
-
+		
 		override public function handleBeginContact (contact:b2Contact):void
 		{
 			super.handleBeginContact(contact);
@@ -125,9 +101,12 @@ package citrus.objects.platformer.box2d
 			}
 			else if (collision is Platform)
 			{
-				platform = collision as Platform;
-				updateBounds();
-				_jumping = false;
+				if (Box2DUtils.isOnTop(this, collision as Box2DPhysicsObject))
+				{
+					platform = collision as Platform;
+					updateBounds();
+					_jumping = false;
+				}
 			}
 			if (wallToEnable)
 			{
@@ -186,6 +165,30 @@ package citrus.objects.platformer.box2d
 				}
 			}
 		}
+		
+		protected function rebound(jumpHeight:Number, velocity:b2Vec2):void
+		{
+			var side:int = bounds.left < wall.x ? -1:1;
+			velocity.x = speed * side;
+			velocity.y = -jumpHeight;
+			_inverted = side < 0;
+			wallToEnable = wall;
+			wall.body.SetActive(false);
+			wall = null;
+		}
+		
+		protected function climb(jumpHeight:Number, velocity:b2Vec2):void
+		{
+			velocity.y = -jumpHeight;
+			if (platform && platform is OneWayPlatform)
+			{
+				(platform as OneWayPlatform).takeOff(body);
+			}
+			platform = null;	//not contacted
+			updateBounds(true);
+			_jumping = true;
+			_falling = false;
+		}
 
 		override protected function defineBody():void
 		{
@@ -203,7 +206,7 @@ package citrus.objects.platformer.box2d
 		override protected function defineFixture():void
 		{
 			super.defineFixture();
-			_fixtureDef.friction = _friction;
+			_fixtureDef.friction = friction;
 			_fixtureDef.restitution = 0;
 			_fixtureDef.filter.categoryBits = PhysicsCollisionCategories.Get("GoodGuys");
 			_fixtureDef.filter.maskBits = PhysicsCollisionCategories.GetAll();

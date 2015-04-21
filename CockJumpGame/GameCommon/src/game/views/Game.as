@@ -1,26 +1,27 @@
 package game.views
 {
-	import citrus.core.starling.StarlingState;
-	import citrus.physics.box2d.Box2D;
-
-	import feathers.themes.MetalWorksMobileTheme;
-
 	import flash.events.UncaughtErrorEvent;
 	import flash.filesystem.File;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	import flash.utils.ByteArray;
-
+	
+	import citrus.core.starling.StarlingState;
+	import citrus.physics.box2d.Box2D;
+	
+	import feathers.themes.MetalWorksMobileTheme;
+	
 	import flump.display.Library;
 	import flump.display.Text;
-
+	
 	import game.character.Cock;
 	import game.conf.GlobalSettings;
 	import game.core.AIRUtils;
 	import game.core.BaseView;
 	import game.core.ClassRegister;
 	import game.core.Device;
+	import game.core.ResizeHandler;
 	import game.resource.creators.GameMovieCreator;
 	import game.resource.creators.TypedMovieCreator;
 	import game.resource.loaders.FlumpLoader;
@@ -31,19 +32,15 @@ package game.views
 	import game.views.scene.GameScene;
 	import game.views.ui.MainUI;
 	import game.views.ui.SceneList;
-
+	
 	import max.runtime.behaviors.BehaviorMapper;
-
+	
 	import starling.core.Starling;
-	import starling.display.DisplayObject;
-	import starling.display.Sprite;
 
 	public class Game extends StarlingState
 	{
 		private static var instance:Game;
 		private static var txt:TextField;
-
-		private var container:Sprite;
 
 		private var ui:BaseView;
 
@@ -55,10 +52,9 @@ package game.views
 
 		private function initOverlay():void
 		{
-			container = new Sprite();
-			super.addChild(container);
+			new ResizeHandler().fullscreen();
 		}
-
+		
 		public static function get Instance():Game
 		{
 			return instance;//

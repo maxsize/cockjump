@@ -5,7 +5,6 @@ package citrus.objects.platformer.box2d
 	import Box2D.Collision.b2Manifold;
 	import Box2D.Dynamics.Contacts.b2Contact;
 	
-	import citrus.objects.Box2DPhysicsObject;
 	import citrus.physics.box2d.Box2DUtils;
 	import citrus.physics.box2d.IBox2DPhysicsObject;
 

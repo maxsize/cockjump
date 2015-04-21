@@ -85,5 +85,10 @@ package citrus.physics.box2d {
 				}
 			}
 		}
+		
+		static public function isOnTop(robot:Robot, platform:Box2DPhysicsObject):Boolean
+		{
+			return robot.y < platform.y;
+		}
 	}
 }
