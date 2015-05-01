@@ -2,6 +2,8 @@ package game.views
 {
 	import flash.events.UncaughtErrorEvent;
 	import flash.filesystem.File;
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
@@ -9,6 +11,7 @@ package game.views
 	
 	import citrus.core.starling.StarlingState;
 	import citrus.physics.box2d.Box2D;
+	import citrus.view.starlingview.StarlingCamera;
 	
 	import feathers.themes.MetalWorksMobileTheme;
 	
@@ -21,7 +24,6 @@ package game.views
 	import game.core.BaseView;
 	import game.core.ClassRegister;
 	import game.core.Device;
-	import game.core.ResizeHandler;
 	import game.resource.creators.GameMovieCreator;
 	import game.resource.creators.TypedMovieCreator;
 	import game.resource.loaders.FlumpLoader;
@@ -47,12 +49,6 @@ package game.views
 		public function Game()
 		{
 			instance = this;
-			initOverlay();
-		}
-
-		private function initOverlay():void
-		{
-			new ResizeHandler().fullscreen();
 		}
 		
 		public static function get Instance():Game

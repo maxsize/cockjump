@@ -1,28 +1,26 @@
 package game.views.ui
 {
-	import flash.display.Stage;
-	import flash.events.Event;
-	import flash.filesystem.File;
-	
 	import flump.display.Library;
 	import flump.display.Movie;
 	import flump.mold.MovieMold;
 	
-	import game.conf.GlobalSettings;
 	import game.controller.GenericController;
 	import game.core.BaseView;
+	import game.core.ResizeHandler;
 	import game.resource.creators.GameMovieCreator;
 	import game.resource.loaders.FlumpLoader;
 	import game.resource.loaders.MultiLookupLoader;
 	import game.views.Game;
 	import game.views.ui.feathers.List;
 	
-	import starling.core.Starling;
+	import starling.utils.ScaleMode;
 	
 	public class MainUI extends BaseView
 	{
 		private var button:Movie;
 		private var list:List;
+
+		private var handler:ResizeHandler;
 		
 		public function MainUI(src:MovieMold, frameRate:Number, library:Library)
 		{
@@ -35,9 +33,7 @@ package game.views.ui
 			list = blindQuery("list") as List;
 			new GenericController().add(button, onPress, null, null);
 			
-			var star:flash.display.Stage = Starling.current.nativeStage;
-			this.x = (star.stageWidth - width) / 2;
-			this.y = (star.stageHeight - height) / 2;
+			handler = new ResizeHandler(this).watch(ScaleMode.NONE);
 		}
 		
 		private function onPress(e:*):void
@@ -62,6 +58,12 @@ package game.views.ui
 			var creator:GameMovieCreator = new GameMovieCreator(lib);
 			var movie:BaseView = creator.createMovie("Scene") as BaseView;
 			Game.Instance.startGame(movie);
+		}
+		
+		override public function dispose():void
+		{
+			handler.dispose();
+			super.dispose();
 		}
 	}
 }

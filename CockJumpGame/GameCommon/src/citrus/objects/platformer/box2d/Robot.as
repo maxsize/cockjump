@@ -137,7 +137,7 @@ package citrus.objects.platformer.box2d
 				//Turn around when they pass their left/right bounds
 				if ((_inverted && position.x * _box2D.scale < leftBound) || (!_inverted && position.x * _box2D.scale > rightBound))
 				{
-					turnAround();
+					//turnAround();
 				}
 				velocity.x = _inverted ? -speed : speed;
 			}

@@ -1,50 +1,40 @@
 package game.core
 {
-	import flash.display.Stage;
-	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import starling.core.Starling;
-	import starling.events.Event;
-	import starling.utils.RectangleUtil;
-	import starling.utils.ScaleMode;
+	import starling.display.DisplayObject;
 
 	public class ResizeHandler
 	{
-		public function ResizeHandler()
+		private var host:DisplayObject;
+		private var scaleMode:String;
+
+		public function ResizeHandler(host:DisplayObject)
 		{
+			this.host = host;
 		}
 		
-		public function fullscreen():void
+		public function watch(scaleMode:String):ResizeHandler
 		{
-			Starling.current.stage.addEventListener(Event.RESIZE, onResize);
+			this.scaleMode = scaleMode;
+			onResize();
+			return this;
 		}
 		
-		private function onResize(e:Event, size:Point):void
+		private function onResize():void
 		{
-			var rectangle:Rectangle = getScreenRect();
-			RectangleUtil.fit(
-				rectangle,
-				new Rectangle(0, 0, size.x, size.y),
-				ScaleMode.SHOW_ALL,
-				false,
-				Starling.current.viewPort
-			);
+			host.x = (host.stage.stageWidth - host.width) / 2;
+			host.y = (host.stage.stageHeight - host.height) / 2;
 		}
 		
 		private function getScreenRect():Rectangle
 		{
-			var rect:Rectangle;
-			var stage:Stage = Starling.current.nativeStage;
-			if (Device.isDesktop)
-			{
-				rect = new Rectangle(0, 0, stage.stageWidth, stage.stageHeight);
-			}
-			else
-			{
-				rect = new Rectangle(0, 0, stage.fullScreenWidth, stage.fullScreenHeight);
-			}
-			return rect;
+			return Starling.current.viewPort;
+		}
+		
+		public function dispose():void
+		{
 		}
 	}
 }
