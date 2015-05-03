@@ -11,9 +11,9 @@ import game.views.Game;
 		public function CockJumpDesktop()
 		{
 			super();
-			_baseWidth = 1024;
-			_baseHeight = 768;
-			_viewportMode = ViewportMode.LETTERBOX;
+			_baseWidth = 1280;
+			_baseHeight = 720;
+			_viewportMode = ViewportMode.NO_SCALE;
 			_assetSizes = [1];
 
 			setUpStarling(true);

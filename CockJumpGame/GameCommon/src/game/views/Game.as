@@ -61,7 +61,7 @@ package game.views
 			super.initialize();
 
 			var physics:Box2D = new Box2D("box2d");
-			physics.visible = false;
+			physics.visible = true;
 			add(physics);
 
 			new MetalWorksMobileTheme();

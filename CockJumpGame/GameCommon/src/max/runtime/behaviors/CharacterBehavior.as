@@ -9,6 +9,9 @@ package max.runtime.behaviors
 	import flump.display.Movie;
 	
 	import game.views.Game;
+	
+	import starling.animation.IAnimatable;
+	import starling.core.Starling;
 
 	/**
 	 * ### TODO ###
@@ -16,7 +19,7 @@ package max.runtime.behaviors
 	 * 2. implement touch screen input (gesture).
 	 * 3. Hero should move automatically on platforms.
 	 */
-	public class CharacterBehavior extends DisplayObjectBehavior
+	public class CharacterBehavior extends DisplayObjectBehavior implements IAnimatable
 	{
 		//public var $maxVelocity:Number;
 		public var $friction:Number;
@@ -24,15 +27,30 @@ package max.runtime.behaviors
 		public var $slideSpeed:Number;
 
 		public var robot:Robot;
+		private var startX:Number;
+		private var startY:Number;
 
 		public function CharacterBehavior()
 		{
 			super();
 		}
+		
+		public function advanceTime(time:Number):void
+		{
+			if (robot.y > 1300)
+			{
+				robot.x = startX;
+				robot.y = startY;
+			}
+		}
 
 		override protected function onViewInit():void
 		{
 			(host as Movie).playChildrenOnly();
+			
+			this.startX = host.x;
+			this.startY = host.y;
+				
 			var e:Object = extract();
 			//e.maxVelocity = $maxVelocity;
 			e.speed = $speed;
@@ -43,6 +61,7 @@ package max.runtime.behaviors
 			Game.Instance.add(robot);
 			
 			setupCamera();
+			Starling.juggler.add(this);
 		}
 		
 		private function setupCamera():void
@@ -56,7 +75,7 @@ package max.runtime.behaviors
 			_camera.easing.setTo(1, 1);
 			_camera.rotationEasing = 1;
 			_camera.zoomEasing = 1;	
-			_camera.zoomFit(1024, 768, true);
+			_camera.zoomFit(2208, 1242, true);
 			_camera.reset();
 		}
 		
@@ -64,5 +83,6 @@ package max.runtime.behaviors
 		{
 			super.dispose();
 		}
+		
 	}
 }
