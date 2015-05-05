@@ -30,6 +30,8 @@ package max.runtime.behaviors
 		private var startX:Number;
 		private var startY:Number;
 
+		private var _camera:StarlingCamera;
+
 		public function CharacterBehavior()
 		{
 			super();
@@ -66,10 +68,10 @@ package max.runtime.behaviors
 		
 		private function setupCamera():void
 		{
-			var _camera:StarlingCamera = Game.Instance.camera as StarlingCamera;
+			_camera = Game.Instance.camera as StarlingCamera;
 			
 			_camera.setUp(robot,null,new Point(0.25,0.6));
-			//_camera.bounds = new Rectangle(-10000,-10000,20000,20000);
+			_camera.bounds = new Rectangle(-900,-800,20000,2042);
 			_camera.allowRotation = true;
 			_camera.allowZoom = true;
 			_camera.easing.setTo(1, 1);

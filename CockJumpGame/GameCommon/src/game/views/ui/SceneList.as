@@ -7,6 +7,7 @@ package game.views.ui
 	import flump.display.Library;
 	import flump.mold.MovieMold;
 	
+	import game.conf.GlobalSettings;
 	import game.core.BaseView;
 	import game.core.Utils;
 	import game.views.ui.feathers.List;
@@ -28,13 +29,12 @@ package game.views.ui
 		
 		private function getScenes():ListCollection
 		{
-			//var storage:File = File.applicationStorageDirectory.resolvePath("assets/scene");
-			var storage:File = new File("/Users/Nicole/git/CockJumpGame/CockAssets/assets/scene/PNG");
-			var install:File = File.applicationDirectory.resolvePath("assets/scene/PNG");
-			var arr1:Array = Utils.getFilesInFolder(storage);
-			var arr2:Array = Utils.getFilesInFolder(install);
+			/*var storage:File = new File("/Users/Nicole/git/CockJumpGame/CockAssets/assets/scene/PNG");
+			var install:File = File.applicationDirectory.resolvePath("assets/scene/PNG");*/
+			var root:File = new File(GlobalSettings.DATA_ROOT + "scene/PNG");
+			var arr2:Array = Utils.getFilesInFolder(root);
 			
-			var arr:Array = merge(arr1, arr2);
+			var arr:Array = arr2;
 			var src:Array = [];
 			for each(var f:String in arr)
 			{

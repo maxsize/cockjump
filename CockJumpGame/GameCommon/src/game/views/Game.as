@@ -70,6 +70,7 @@ package game.views
 			var globalFile:File = File.applicationDirectory.resolvePath("embed/global.json");
 			var readFile:ByteArray = AIRUtils.readFile(globalFile);
 			onConfig(readFile);
+			debug(globalFile.nativePath);
 
 			TypedMovieCreator.register("Platform", StaticPlatform);
 			TypedMovieCreator.register("Star", Star);
@@ -112,7 +113,8 @@ package game.views
 			MultiLookupLoader.init();
 			if (Device.isDesktop)
 			{
-				MultiLookupLoader.enableLookup(new File(GlobalSettings.DATA_ROOT));
+				var f:File = new File(GlobalSettings.DATA_ROOT);
+				MultiLookupLoader.enableLookup(f);
 			}
 			else
 			{
