@@ -61,7 +61,7 @@ package game.views
 			super.initialize();
 
 			var physics:Box2D = new Box2D("box2d");
-			physics.visible = true;
+			physics.visible = false;
 			add(physics);
 
 			new MetalWorksMobileTheme();
@@ -82,8 +82,15 @@ package game.views
 			TypedMovieCreator.register("BridgePlatform", BridgePlatform);
 
 			BehaviorMapper.mapAllBehaviors();
+			
+			Starling.current.nativeStage.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onError);
 		}
-
+		
+		protected function onError(event:UncaughtErrorEvent):void
+		{
+			//
+		}
+		
 		public static function debug(msg:String):void
 		{
 			if (txt == null)

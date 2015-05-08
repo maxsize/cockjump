@@ -10,6 +10,7 @@ package game.views.ui
 	import game.conf.GlobalSettings;
 	import game.core.BaseView;
 	import game.core.Utils;
+	import game.views.Game;
 	import game.views.ui.feathers.List;
 	
 	public class SceneList extends BaseView
@@ -30,10 +31,14 @@ package game.views.ui
 		private function getScenes():ListCollection
 		{
 			var install:File = File.applicationDirectory.resolvePath("assets/scene/PNG");
-			var root:File = new File(GlobalSettings.DATA_ROOT + "scene/PNG");
 			var arr1:Array = Utils.getFilesInFolder(install);
-			var arr2:Array = Utils.getFilesInFolder(root);
-			var merged:Array = merge(arr1, arr2);
+			var merged:Array = arr1;
+			if (GlobalSettings.DATA_ROOT)
+			{
+				var root:File = new File(GlobalSettings.DATA_ROOT + "scene/PNG");
+				var arr2:Array = Utils.getFilesInFolder(root);
+				merged = merge(arr1, arr2);
+			}
 			
 			var arr:Array = merged;
 			var src:Array = [];
