@@ -29,12 +29,13 @@ package game.views.ui
 		
 		private function getScenes():ListCollection
 		{
-			/*var storage:File = new File("/Users/Nicole/git/CockJumpGame/CockAssets/assets/scene/PNG");
-			var install:File = File.applicationDirectory.resolvePath("assets/scene/PNG");*/
+			var install:File = File.applicationDirectory.resolvePath("assets/scene/PNG");
 			var root:File = new File(GlobalSettings.DATA_ROOT + "scene/PNG");
+			var arr1:Array = Utils.getFilesInFolder(install);
 			var arr2:Array = Utils.getFilesInFolder(root);
+			var merged:Array = merge(arr1, arr2);
 			
-			var arr:Array = arr2;
+			var arr:Array = merged;
 			var src:Array = [];
 			for each(var f:String in arr)
 			{

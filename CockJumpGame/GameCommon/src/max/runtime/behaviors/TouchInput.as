@@ -3,6 +3,8 @@
  */
 package max.runtime.behaviors
 {
+	import flash.events.MouseEvent;
+	
 	import Box2D.Common.Math.b2Vec2;
 	
 	import citrus.objects.platformer.box2d.Robot;
@@ -37,8 +39,14 @@ package max.runtime.behaviors
 
 		protected function onViewInit ():void
 		{
-			var adaptor:SwipeAdaptor = GestureController.enableSwipe(Starling.current.nativeStage);
-			adaptor.swipeUp.connect(onUp);
+			/*var adaptor:SwipeAdaptor = GestureController.enableSwipe(Starling.current.nativeStage);
+			adaptor.swipeUp.connect(onUp);*/
+			Starling.current.nativeStage.addEventListener(MouseEvent.CLICK, onClick);
+		}
+		
+		protected function onClick(event:MouseEvent):void
+		{
+			onUp(0);
 		}
 		
 		private function onHeroLand():void

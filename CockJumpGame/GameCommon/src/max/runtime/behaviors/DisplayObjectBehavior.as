@@ -1,5 +1,7 @@
 package max.runtime.behaviors
 {
+	import flash.geom.Point;
+	
 	import max.runtime.behaviors.entity.IEntity;
 	
 	import starling.core.Starling;
@@ -34,10 +36,12 @@ package max.runtime.behaviors
 		
 		protected function extract():Object
 		{
+			var global:Point = new Point();
+			global = (host as DisplayObject).localToGlobal(global);
 			var obj:Object = 
 				{
-					x:host.x,
-					y:host.y,
+					x:global.x,
+					y:global.y,
 					width:host.width,
 					height:host.height,
 					view:host

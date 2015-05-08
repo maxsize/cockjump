@@ -118,7 +118,7 @@ package game.views
 			}
 			else
 			{
-				var storage:File = File.applicationStorageDirectory.resolvePath("assets");
+				var storage:File = File.applicationDirectory.resolvePath("assets");
 				MultiLookupLoader.enableLookup(storage);
 			}
 

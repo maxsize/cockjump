@@ -4,17 +4,18 @@
 package game.input
 {
 	import org.gestouch.gestures.SwipeGesture;
-
+	
 	import react.Signal;
 
 	public class SwipeAdaptor
 	{
-		private static const THRESHOLD:int = 6;
+		private static const THRESHOLD:int = 3;
 
 		private var _swipeLeft:Signal;
 		private var _swipeRight:Signal;
 		private var _swipeUp:Signal;
 		private var _swipeDown:Signal;
+		private var _tap:Signal;
 
 		public function SwipeAdaptor (threshold:int = 6)
 		{
@@ -22,6 +23,7 @@ package game.input
 			_swipeRight = new Signal(Number);
 			_swipeUp = new Signal(Number);
 			_swipeDown = new Signal(Number);
+			_tap = new Signal(Number);
 		}
 
 		internal function handle(gesture:SwipeGesture):void
@@ -42,6 +44,15 @@ package game.input
 			{
 				_swipeLeft.emit(gesture.offsetX);
 			}
+			if (Math.abs(gesture.offsetX) < THRESHOLD && Math.abs(gesture.offsetY) < THRESHOLD)
+			{
+				_tap.emit(0);
+			}
+		}
+
+		public function get tap ():Signal
+		{
+			return _tap;
 		}
 
 		public function get swipeLeft ():Signal
