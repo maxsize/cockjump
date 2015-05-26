@@ -8,7 +8,6 @@ package max.runtime.behaviors
 		public static const BEHAV_CHARACTER:String = "Character";
 		public static const BEHAV_COIN:String = "Coin";
 		public static const BEHAV_TOUCH_INPUT:String = "TouchInput";
-		public static const BEHAV_WATER:String = "Fluid";
 
 		public static function mapAllBehaviors():void
 		{
@@ -18,7 +17,6 @@ package max.runtime.behaviors
 			BehaviorFactory.register(BEHAV_CHARACTER, CharacterBehavior);
 			BehaviorFactory.register(BEHAV_COIN, CoinBehavior);
 			BehaviorFactory.register(BEHAV_TOUCH_INPUT, TouchInput);
-			BehaviorFactory.register(BEHAV_WATER, FluidBehavior);
 		}
 	}
 }

@@ -50,7 +50,7 @@ package game.views.ui
 		{
 			var relative:String = "scene/PNG/" + f;
 			var loader:FlumpLoader = new FlumpLoader(relative);
-			new MultiLookupLoader().addResource(loader).load(onLoad);
+			new MultiLookupLoader().addResource(loader).load(onLoad, null, null);
 		}
 		
 		private function onLoad(lib:Library):void

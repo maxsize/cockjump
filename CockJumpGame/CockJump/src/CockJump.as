@@ -20,7 +20,7 @@ package
 			super();
 			_baseWidth = 1024;
 			_baseHeight = 768;
-			_viewportMode = ViewportMode.FULLSCREEN;
+			_viewportMode = ViewportMode.LETTERBOX;
 			_assetSizes = [1];
 			
 			stage.scaleMode = StageScaleMode.NO_SCALE;

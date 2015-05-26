@@ -40,7 +40,7 @@ package game.resource
 		 * <code>onProgress(percentage:Number):void</code>
 		 * @param	clientParams 
 		 */
-		public function load(success:Function, failure:Function = null, progress:Function = null, clientParams:Array = null):void
+		public function load(success:Function, failure:Function, progress:Function, clientParams:Array = null):void
 		{
 			this.success = success;
 			this.failure = failure;

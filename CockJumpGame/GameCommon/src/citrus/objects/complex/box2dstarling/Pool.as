@@ -2,13 +2,13 @@ package citrus.objects.complex.box2dstarling {
 
 	import Box2D.Collision.Shapes.b2PolygonShape;
 	import Box2D.Common.Math.b2Vec2;
+	import Box2D.Dynamics.Contacts.b2Contact;
+	import Box2D.Dynamics.Controllers.b2BuoyancyController;
 	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2Fixture;
 	import Box2D.Dynamics.b2FixtureDef;
-	import Box2D.Dynamics.Contacts.b2Contact;
-	import Box2D.Dynamics.Controllers.b2BuoyancyController;
-	
+
 	import citrus.objects.Box2DPhysicsObject;
 	import citrus.physics.box2d.Box2DUtils;
 	
@@ -153,9 +153,7 @@ package citrus.objects.complex.box2dstarling {
 		
 		override public function handleBeginContact(contact:b2Contact):void
 		{
-			var fixA:b2Fixture = contact.GetFixtureA();
-			var fixB:b2Fixture = contact.GetFixtureB();
-			if(fixA == _fixture || fixB == _fixture)
+			if(contact.GetFixtureA() == _fixture || contact.GetFixtureB() == _fixture)
 			{
 				//needs better checking if multiple controllers are used 
 				if (Box2DUtils.CollisionGetOther(this, contact).body.GetControllerList() == null) {
