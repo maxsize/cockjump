@@ -24,6 +24,7 @@ package game.views
 	import game.core.BaseView;
 	import game.core.ClassRegister;
 	import game.core.Device;
+	import game.core.SceneConstants;
 	import game.resource.creators.GameMovieCreator;
 	import game.resource.creators.TypedMovieCreator;
 	import game.resource.loaders.FlumpLoader;
@@ -142,6 +143,7 @@ package game.views
 
 		public function startGame(movie:BaseView):void
 		{
+			SceneConstants.setup(movie);
 			addChild(movie);
 			removeChild(ui);
 		}

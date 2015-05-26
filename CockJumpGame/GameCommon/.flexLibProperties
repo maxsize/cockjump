@@ -718,6 +718,9 @@
     <classEntry path="citrus.objects.platformer.box2d.WallPlatform"/>
     <classEntry path="max.runtime.behaviors.WallPlatformBehavior"/>
     <classEntry path="game.core.ResizeHandler"/>
+    <classEntry path="max.runtime.behaviors.FluidBehavior"/>
+    <classEntry path="game.utils.CameraUtils"/>
+    <classEntry path="game.core.SceneConstants"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
