@@ -1,6 +1,8 @@
 package game.core
 {
 	import flash.system.Capabilities;
+	
+	import starling.core.Starling;
 
 	public class Device
 	{
@@ -35,6 +37,28 @@ package game.core
 		public static function get isDesktop():Boolean
 		{
 			return OS == DESKTOP;
+		}
+		
+		public static function get SCREEN_WIDTH():int
+		{
+			var current:Starling = Starling.current;
+			if (isDesktop)
+			{
+				return current.nativeStage.stageWidth;
+			}
+			else
+			{
+				return current.nativeStage.fullScreenWidth;
+			}
+		}
+		
+		public static function get SCREEN_HEIGHT():int
+		{
+			var current:Starling = Starling.current;
+			if (isDesktop)
+				return current.nativeStage.stageHeight;
+			else
+				return current.nativeStage.fullScreenHeight;
 		}
 	}
 }

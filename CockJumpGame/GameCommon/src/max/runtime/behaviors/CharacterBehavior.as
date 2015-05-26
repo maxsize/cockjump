@@ -1,13 +1,11 @@
 package max.runtime.behaviors
 {
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
-	
 	import citrus.objects.platformer.box2d.Robot;
 	import citrus.view.starlingview.StarlingCamera;
 	
 	import flump.display.Movie;
 	
+	import game.utils.CameraUtils;
 	import game.views.Game;
 	
 	import starling.animation.IAnimatable;
@@ -70,15 +68,7 @@ package max.runtime.behaviors
 		{
 			_camera = Game.Instance.camera as StarlingCamera;
 			
-			_camera.setUp(robot,null,new Point(0.25,0.6));
-			_camera.bounds = new Rectangle(-900,-800,20000,2042);
-			_camera.allowRotation = true;
-			_camera.allowZoom = true;
-			_camera.easing.setTo(1, 1);
-			_camera.rotationEasing = 1;
-			_camera.zoomEasing = 1;	
-			_camera.zoomFit(2208, 1242, true);
-			_camera.reset();
+			CameraUtils.setupCamera(_camera, robot);
 		}
 		
 		override public function dispose():void
