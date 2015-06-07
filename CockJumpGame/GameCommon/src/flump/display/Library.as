@@ -17,6 +17,8 @@ public interface Library
 
     /** @return the names of all Image symbols in the Library */
     function get imageSymbols () :Vector.<String>;
+	
+	function hasSymbol(name:String):Boolean;
 
     /**
      * Creates a movie for the given symbol.

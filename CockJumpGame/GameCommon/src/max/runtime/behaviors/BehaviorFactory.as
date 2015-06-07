@@ -2,12 +2,16 @@ package max.runtime.behaviors
 {
 	import flash.utils.Dictionary;
 	
+	import flump.display.Movie;
 	import flump.mold.KeyframeMold;
+	
+	import game.utils.GlobalLibUtils;
 	
 	import max.runtime.behaviors.entity.IEntity;
 
 	public class BehaviorFactory
 	{
+		private static const PARAM_VIEW:String = "$view";
 		private static var mapping:Dictionary = new Dictionary();
 		
 		public function BehaviorFactory()
@@ -44,6 +48,12 @@ package max.runtime.behaviors
 					host.addBehavior(behavior);
 				}
 			}
+			if (data.hasOwnProperty(PARAM_VIEW))
+			{
+				(host as Movie).removeChildren();
+				(host as Movie).addChild(GlobalLibUtils.createMovie(data[PARAM_VIEW]));
+			}
+			
 			return result;
 		}
 	}

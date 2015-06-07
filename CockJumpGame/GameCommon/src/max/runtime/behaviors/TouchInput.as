@@ -5,12 +5,7 @@ package max.runtime.behaviors
 {
 	import flash.events.MouseEvent;
 	
-	import Box2D.Common.Math.b2Vec2;
-	
 	import citrus.objects.platformer.box2d.Robot;
-	
-	import game.input.GestureController;
-	import game.input.SwipeAdaptor;
 	
 	import max.runtime.behaviors.entity.IEntity;
 	

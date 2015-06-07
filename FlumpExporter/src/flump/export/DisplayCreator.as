@@ -3,10 +3,10 @@
 
 package flump.export {
 
+import flash.utils.Dictionary;
+
 import aspire.util.Map;
 import aspire.util.maps.ValueComputingMap;
-
-import flash.utils.Dictionary;
 
 import flump.display.Library;
 import flump.display.Movie;
@@ -41,6 +41,13 @@ public class DisplayCreator
             }
         }
     }
+	
+	public function hasSymbol(name:String):Boolean
+	{
+		var hasImg:Boolean = imageSymbols.indexOf(name) >= 0;
+		var hasMov:Boolean = movieSymbols.indexOf(name) >= 0;
+		return hasImg || hasMov;
+	}
 
     public function get imageSymbols () :Vector.<String> {
         // Vector.map can't be used to create a Vector of a new type

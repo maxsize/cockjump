@@ -51,6 +51,12 @@ internal class LibraryImpl implements Library {
         checkNotDisposed();
         return requireSymbolCreator(name).create(this);
     }
+	
+	public function hasSymbol(symbol:String):Boolean
+	{
+		var creator :SymbolCreator = _creators[symbol];
+		return creator != null;
+	}
 
     public function dispose () :void {
         checkNotDisposed();

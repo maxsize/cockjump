@@ -219,7 +219,7 @@ package citrus.objects.platformer.box2d
 		
 		private function get movie():Movie
 		{
-			return view;
+			return view.getChildAt(0);
 		}
 
 		private function updateBounds (unlimited:Boolean = false):void
