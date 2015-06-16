@@ -129,9 +129,23 @@ package flump.xfl {
 			for each(var xml:XML in inspectors)
 			{
 				var type:String = XmlUtil.getStringAttr(xml, "type");
-				value[XmlUtil.getStringAttr(xml, "name")] = XmlUtil["get" + type + "Attr"](xml, "defaultValue");
+				value[XmlUtil.getStringAttr(xml, "name")] = XmlUtil["get" + getFunctionName(type) + "Attr"](xml, "defaultValue");
 			}
 			return value;
+		}
+		
+		private static function getFunctionName(type:String):String
+		{
+			switch (type)
+			{
+				case "Number":
+				case "Int":
+				case "Boolean":
+				case "String":
+					return type;
+				default:
+					return "String";
+			}
 		}
 	}
 }

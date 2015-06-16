@@ -1,5 +1,7 @@
 package game.views.ui
 {
+	import feathers.core.PopUpManager;
+	
 	import flump.display.Library;
 	import flump.display.Movie;
 	import flump.mold.MovieMold;
@@ -12,6 +14,7 @@ package game.views.ui
 	import game.resource.loaders.MultiLookupLoader;
 	import game.views.Game;
 	import game.views.ui.feathers.List;
+	import game.views.ui.popup.PopupAddRoot;
 	
 	import starling.utils.ScaleMode;
 	
@@ -19,11 +22,14 @@ package game.views.ui
 	{
 		private var button:Movie;
 		private var list:List;
+		private var btnAdd:Movie;
 
 		private var handler:ResizeHandler;
+		private var library:Library;
 		
 		public function MainUI(src:MovieMold, frameRate:Number, library:Library)
 		{
+			this.library = library;
 			super(src, frameRate, library);
 		}
 		
@@ -31,9 +37,18 @@ package game.views.ui
 		{
 			button = blindQuery("startButton") as Movie;
 			list = blindQuery("list") as List;
+			btnAdd = blindQuery("crossButton") as Movie;
+			
 			new GenericController().add(button, onPress, null, null);
+			new GenericController().add(btnAdd, onAdd, null, null);
 			
 			handler = new ResizeHandler(this).watch(ScaleMode.NONE);
+		}
+		
+		private function onAdd(...args):void
+		{
+			var popup:Movie = library.createMovie("PopupAddRoot");
+			PopUpManager.addPopUp(popup);
 		}
 		
 		private function onPress(e:*):void

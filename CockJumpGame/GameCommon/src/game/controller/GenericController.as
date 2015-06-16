@@ -56,7 +56,7 @@ package game.controller
 		
 		protected function onTouchEnded(e:TouchEvent):void
 		{
-			Utils.applyFunc(onRelease, e);
+			Utils.applyFunc(onRelease, getParameter(onRelease.length, e));
 		}
 		
 		protected function onTouchHovered(e:TouchEvent):void
@@ -66,12 +66,17 @@ package game.controller
 		
 		protected function onTouchMoved(e:TouchEvent):void
 		{
-			Utils.applyFunc(onMove, e);
+			Utils.applyFunc(onMove, getParameter(onRelease.length, e));
 		}
 		
 		protected function onTouchBegin(e:TouchEvent):void
 		{
-			Utils.applyFunc(onPress, e);
+			Utils.applyFunc(onPress, getParameter(onRelease.length, e));
+		}
+		
+		private function getParameter(length:int, e:*):*
+		{
+			return length == 1 ? e:null;
 		}
 		
 		private function onRemove(e:Event):void
@@ -84,6 +89,10 @@ package game.controller
 		
 		protected function dispose():void
 		{
+			target = null;
+			onPress = null;
+			onRelease = null;
+			onMove = null;
 			target.removeEventListener(TouchEvent.TOUCH, onTouch);
 			target.removeEventListener(Event.REMOVED_FROM_STAGE, onRemove);
 		}

@@ -59,7 +59,11 @@ package flump.display {
 					_movie.addChild(display);
 				}
 				if (_keyframes.length > 0)
+				{
 					initBehaviors(_keyframes[0].customData, _keyframes, display);
+					if (display is Movie)
+						(display as Movie).customData = _keyframes[0].customData;
+				}
 				_currentDisplay = _displays[0];
 				_currentDisplay.visible = true;
 			}
@@ -109,6 +113,7 @@ package flump.display {
 					// If we're swapping in a Movie, reset its timeline.
 					if (disp is Movie) {
 						Movie(disp).addedToLayer();
+						Movie(disp).customData = kf.customData;
 					}
 					_currentDisplay = disp;
 					_currentDisplay.name = _name;
