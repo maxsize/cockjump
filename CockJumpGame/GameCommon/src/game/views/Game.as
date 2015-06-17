@@ -15,6 +15,7 @@ package game.views
 	import flump.display.Library;
 	import flump.display.Text;
 	
+	import game.byte.LocalSaveInitializer;
 	import game.character.Cock;
 	import game.conf.GlobalSettings;
 	import game.core.AIRUtils;
@@ -33,6 +34,7 @@ package game.views
 	import game.views.ui.MainUI;
 	import game.views.ui.SceneList;
 	import game.views.ui.popup.PopupAddRoot;
+	import game.vo.register.VORegister;
 	
 	import max.runtime.behaviors.BehaviorMapper;
 	
@@ -58,6 +60,9 @@ package game.views
 		override public function initialize():void
 		{
 			super.initialize();
+			
+			VORegister.register();
+			LocalSaveInitializer.readAll();
 
 			var physics:Box2D = new Box2D("box2d");
 			physics.visible = false;

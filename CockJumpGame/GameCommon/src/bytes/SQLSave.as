@@ -32,8 +32,6 @@ package bytes
 		/** Put all variables to be saved into this object. */
 		public var data:Object = new Object();
 		
-		public var onComplete:Function;
-		
 		private var connection:SQLConnection;
 		private var statement:SQLStatement;
 		
@@ -53,6 +51,7 @@ package bytes
 			
 			// open or create the file
 			file = File.applicationStorageDirectory.resolvePath(name);
+			file.parent.createDirectory();
 			
 			// make the connection
 			connection = new SQLConnection();	
@@ -100,7 +99,6 @@ package bytes
 			if (result.data && result.data.length > 0){
 				data = result.data[0].data;
 			}
-			Utils.applyFunc(onComplete);
 		}	
 		
 		
