@@ -64,8 +64,15 @@ package game.resource.creators
 					if (keyframe.customData && keyframe.customData.hasOwnProperty(GENERATOR))
 					{
 						var className:String = keyframe.customData[GENERATOR];
-						var clazz:Class = getDefinitionByName("game.views.ui.feathers." + className) as Class;
-						generators[keyframe.ref] = clazz;
+						var clazz:Class;
+						try
+						{
+							clazz = getDefinitionByName("game.views.ui.feathers." + className) as Class;
+							generators[keyframe.ref] = clazz;
+						}
+						catch(e:Error)
+						{
+						}
 					}
 				}
 			}

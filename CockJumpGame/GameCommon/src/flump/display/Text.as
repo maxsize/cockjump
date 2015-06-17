@@ -1,9 +1,13 @@
 package flump.display
 {
+	import flash.filesystem.File;
+	
+	import feathers.controls.TextInput;
+	
 	import flump.mold.MovieMold;
 	
+	import game.conf.TextType;
 	import game.core.Ticker;
-	import game.core.Utils;
 	
 	import starling.core.Starling;
 	import starling.text.TextField;
@@ -14,7 +18,11 @@ package flump.display
 		private var cacheWidth:Number;
 		private var _label:String;
 
-		private var txt:TextField;
+		private var format:FontFormat;
+
+		private var txt:*;
+		private var initialized:Boolean;
+		private var pendingLabel:String;
 		
 		public function Text(src:MovieMold, frameRate:Number, library:Library)
 		{
@@ -32,8 +40,20 @@ package flump.display
 		{
 			var changed:Boolean = (value != _label);
 			_label = value;
-			if (changed && txt)
-				txt.text = value;
+			if (changed)
+			{
+				if (txt)
+					txt.text = value;
+				else
+					pendingLabel = value;
+			}
+		}
+		
+		override public function set customData(value:Object):void
+		{
+			super.customData = value;
+			if (initialized)
+				draw();
 		}
 		
 		override protected function updateFrame(newFrame:int, dt:Number):void
@@ -45,23 +65,75 @@ package flump.display
 		{
 			cacheWidth = width;
 			cacheHeight = height;
+			scaleX = scaleY = 1;
 			removeChildren();
 			Starling.juggler.remove(this);
-			var format:FontFormat = extract(name);
-			
-			
-			if (format.hasFormat)
+			initialized = true;
+			customData = customData;
+		}
+		
+		private function draw():void
+		{
+			format = extract();
+			if (format)
 			{
-				txt = new TextField(cacheWidth, cacheHeight, format.label, format.fontFamily, format.fontSize, format.color);
+				if (txt == null)
+				{
+					txt = createText(customData.type);
+				}
+				setProperties();
+			}
+		}
+		
+		private function setProperties():void
+		{
+			if (txt is TextField)
+			{
+				txt.text = format.label;
+				txt.color = format.color;
+				txt.fontName = format.fontFamily;
+				txt.fontSize = format.fontSize;
 			}
 			else
 			{
-				txt = new TextField(cacheWidth, cacheHeight, format.label);
+				var input:TextInput = txt;
+				input.textEditorProperties.fontFamily = format.fontFamily;
+				input.textEditorProperties.fontSize = format.fontSize;
+				input.textEditorProperties.color = format.color;
 			}
-			addChild(txt);
 		}
 		
-		private function extract(value:String):FontFormat
+		private function createText(type:String):*
+		{
+			var txt:*;
+			if (type == TextType.STATIC || type == TextType.DYNAMIC)
+			{
+				txt = new TextField(cacheWidth, cacheHeight, format.label, format.fontFamily, format.fontSize, format.color);
+				addChild(txt);
+			}
+			else
+			{
+				txt = new TextInput();
+				txt.height = cacheHeight;
+				txt.width = cacheWidth;
+				addChild(txt);
+			}
+			return txt;
+		}
+		
+		private function extract():FontFormat
+		{
+			if (!customData)
+				return null;
+			var f:FontFormat = new FontFormat();
+			f.color = uint(customData.color.replace("#", "0x"));
+			f.fontFamily = customData.fontFamily;
+			f.fontSize = customData.fontSize;
+			f.label = customData.label;
+			return f;
+		}
+		
+		/*private function extract(value:String):FontFormat
 		{
 			var i1:int = value.indexOf("<");
 			var i2:int = value.indexOf(">");
@@ -86,7 +158,7 @@ package flump.display
 				return f;
 			}
 			return f;
-		}
+		}*/
 		
 	}
 }
@@ -97,5 +169,4 @@ class FontFormat
 	public var fontSize:Number;
 	public var color:uint;
 	public var label:String;
-	public var hasFormat:Boolean = false;
 }

@@ -47,6 +47,8 @@ public class Movie extends Sprite
 
     /** Fires the label string whenever it's passed in playing. */
     public const labelPassed :Signal = new Signal(String);
+	
+	private var _customData:Object;
 
     /** @private */
     public function Movie (src :MovieMold, frameRate :Number, library :Library) {
@@ -72,6 +74,16 @@ public class Movie extends Sprite
             dispatchEventWith(Event.REMOVE_FROM_JUGGLER);
         });
     }
+
+	public function get customData():Object
+	{
+		return _customData;
+	}
+
+	public function set customData(value:Object):void
+	{
+		_customData = value;
+	}
 
     /** @return the frame being displayed. */
     public function get frame () :int { return _frame; }

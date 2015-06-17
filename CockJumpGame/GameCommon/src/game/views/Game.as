@@ -32,6 +32,7 @@ package game.views
 	import game.views.scene.GameScene;
 	import game.views.ui.MainUI;
 	import game.views.ui.SceneList;
+	import game.views.ui.popup.PopupAddRoot;
 	
 	import max.runtime.behaviors.BehaviorMapper;
 	
@@ -75,6 +76,7 @@ package game.views
 			TypedMovieCreator.register("Scene", GameScene);
 			TypedMovieCreator.register("Cock", Cock);
 			TypedMovieCreator.register("MainUI", MainUI);
+			TypedMovieCreator.register("PopupAddRoot", PopupAddRoot);
 			TypedMovieCreator.register("Text", Text);
 			TypedMovieCreator.register("SceneList", SceneList);
 			TypedMovieCreator.register("BridgePlatform", BridgePlatform);
