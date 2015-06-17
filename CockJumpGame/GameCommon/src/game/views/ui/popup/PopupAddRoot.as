@@ -9,7 +9,10 @@ package game.views.ui.popup
 	
 	import game.controller.GenericController;
 	import game.core.BaseView;
+	import game.data.LocalSave;
+	import game.model.ML;
 	import game.resource.loaders.MultiLookupLoader;
+	import game.vo.LookupVO;
 	
 	public class PopupAddRoot extends BaseView
 	{
@@ -37,7 +40,9 @@ package game.views.ui.popup
 		
 		private function saveRoot(label:String):void
 		{
-			
+			var lookupVO:LookupVO = ML.Instance.lookupVO;
+			lookupVO.lookup.push(label);
+			LocalSave.create().save(lookupVO);
 		}
 	}
 }
