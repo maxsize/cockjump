@@ -15,10 +15,13 @@ package game.byte
 		public static function readAll():void
 		{
 			var data:* = LocalSave.create().read("LookupVO");
-			ML.Instance.lookupVO = data;
-			for each (var path:String in data)
+			if (data)
 			{
-				MultiLookupLoader.enableLookup(new File(path));
+				ML.Instance.lookupVO = data;
+				for each (var path:String in data)
+				{
+					MultiLookupLoader.enableLookup(new File(path));
+				}
 			}
 		}
 	}

@@ -56,7 +56,7 @@ package game.core
 			return c;
 		}
 		
-		public static function getFilesInFolder(file:File):Array
+		public static function getFilesInFolder(file:File, extension:String = null):Array
 		{
 			if (!file.exists || !file.isDirectory)
 			{
@@ -66,6 +66,11 @@ package game.core
 			var relative:Array = [];
 			for each(var f:File in arr)
 			{
+				if (extension)
+				{
+					if (f.extension.toLowerCase() != extension.toLowerCase())
+						continue;
+				}
 				relative.push(file.getRelativePath(f));
 			}
 			return relative;

@@ -36,6 +36,8 @@ package game.core
 					if (child is BaseView)
 					{
 						target = (child as BaseView).blindQuery(name);
+						if (target)
+							return target;
 					}
 				}
 			}

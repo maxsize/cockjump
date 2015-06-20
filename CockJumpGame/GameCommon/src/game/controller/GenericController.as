@@ -14,22 +14,26 @@ package game.controller
 		protected var onPress:Function;
 		protected var onRelease:Function;
 		protected var onMove:Function;
+		protected var onOver:Function;
+		protected var onOut:Function;
 		
 		public function GenericController()
 		{
 		}
 		
-		public function add(target:DisplayObject, onPress:Function, onMove:Function, onRelease:Function):void
+		public function add(target:DisplayObject, onPress:Function, onMove:Function, onRelease:Function, onOver:Function = null, onOut:Function = null):void
 		{
 			this.target = target;
 			this.onPress = onPress;
 			this.onMove = onMove;
 			this.onRelease = onRelease;
+			this.onOver = onOver;
+			this.onOut = onOut;
 			target.addEventListener(TouchEvent.TOUCH, onTouch);
 			target.addEventListener(Event.REMOVED_FROM_STAGE, onRemove);
 		}
 		
-		private function onTouch(e:TouchEvent):void
+		protected function onTouch(e:TouchEvent):void
 		{
 			var touch:Touch = e.getTouch(target);
 			
@@ -74,7 +78,7 @@ package game.controller
 			apply(onPress, e);
 		}
 		
-		private function apply(func:Function, e:TouchEvent):void
+		protected function apply(func:Function, e:TouchEvent):void
 		{
 			if (func)
 			{
@@ -104,12 +108,17 @@ package game.controller
 		
 		protected function dispose():void
 		{
-			target = null;
 			onPress = null;
 			onRelease = null;
 			onMove = null;
-			target.removeEventListener(TouchEvent.TOUCH, onTouch);
-			target.removeEventListener(Event.REMOVED_FROM_STAGE, onRemove);
+			onOver = null;
+			onOut = null;
+			if (target)
+			{
+				target.removeEventListener(TouchEvent.TOUCH, onTouch);
+				target.removeEventListener(Event.REMOVED_FROM_STAGE, onRemove);
+				target = null;
+			}
 		}
 	}
 }

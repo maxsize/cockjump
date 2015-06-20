@@ -103,7 +103,7 @@ package game.views
 				txt = new TextField();
 				txt.defaultTextFormat = new TextFormat("Verdana", 24, 0xFFFFFF);
 				txt.autoSize = TextFieldAutoSize.LEFT;
-				Starling.current.nativeStage.addChild(txt);
+				//Starling.current.nativeStage.addChild(txt);
 				Starling.current.nativeStage.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR,
 						function onError(e:UncaughtErrorEvent):void
 						{

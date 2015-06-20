@@ -75,6 +75,7 @@ package citrus.objects.platformer.box2d
 					updateBounds(true);
 					_jumping = true;
 					_falling = false;
+					movie.goTo("jump");
 				}
 			}
 			else
@@ -106,6 +107,7 @@ package citrus.objects.platformer.box2d
 					platform = collision as Platform;
 					updateBounds();
 					_jumping = false;
+					movie.goTo("walk");
 				}
 			}
 			if (wallToEnable)
@@ -135,10 +137,10 @@ package citrus.objects.platformer.box2d
 				var position:b2Vec2 = _body.GetPosition();
 	
 				//Turn around when they pass their left/right bounds
-				if ((_inverted && position.x * _box2D.scale < leftBound) || (!_inverted && position.x * _box2D.scale > rightBound))
+				/*if ((_inverted && position.x * _box2D.scale < leftBound) || (!_inverted && position.x * _box2D.scale > rightBound))
 				{
-					//turnAround();
-				}
+					turnAround();
+				}*/
 				velocity.x = _inverted ? -speed : speed;
 			}
 			else if (wall && platform)
@@ -219,7 +221,8 @@ package citrus.objects.platformer.box2d
 		
 		private function get movie():Movie
 		{
-			return view.getChildAt(0);
+			//return view.getChildAt(0);
+			return view;
 		}
 
 		private function updateBounds (unlimited:Boolean = false):void

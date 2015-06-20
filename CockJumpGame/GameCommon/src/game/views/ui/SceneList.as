@@ -10,6 +10,7 @@ package game.views.ui
 	import game.conf.GlobalSettings;
 	import game.core.BaseView;
 	import game.core.Utils;
+	import game.model.ML;
 	import game.views.Game;
 	import game.views.ui.feathers.List;
 	
@@ -30,19 +31,29 @@ package game.views.ui
 		
 		private function getScenes():ListCollection
 		{
-			var install:File = File.applicationDirectory.resolvePath("assets/scene/PNG");
-			var arr1:Array = Utils.getFilesInFolder(install);
-			var merged:Array = arr1;
+			var roots:Vector.<String> = ML.Instance.lookupVO.lookup.concat();
+			var appDir:File = File.applicationDirectory.resolvePath("assets/");
 			if (GlobalSettings.DATA_ROOT)
 			{
-				var root:File = new File(GlobalSettings.DATA_ROOT + "scene/PNG");
-				var arr2:Array = Utils.getFilesInFolder(root);
-				merged = merge(arr1, arr2);
+				roots.push(GlobalSettings.DATA_ROOT);
 			}
-			
-			var arr:Array = merged;
+			var folders:Vector.<File> = new Vector.<File>();
+			for (var i:int = 0; i < roots.length; i++)
+			{
+				folders.push(new File(roots[i]).resolvePath("scene/PNG"));
+			}
+			//add app dir, put to 1st 
+			folders.unshift(appDir.resolvePath("scene/PNG"));
+			var files:Array = [];
+			for (i = 0; i < folders.length; i++)
+			{
+				if (folders[i].exists)
+				{
+					files = files.concat(Utils.getFilesInFolder(folders[i], "zip"));
+				}
+			}
 			var src:Array = [];
-			for each(var f:String in arr)
+			for each(var f:String in files)
 			{
 				src.push({label:f, file:f});
 			}
