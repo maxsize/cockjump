@@ -2,13 +2,13 @@ package citrus.objects.complex.box2dstarling {
 
 	import Box2D.Collision.Shapes.b2PolygonShape;
 	import Box2D.Common.Math.b2Vec2;
-	import Box2D.Dynamics.Contacts.b2Contact;
-	import Box2D.Dynamics.Controllers.b2BuoyancyController;
 	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2Fixture;
 	import Box2D.Dynamics.b2FixtureDef;
-
+	import Box2D.Dynamics.Contacts.b2Contact;
+	import Box2D.Dynamics.Controllers.b2BuoyancyController;
+	
 	import citrus.objects.Box2DPhysicsObject;
 	import citrus.physics.box2d.Box2DUtils;
 	
@@ -97,7 +97,8 @@ package citrus.objects.complex.box2dstarling {
 		override protected function createShape():void
 		{
 			_shape = new b2PolygonShape();
-			b2PolygonShape(_shape).SetAsOrientedBox(_width/2, _height/2 - wallThickness/ws, new b2Vec2(0, -wallThickness/ws));
+			//b2PolygonShape(_shape).SetAsOrientedBox(_width/2, _height/2 - wallThickness/ws, new b2Vec2(0, -wallThickness/ws));
+			b2PolygonShape(_shape).SetAsOrientedBox(_width/2, _height/2 - wallThickness/ws, new b2Vec2(_width/2, _height/2 - wallThickness/ws));
 		}
 		
 		override protected function defineFixture():void
@@ -121,7 +122,8 @@ package citrus.objects.complex.box2dstarling {
 			if (leftWall)
 			{
 				_shape = new b2PolygonShape();
-				b2PolygonShape(_shape).SetAsOrientedBox(wallThickness/ws, _height/2, new b2Vec2(-_width/2 - wallThickness/ws, 0));
+				//b2PolygonShape(_shape).SetAsOrientedBox(wallThickness/ws, _height/2, new b2Vec2(-_width/2 - wallThickness/ws, 0));
+				b2PolygonShape(_shape).SetAsOrientedBox(wallThickness/ws, _height/2, new b2Vec2(-wallThickness/ws, _height/2));
 				poolFixtureDef.shape = _shape;
 				pool.CreateFixture(poolFixtureDef);
 			}
@@ -129,7 +131,8 @@ package citrus.objects.complex.box2dstarling {
 			if(rightWall)
 			{
 				_shape = new b2PolygonShape();
-				b2PolygonShape(_shape).SetAsOrientedBox(wallThickness/ws, _height/2, new b2Vec2(_width/2 + wallThickness/ws, 0));
+				//b2PolygonShape(_shape).SetAsOrientedBox(wallThickness/ws, _height/2, new b2Vec2(_width/2 + wallThickness/ws, 0));
+				b2PolygonShape(_shape).SetAsOrientedBox(wallThickness/ws, _height/2, new b2Vec2(_width + wallThickness/ws, _height/2));
 				poolFixtureDef.shape = _shape;
 				pool.CreateFixture(poolFixtureDef);
 			}
@@ -137,13 +140,15 @@ package citrus.objects.complex.box2dstarling {
 			if (bottom)
 			{
 				_shape = new b2PolygonShape();
-				b2PolygonShape(_shape).SetAsOrientedBox(_width/2, wallThickness/ws, new b2Vec2(0, _height/2 - wallThickness/ws));
+				//b2PolygonShape(_shape).SetAsOrientedBox(_width/2, wallThickness/ws, new b2Vec2(0, _height/2 - wallThickness/ws));
+				b2PolygonShape(_shape).SetAsOrientedBox(_width/2, wallThickness/ws, new b2Vec2(_width/2, _height - wallThickness/ws));
 				poolFixtureDef.shape = _shape;
 				pool.CreateFixture(poolFixtureDef);
 			}
 			
 			buoyancyController.normal.Set(0,-1);
-			buoyancyController.offset = -(_y - _height/2);
+			//buoyancyController.offset = -(_y - _height/2);
+			buoyancyController.offset = -_y;
 			buoyancyController.useDensity = true;
 			buoyancyController.density = density;
 			buoyancyController.linearDrag = linearDrag;

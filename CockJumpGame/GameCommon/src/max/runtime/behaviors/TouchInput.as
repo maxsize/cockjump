@@ -5,7 +5,9 @@ package max.runtime.behaviors
 {
 	import flash.events.MouseEvent;
 	
+	import citrus.objects.platformer.box2d.Platform;
 	import citrus.objects.platformer.box2d.Robot;
+	import citrus.physics.box2d.IBox2DPhysicsObject;
 	
 	import max.runtime.behaviors.entity.IEntity;
 	
@@ -44,9 +46,10 @@ package max.runtime.behaviors
 			onUp(0);
 		}
 		
-		private function onHeroLand():void
+		private function onHeroLand(contact:IBox2DPhysicsObject):void
 		{
-			phase = 0;	//reset jump phase
+			if (contact is Platform)
+				phase = 0;	//reset jump phase
 		}
 		
 		private function onUp (offset:Number):void

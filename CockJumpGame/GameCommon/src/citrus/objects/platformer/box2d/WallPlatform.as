@@ -18,7 +18,7 @@ package citrus.objects.platformer.box2d
 		
 		override public function handlePreSolve(contact:b2Contact, oldManifold:b2Manifold):void
 		{
-			var collider:IBox2DPhysicsObject = Box2DUtils.CollisionGetOther(this, contact);
+			/*var collider:IBox2DPhysicsObject = Box2DUtils.CollisionGetOther(this, contact);
 			var robot:Robot = collider as Robot;
 			if (robot && robot.wall == null)
 			{
@@ -27,7 +27,7 @@ package citrus.objects.platformer.box2d
 				{//means side collide
 					robot.wall = this;
 				}
-			}
+			}*/
 		}
 	}
 }

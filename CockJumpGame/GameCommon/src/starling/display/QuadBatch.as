@@ -70,17 +70,17 @@ package starling.display
         
         private static const QUAD_PROGRAM_NAME:String = "QB_q";
         
-        private var mNumQuads:int;
+		protected var mNumQuads:int;
         private var mSyncRequired:Boolean;
         private var mBatchable:Boolean;
 
-        private var mTinted:Boolean;
-        private var mTexture:Texture;
+        protected var mTinted:Boolean;
+		protected var mTexture:Texture;
         private var mSmoothing:String;
         
-        private var mVertexBuffer:VertexBuffer3D;
-        private var mIndexData:Vector.<uint>;
-        private var mIndexBuffer:IndexBuffer3D;
+		protected var mVertexBuffer:VertexBuffer3D;
+		protected var mIndexData:Vector.<uint>;
+		protected var mIndexBuffer:IndexBuffer3D;
         
         /** The raw vertex data of the quad. After modifying its contents, call
          *  'onVertexDataChanged' to upload the changes to the vertex buffers. Don't change the
@@ -89,7 +89,7 @@ package starling.display
 
         /** Helper objects. */
         private static var sHelperMatrix:Matrix = new Matrix();
-        private static var sRenderAlpha:Vector.<Number> = new <Number>[1.0, 1.0, 1.0, 1.0];
+		protected static var sRenderAlpha:Vector.<Number> = new <Number>[1.0, 1.0, 1.0, 1.0];
         private static var sRenderMatrix:Matrix3D = new Matrix3D();
         private static var sProgramNameCache:Dictionary = new Dictionary();
         
@@ -196,7 +196,7 @@ package starling.display
         }
 
         /** Uploads the raw data of all batched quads to the vertex buffer. */
-        private function syncBuffers():void
+		protected function syncBuffers():void
         {
             if (mVertexBuffer == null)
             {
@@ -695,7 +695,7 @@ package starling.display
 
         // program management
         
-        private function getProgram(tinted:Boolean):Program3D
+		protected function getProgram(tinted:Boolean):Program3D
         {
             var target:Starling = Starling.current;
             var programName:String = QUAD_PROGRAM_NAME;
