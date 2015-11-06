@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				creationComplete="init(event)"
+				width="100%" xmlns:renderers="views.renderers.*">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import flash.utils.getDefinitionByName;
+			
+			import mx.events.FlexEvent;
+			
+			import spark.events.TextOperationEvent;
+			
+			import max.reflection.ClassMember;
+			
+			[Bindable]
+			public var member:ClassMember;
+			
+			override public function set data(value:Object):void
+			{
+				super.data = value;
+				if (initialized)
+					refresh();
+			}
+			
+			protected function init(event:FlexEvent):void
+			{
+				data = data;
+			}
+			
+			protected function onTextChange(event:*):void
+			{
+				if (data && member)
+				{
+					var clazz:Class = getDefinitionByName(member.classname) as Class;
+					data[member.name] = clazz(text.text);
+					data.dispatchEvent(new Event(Event.CHANGE));
+				}
+			}
+			
+			private function refresh():void
+			{
+				if (data && member)
+					text.text = data[member.name];
+				else
+					text.text = "";
+			}
+			
+			private function getLabel(member:ClassMember):Object
+			{
+				return member.name;
+			}
+			
+		]]>
+	</fx:Script>
+	<s:FormItem label="{getLabel(member)}">
+		<!--<s:TextInput id="text" change="onTextChange(event)"/>-->
+		<renderers:AutoFilterInput id="text" change="onTextChange(event)" host="{data}" member="{member}"/>
+	</s:FormItem>
+</s:ItemRenderer>

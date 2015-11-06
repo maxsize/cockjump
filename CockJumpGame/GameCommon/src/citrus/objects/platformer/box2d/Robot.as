@@ -4,10 +4,10 @@
 package citrus.objects.platformer.box2d
 {
 	import flash.geom.Rectangle;
-	
+
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.Contacts.b2Contact;
-	
+
 	import citrus.objects.Box2DPhysicsObject;
 	import citrus.objects.complex.box2dstarling.Pool;
 	import citrus.objects.platformer.box2d.constants.RobotStatus;
@@ -15,9 +15,9 @@ package citrus.objects.platformer.box2d
 	import citrus.physics.box2d.Box2DShapeMaker;
 	import citrus.physics.box2d.Box2DUtils;
 	import citrus.physics.box2d.IBox2DPhysicsObject;
-	
+
 	import flump.display.Movie;
-	
+
 	import org.osflash.signals.Signal;
 
 	public class Robot extends Box2DPhysicsObject
@@ -34,7 +34,7 @@ package citrus.objects.platformer.box2d
 		private var leftBound:Number;
 		private var rightBound:Number;
 		private var _onContact:Signal;
-		
+
 		private var _bounds:Rectangle = new Rectangle();
 		private var _status:Number = RobotStatus.IDOL;
 
@@ -57,14 +57,14 @@ package citrus.objects.platformer.box2d
 
 		/**
 		 * Singal will dispatch with contact:IBox2DPhysicsObject.
-		 * @return 
-		 * 
-		 */		
+		 * @return
+		 *
+		 */
 		public function get onContact():Signal
 		{
 			return _onContact;
 		}
-		
+
 		final public function jump(jumpHeight:Number):void
 		{
 			if (!isInStatus(RobotStatus.JUMP))
@@ -73,7 +73,7 @@ package citrus.objects.platformer.box2d
 			}
 			/*if (!wall)
 			{
-				
+
 			}
 			else
 			{
@@ -88,7 +88,7 @@ package citrus.objects.platformer.box2d
 				}
 			}*/
 		}
-		
+
 		override public function handleBeginContact (contact:b2Contact):void
 		{
 			super.handleBeginContact(contact);
@@ -117,17 +117,17 @@ package citrus.objects.platformer.box2d
 			}*/
 			_onContact.dispatch(collision);
 		}
-		
+
 		override public function update(timeDelta:Number):void
 		{
 			super.update(timeDelta);
 
 			/*if (!platform && !wall)	//don't move unless landed on platform
 				return;*/
-			
+
 			if (!currentContact)	//don't move unless landed on platform
 				return;
-			
+
 			var velocity:b2Vec2 = _body.GetLinearVelocity();
 			switch (_status)
 			{
@@ -154,7 +154,7 @@ package citrus.objects.platformer.box2d
 				}
 				var velocity:b2Vec2 = _body.GetLinearVelocity();
 				velocity.x = _inverted ? -speed : speed;
-	
+
 				//Turn around when they pass their left/right bounds
 //				var position:b2Vec2 = _body.GetPosition();
 //				if ((_inverted && position.x * _box2D.scale < leftBound) || (!_inverted && position.x * _box2D.scale > rightBound))
@@ -186,12 +186,12 @@ package citrus.objects.platformer.box2d
 				}
 			}*/
 		}
-		
+
 		protected function isInStatus(status:Number):Boolean
 		{
 			return _status == status;
 		}
-		
+
 		private function onSwim():void
 		{
 			movie.goTo("swim");
@@ -200,14 +200,14 @@ package citrus.objects.platformer.box2d
 			velocity.y = diveSpeed;
 			velocity.x = _inverted ? -swimmingSpeed : swimmingSpeed;
 		}
-		
+
 		protected function onWalk():void
 		{
 			updateBounds();
 			movie.goTo("walk");
 			_status = RobotStatus.WALK;
 		}
-		
+
 		protected function onJump(jumpHeight:Number):void
 		{
 			var velocity:b2Vec2;
@@ -223,7 +223,7 @@ package citrus.objects.platformer.box2d
 			_status = RobotStatus.JUMP;
 			movie.goTo("jump");
 		}
-		
+
 		/*protected function rebound(jumpHeight:Number, velocity:b2Vec2):void
 		{
 			var side:int = bounds.left < wall.x ? -1:1;
@@ -234,7 +234,7 @@ package citrus.objects.platformer.box2d
 			wall.body.SetActive(false);
 			wall = null;
 		}
-		
+
 		protected function climb(jumpHeight:Number, velocity:b2Vec2):void
 		{
 			velocity.y = -jumpHeight;
@@ -274,7 +274,7 @@ package citrus.objects.platformer.box2d
 		{
 			_inverted = !_inverted;
 		}
-		
+
 		private function get movie():Movie
 		{
 			//return view.getChildAt(0);

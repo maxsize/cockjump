@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width="100%" height="100%"
+		 creationComplete="init(event)">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import spark.events.IndexChangeEvent;
+			
+			import events.MEvent;
+			
+			import game.core.ClassRegister;
+			
+			private const META_PACKAGE:String = "max.modules.meta";
+			private const EXCLUDES:Array = ["MetaDataVO", "CoinsVO", "UniversalVO"];
+			
+			[Bindable]
+			public var selectedClass:String;
+			
+			protected function init(event:FlexEvent):void
+			{
+				ClassRegister.registerVO();
+				getMetaClasses();
+			}
+			
+			private function getMetaClasses():void
+			{
+				var allDefs:__AS3__.vec.Vector.<String> = ApplicationDomain.currentDomain.getQualifiedDefinitionNames();
+				var metas:Array = [];
+				for (var i:int = 0; i < allDefs.length; i++) 
+				{
+					var def:String = allDefs[i];
+					if (def.indexOf(META_PACKAGE) == 0 && !isExcluded(def))
+					{
+						metas.push(def);
+					}
+				}
+				metas = metas.sort();
+				dataProvider = new ArrayList(metas);
+			}
+			
+			private function isExcluded(def:String):Boolean
+			{
+				for (var i:int = 0; i < EXCLUDES.length; i++) 
+				{
+					var exc:String = EXCLUDES[i];
+					if (def.indexOf(exc) >= 0)
+						return true;
+				}
+				return false;
+			}
+			
+			protected function onChange(event:IndexChangeEvent):void
+			{
+				var meta:String = list.selectedItem;
+				selectedClass = meta;
+				dispatchEvent(new events.MEvent(Event.CHANGE, meta));
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Metadata>
+		[Event(name="change", type="events.MEvent")]
+	</fx:Metadata>
+	<fx:Declarations>
+		<mx:ArrayList id="dataProvider"/>
+	</fx:Declarations>
+	<s:Panel title="Metadata Classes" width="100%" height="100%">
+		<s:List labelField="name"
+				id="list"
+				itemRenderer="views.renderers.ClassItemRenderer"
+				dataProvider="{dataProvider}"
+				change="onChange(event)"
+				width="100%" height="100%">
+			<s:layout>
+				<s:VerticalLayout gap="2" paddingLeft="5"/>
+			</s:layout>
+		</s:List>
+	</s:Panel>
+</s:Group>

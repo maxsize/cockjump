@@ -1,4 +1,4 @@
-package bytes
+package max.offline
 {
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;

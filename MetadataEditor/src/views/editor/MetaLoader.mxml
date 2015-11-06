@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%">
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:HGroup gap="10" verticalAlign="middle">
+		<s:Label id="label"/>
+		<s:Button label="Select" click="onSelect(event)"/>
+	</s:HGroup>
+	
+	<fx:Script>
+		<![CDATA[
+			import org.osmf.metadata.Metadata;
+			protected function onSelect(event:MouseEvent):void
+			{
+				var fr:File = new File();
+				fr.browse();
+				fr.addEventListener(Event.SELECT, onFileSelect);
+			}
+			
+			protected function onFileSelect(event:Event):void
+			{
+				var fr:File = event.target as File;
+				label.text = fr.nativePath;
+				fr.load();
+				var json:String = fr.data.readUTF();
+				var jsonObj:Object = JSON.parse(json);
+			}
+			
+		]]>
+	</fx:Script>
+</s:Group>

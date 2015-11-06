@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   xmlns:views="views.*"
+					   width="1200" height="680">
+	<fx:Script>
+		<![CDATA[
+			import events.MEvent;
+			
+			import max.modules.meta.MetaDataVO;
+			
+			import views.modules.EML;
+			
+			protected function classes_changeHandler(event:MEvent):void
+			{
+				editor.data = null;
+			}
+			
+			protected function onSaveMeta(event:MouseEvent):void
+			{
+				var meta:MetaDataVO = EML.Instance.metadata;
+				meta.saveToDisk();
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:layout>
+		<s:VerticalLayout gap="5"/>
+	</s:layout>
+	
+	<mx:HDividedBox width="100%" height="100%">
+		<views:ClassPanel id="classes" width="200" change="classes_changeHandler(event)"/>
+		<views:MetaPanel id="metas" clazzName="{classes.selectedClass}" width="240"/>
+		<views:VariableEditor id="editor" data="{metas.selectedItem}"/>
+	</mx:HDividedBox>
+	<s:HGroup>
+		<s:Button label="Save" click="onSaveMeta(event)"/>
+	</s:HGroup>
+</s:WindowedApplication>

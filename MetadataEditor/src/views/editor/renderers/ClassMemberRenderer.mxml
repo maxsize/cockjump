@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="true"
+				width="100%"
+				xmlns:renderers="views.editor.renderers.*">
+	
+	<fx:Script>
+		<![CDATA[
+			import flash.utils.getDefinitionByName;
+			
+			import max.reflection.ClassMember;
+			
+			override public function set data(value:Object):void
+			{
+				super.data = value;
+				clearRenderer();
+				createRenderer();
+			}
+			
+			private function createRenderer():void
+			{
+				if (data == null)
+					return;
+				var member:ClassMember = data.member;
+				var source:* = data.source;
+				var isBasicType:Boolean = member.isBasicType;
+				if (isBasicType)
+				{
+					var frender:FieldRenderer = new FieldRenderer();
+					frender.data = data.source;
+					frender.member = data.member;
+					addElement(frender);
+				}
+				else
+				{
+					if (member.classname == ClassMember.TYPE_ARRAY)
+					{
+						if (source[member.name] == null)
+						{
+							source[member.name] = [];	//make sure array instance is not null
+						}
+						var arender:ArrayRenderer = new ArrayRenderer();
+						arender.data = data;
+						addElement(arender);
+					}
+					else
+					{
+						if (source[member.name] == null)
+						{
+							var clazz:Class = getDefinitionByName(member.classname) as Class;
+							source[member.name] = new clazz();	//make sure value is not null.
+						}
+						var crender:ClassRenderer = new ClassRenderer();
+						crender.data = source[member.name];
+						addElement(crender);
+					}
+				}
+			}
+			
+			private function clearRenderer():void
+			{
+				removeAllElements();
+			}
+			
+		]]>
+	</fx:Script>
+</s:ItemRenderer>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TextInput xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			 xmlns:s="library://ns.adobe.com/flex/spark" 
+			 xmlns:mx="library://ns.adobe.com/flex/mx"
+			 creationComplete="init(event)"
+			 focusIn="onFocusIn(event)"
+			 focusOut="onFocusOut(event)">
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayList;
+			import mx.events.FlexEvent;
+			import mx.managers.IFocusManagerComponent;
+			
+			import spark.components.List;
+			import spark.events.IndexChangeEvent;
+			
+			import max.reflection.ClassMember;
+			import max.reflection.MetaTag;
+			import max.reflection.MetaTagArg;
+			
+			import views.modules.EML;
+			
+			public var host:Object;
+			public var member:ClassMember;
+			public var dataProvider:ArrayList;
+			
+			private var list:List;
+			
+			protected function init(event:FlexEvent):void
+			{
+				initTag();
+			}
+			
+			private function initTag():void
+			{
+				if (!member)
+					return;
+				var tag:MetaTag = member.tagByName(MetaTag.TAG_ENUM);
+				if (tag)
+					initEnumProvider(tag);
+				else
+				{
+					tag = member.tagByName(MetaTag.TAG_DATA_PROVIDER);
+					if (tag)
+						initProvider(tag);
+				}
+			}
+			
+			private function initEnumProvider(tag:MetaTag):void
+			{
+				var value:String = (tag.args[0] as MetaTagArg).value;
+				var arr:Array = value.split(",");
+				dataProvider = new ArrayList(arr);
+			}
+			
+			private function initProvider(tag:MetaTag):void
+			{
+				var assert:MetaTagArg = tag.argByKey(MetaTagArg.NAME_ASSERT);
+				if (!assert)
+				{
+					throw new Error("\"assert\" is missing from " + member.name + "'s meta tag");
+				}
+				var argName:String = host[assert.value];
+				var arg:MetaTagArg = tag.argByKey(argName);
+				if (arg)
+				{
+					dataProvider = new ArrayList(EML.Instance.metadata[arg.value]);
+				}
+				else
+				{
+					dataProvider = new ArrayList();
+				}
+			}
+			
+			protected function onFocusIn(event:FocusEvent):void
+			{
+				showList();
+			}
+			
+			protected function onFocusOut(event:FocusEvent):void
+			{
+				hideList();
+			}
+			
+			private function showList():void
+			{
+				if (list == null)
+				{
+					createList();
+				}
+				if (dataProvider)
+					systemManager.addChild(list as DisplayObject);
+			}
+			
+			private function hideList():void
+			{
+				if (list.parent)
+				{
+					list.parent.removeChild(list);
+				}
+			}
+			
+			private function createList():void
+			{
+				list = new List();
+				list.dataProvider = dataProvider;
+				list.labelField = "name";
+				list.addEventListener(IndexChangeEvent.CHANGE, onChange);
+				var p:Point = new Point(0, height);
+				p = localToGlobal(p);
+				list.x = p.x;
+				list.y = p.y;
+			}
+			
+			protected function onChange(event:IndexChangeEvent):void
+			{
+				if (list.selectedItem is String || list.selectedItem is Number || list.selectedItem is Boolean)
+				{
+					text = list.selectedItem;
+				}
+				else
+				{
+					text = list.selectedItem.name;
+				}
+				hideList();
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+</mx:TextInput>

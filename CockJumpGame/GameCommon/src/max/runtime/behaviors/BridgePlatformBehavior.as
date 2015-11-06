@@ -1,6 +1,5 @@
 package max.runtime.behaviors
 {
-	import game.character.ICollision;
 
 	public class BridgePlatformBehavior extends PlatformBehavior
 	{

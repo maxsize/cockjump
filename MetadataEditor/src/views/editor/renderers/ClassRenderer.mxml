@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				width="100%"
+				autoDrawBackground="false">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayList;
+			
+			import max.reflection.ClassDescriptor;
+			import max.reflection.ClassDescriptorCache;
+			import max.reflection.ClassMember;
+			
+			import views.modules.ClassMemberData;
+			
+			
+			private function getProvider(data:Object):ArrayList
+			{
+				if (!data)
+					return null;
+				var desc:ClassDescriptor = ClassDescriptorCache.getClassDescriptorForInstance(data);
+				var accessables:Array = desc.accessables;
+				var provider:Array = [];
+				for (var i:int = 0; i < accessables.length; i++) 
+				{
+					var member:ClassMember = accessables[i];
+					var obj:ClassMemberData = new ClassMemberData();
+					obj.member = member;
+					obj.source = data;
+					provider.push(obj);
+				}
+				
+				return new ArrayList(provider);
+			}
+			
+		]]>
+	</fx:Script>
+	<s:Panel title="{data}" width="100%">
+		<s:List id="list"
+				width="100%"
+				itemRenderer="views.editor.renderers.ClassMemberRenderer"
+				dataProvider="{getProvider(data)}"/>
+	</s:Panel>
+</s:ItemRenderer>

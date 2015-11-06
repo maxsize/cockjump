@@ -5,10 +5,8 @@ package game.data
 	import flash.utils.ByteArray;
 	import flash.utils.getQualifiedClassName;
 	
-	import bytes.SQLSave;
+	import max.offline.SQLSave;
 	
-	import game.core.Utils;
-
 	public class LocalSave
 	{
 		private static const _P$SW_:String = "6*E^13df9*ODFreO&fhEO9d2#8f3n*";

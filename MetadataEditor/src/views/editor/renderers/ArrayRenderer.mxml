@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				width="100%">
+	
+	<fx:Script>
+		<![CDATA[
+			import flash.utils.getDefinitionByName;
+			
+			import mx.collections.ArrayList;
+			
+			import max.reflection.ClassMember;
+
+			private var clazz:Class;
+			
+			private function getProvider(data:Object):ArrayList
+			{
+				//in this case data is an array
+				var source:Object = data.source;
+				var member:ClassMember = data.member;
+				if (!(source[member.name] is Array))
+				{
+					return null;
+				}
+				var array:Array = source[member.name];
+				clazz = getDefinitionByName(member.tagType.args[0].value) as Class;
+				return new ArrayList(array);
+			}
+			
+			protected function onAdd(event:MouseEvent):void
+			{
+				if (list.dataProvider)
+				{
+					list.dataProvider.addItem(new clazz());
+				}
+			}
+			
+			private static function getLabel(data:Object):String
+			{
+				var member:ClassMember = data.member;
+				return "Array: " + member.name;
+			}
+			
+			protected function onDel(event:MouseEvent):void
+			{
+				if (list.selectedItem)
+				{
+					list.dataProvider.removeItemAt(list.dataProvider.getItemIndex(list.selectedItem));
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	<s:Label text="{data.member.name}" fontWeight="bold"/>
+	<s:HGroup>
+		<s:Button label="Add" click="onAdd(event)"/>
+		<s:Button label="Del" click="onDel(event)"/>
+	</s:HGroup>
+	<s:List id="list"
+			itemRenderer="views.editor.renderers.ClassRenderer"
+			dataProvider="{getProvider(data)}"
+			width="100%"/>
+</s:ItemRenderer>

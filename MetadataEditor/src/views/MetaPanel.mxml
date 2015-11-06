@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 height="100%"
+		 creationComplete="init(event)">
+	<fx:Script>
+		<![CDATA[
+			import flash.net.registerClassAlias;
+			import flash.utils.getDefinitionByName;
+			import flash.utils.getTimer;
+			
+			import mx.collections.ArrayList;
+			import mx.events.FlexEvent;
+			
+			import spark.events.IndexChangeEvent;
+			
+			import events.MEvent;
+			
+			import game.data.LocalSave;
+			import game.vo.register.VORegister;
+			
+			import max.modules.meta.MetaDataVO;
+			
+			import views.modules.EML;
+
+			[Bindable]
+			public var clazzName:String;
+			[Bindable]
+			private var metadata:MetaDataVO;
+			[Bindable]
+			public var selectedItem:Object;
+			
+			protected function init(event:FlexEvent):void
+			{
+				VORegister.register();
+				var meta:MetaDataVO = LocalSave.create().read("MetaDataVO") as MetaDataVO;
+				EML.Instance.metadata = meta;
+				if (EML.Instance.metadata == null)
+				{
+					EML.Instance.metadata = new MetaDataVO();
+				}
+				metadata = EML.Instance.metadata;
+			}
+			
+			protected function onChange(event:IndexChangeEvent):void
+			{
+				selectedItem = list.selectedItem;
+				dispatchEvent(new events.MEvent(Event.CHANGE, selectedItem));
+			}
+			
+			private function getDataProvider(className:String):ArrayList
+			{
+				if (!className || !metadata)
+					return null;
+				var array:Array = metadata.getDataByType(className);
+				return new ArrayList(array);
+			}
+			
+			protected function onAdd(event:MouseEvent):void
+			{
+				addNew();
+			}
+			
+			private function addNew():void
+			{
+				if (clazzName == null)
+					return;
+				var clazz:Class = getDefinitionByName(clazzName) as Class;
+				var ins:* = new clazz();
+				ins.name = "NewItem_" + getTimer();
+				list.dataProvider.addItem(ins);
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Metadata>
+		[Event(name="change", type="events.MEvent")]
+	</fx:Metadata>
+	<s:Panel title="{clazzName}" width="100%" height="100%">
+		<s:layout>
+			<s:VerticalLayout/>
+		</s:layout>
+		<s:HGroup>
+			<s:Button label="Add" click="onAdd(event)"/>
+			<s:Button label="Del"/>
+		</s:HGroup>
+		<s:List labelField="name"
+				id="list"
+				itemRenderer="views.renderers.MetaPanelRenderer"
+				dataProvider="{getDataProvider(clazzName)}"
+				change="onChange(event)"
+				width="100%" height="100%">
+			<s:layout>
+				<s:VerticalLayout/>
+			</s:layout>
+		</s:List>
+	</s:Panel>
+	
+</s:Group>
