@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
-				xmlns:s="library://ns.adobe.com/flex/spark" 
-				xmlns:mx="library://ns.adobe.com/flex/mx"
-				width="100%"
-				autoDrawBackground="false">
-	<fx:Declarations>
-		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
-	</fx:Declarations>
+<f:DefaultGroupedListItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+								  xmlns:f="library://ns.feathersui.com/mxml"
+								  creationComplete="onInit(event)">
 	<fx:Script>
 		<![CDATA[
-			import mx.collections.ArrayList;
+			import feathers.data.ListCollection;
 			
 			import max.reflection.ClassDescriptor;
 			import max.reflection.ClassDescriptorCache;
 			import max.reflection.ClassMember;
 			
+			import starling.events.Event;
+			
 			import views.modules.ClassMemberData;
 			
 			
-			private function getProvider(data:Object):ArrayList
+			private function getProvider(data:Object):ListCollection
 			{
 				if (!data)
 					return null;
@@ -34,15 +31,30 @@
 					provider.push(obj);
 				}
 				
-				return new ArrayList(provider);
+				return new ListCollection(provider);
+			}
+			
+			override public function set data(value:Object):void
+			{
+				super.data = value;
+				if (isInitialized)
+					onInit();
+			}
+			
+			protected function onInit(event:starling.events.Event):void
+			{
+				panel.headerProperties.title = data;
 			}
 			
 		]]>
 	</fx:Script>
-	<s:Panel title="{data}" width="100%">
-		<s:List id="list"
+	<f:Panel id="panel">
+		<f:layout>
+			<f:VerticalLayout percentHeight="100" percentWidth="100"/>
+		</f:layout>
+		<f:List id="list"
 				width="100%"
 				itemRenderer="views.editor.renderers.ClassMemberRenderer"
 				dataProvider="{getProvider(data)}"/>
-	</s:Panel>
-</s:ItemRenderer>
+	</f:Panel>
+</f:DefaultGroupedListItemRenderer>

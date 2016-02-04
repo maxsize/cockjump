@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
-				xmlns:s="library://ns.adobe.com/flex/spark" 
-				xmlns:mx="library://ns.adobe.com/flex/mx" 
-				autoDrawBackground="true"
-				minHeight="18"
-				width="100%"
-				removedFromStage="dispose(event)">
+<f:DefaultGroupedListItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+								  xmlns:f="library://ns.feathersui.com/mxml"
+								  minHeight="18"
+								  label="{data.name}"
+								  removedFromStage="onRemove(event)">
 	
-	<s:layout>
-		<s:HorizontalLayout verticalAlign="middle"/>
-	</s:layout>
 	<fx:Script>
 		<![CDATA[
+			import starling.events.Event;
 			
 			override public function set data(value:Object):void
 			{
@@ -21,11 +17,6 @@
 				{
 					data.addEventListener(Event.CHANGE, onChange);
 				}
-			}
-			
-			private function getLabel(data:Object):String
-			{
-				return data.name;
 			}
 			
 			private function removeDataListener():void
@@ -38,11 +29,11 @@
 			
 			private function onChange(e:Event):void
 			{
-				if (e.target == data)
-					txt.text = getLabel(data);
+				if (e.target == data && data)
+					label = data.name;
 			}
 			
-			protected function dispose(event:Event):void
+			protected function onRemove(event:starling.events.Event):void
 			{
 				removeDataListener();
 			}
@@ -50,7 +41,4 @@
 		]]>
 	</fx:Script>
 	
-	
-	<s:Label id="txt" text="{getLabel(data)}"/>
-	
-</s:ItemRenderer>
+</f:DefaultGroupedListItemRenderer>

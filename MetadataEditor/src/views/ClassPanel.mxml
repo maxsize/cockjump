@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx"
-		 width="100%" height="100%"
-		 creationComplete="init(event)">
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml"
+			   xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   width="200"
+			   creationComplete="init(event)" xmlns:renderers="views.renderers.*">
 	<fx:Script>
 		<![CDATA[
-			import mx.events.FlexEvent;
-			
-			import spark.events.IndexChangeEvent;
-			
 			import events.MEvent;
 			
+			import feathers.data.ListCollection;
+			import feathers.layout.VerticalLayoutData;
+			
 			import game.core.ClassRegister;
+			
+			import starling.events.Event;
 			
 			private const META_PACKAGE:String = "max.modules.meta";
 			private const EXCLUDES:Array = ["MetaDataVO", "CoinsVO", "UniversalVO"];
@@ -20,8 +20,10 @@
 			[Bindable]
 			public var selectedClass:String;
 			
-			protected function init(event:FlexEvent):void
+			protected function init(event:starling.events.Event):void
 			{
+				panel.headerProperties.title = "Metadata Classes";
+				layoutData = new VerticalLayoutData(NaN, 100);
 				ClassRegister.registerVO();
 				getMetaClasses();
 			}
@@ -39,7 +41,7 @@
 					}
 				}
 				metas = metas.sort();
-				dataProvider = new ArrayList(metas);
+				list.dataProvider = new ListCollection(metas);
 			}
 			
 			private function isExcluded(def:String):Boolean
@@ -53,7 +55,7 @@
 				return false;
 			}
 			
-			protected function onChange(event:IndexChangeEvent):void
+			protected function onChange(event:starling.events.Event):void
 			{
 				var meta:String = list.selectedItem;
 				selectedClass = meta;
@@ -65,19 +67,25 @@
 	<fx:Metadata>
 		[Event(name="change", type="events.MEvent")]
 	</fx:Metadata>
-	<fx:Declarations>
-		<mx:ArrayList id="dataProvider"/>
-	</fx:Declarations>
-	<s:Panel title="Metadata Classes" width="100%" height="100%">
-		<s:List labelField="name"
+	<f:Panel id="panel">
+		<f:layout>
+			<f:VerticalLayout percentHeight="100" percentWidth="100"/>
+		</f:layout>
+		<f:List dataProvider="{dataProvider}"
 				id="list"
-				itemRenderer="views.renderers.ClassItemRenderer"
-				dataProvider="{dataProvider}"
 				change="onChange(event)"
 				width="100%" height="100%">
-			<s:layout>
-				<s:VerticalLayout gap="2" paddingLeft="5"/>
-			</s:layout>
-		</s:List>
-	</s:Panel>
-</s:Group>
+			<f:itemRendererFactory>
+				<fx:Component>
+					<renderers:ClassItemRenderer labelField="name"/>
+				</fx:Component>
+			</f:itemRendererFactory>
+			<f:layout>
+				<f:VerticalLayout gap="2" paddingLeft="5"/>
+			</f:layout>
+			<f:layoutData>
+				<f:VerticalLayoutData percentWidth="100" percentHeight="100"/>
+			</f:layoutData>
+		</f:List>
+	</f:Panel>
+</f:LayoutGroup>

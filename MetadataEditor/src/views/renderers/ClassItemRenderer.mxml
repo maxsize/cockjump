@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
-				xmlns:s="library://ns.adobe.com/flex/spark" 
-				xmlns:mx="library://ns.adobe.com/flex/mx" 
-				minHeight="18" width="100%"
-				autoDrawBackground="true">
+<f:DefaultListItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+						   xmlns:f="library://ns.feathersui.com/mxml"
+						   minHeight="18">
 	
 	<fx:Script>
 		<![CDATA[
-			private static function getName(data:Object):Object
+			private static function getName(data:Object):String
 			{
 				if (data == null)
 					return null;
 				return (data as String).split("::")[1];
 			}
+			
+			override public function set data(value:Object):void
+			{
+				super.data = value;
+				this.label = getName(value);
+			}
 		]]>
 	</fx:Script>
-	
-	<s:layout>
-		<s:HorizontalLayout verticalAlign="middle"/>
-	</s:layout>
-	<s:Label text="{getName(data)}"/>
-	
-</s:ItemRenderer>
+	<f:layoutData>
+		<f:HorizontalLayoutData percentWidth="100"/>
+	</f:layoutData>
+</f:DefaultListItemRenderer>
