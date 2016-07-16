@@ -50,7 +50,7 @@ package max.runtime.behaviors
 			}
 			if (data && data.hasOwnProperty(PARAM_VIEW))
 			{
-				(host as Movie).removeChildren();
+				(host as Movie).removeChildren(0, -1, true);
 				(host as Movie).addChild(GlobalLibUtils.createMovie(data[PARAM_VIEW]));
 			}
 			

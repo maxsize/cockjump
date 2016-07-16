@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ns:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:ns="library://ns.feathersui.com/mxml"
+				implements="feathers.controls.renderers.IListItemRenderer"
+				height="70" xmlns:renderers="views.renderers.*">
+	<fx:Script>
+		<![CDATA[
+			import feathers.controls.List;
+			import feathers.controls.renderers.IListItemRenderer;
+			
+			import starling.display.Quad;
+			import starling.events.Event;
+			
+			private var quad:Quad;
+			private var _data:Object;
+			private var _factoryID:String;
+			private var _index:int;
+			private var _owner:List;
+			
+			public function get data():Object
+			{
+				return _data;
+			}
+			
+			public function set data(value:Object):void
+			{
+				_data = value;
+				invalidate(INVALIDATION_FLAG_DATA);
+			}
+			
+			public function get factoryID():String
+			{
+				return _factoryID;
+			}
+			
+			public function set factoryID(value:String):void
+			{
+				_factoryID = value;
+			}
+			
+			public function get index():int
+			{
+				return _index;
+			}
+			
+			public function set index(value:int):void
+			{
+				_index = value;
+			}
+			
+			public function get owner():List
+			{
+				return _owner;
+			}
+			
+			public function set owner(value:List):void
+			{
+				_owner = value;
+				invalidate(INVALIDATION_FLAG_SIZE);
+			}
+			
+			public function get isSelected():Boolean
+			{
+				return false;
+			}
+			
+			public function set isSelected(value:Boolean):void
+			{
+				
+			}
+			
+			override protected function draw():void
+			{
+				super.draw();
+				if (isInvalid(INVALIDATION_FLAG_SIZE) && _owner)
+				{
+					width = _owner.width;
+					onResize();
+				}
+				if (isInvalid(INVALIDATION_FLAG_DATA) && _data)
+				{
+					desc.text = _data.description;
+					starContainer.stars = data.stars;
+				}
+			}
+			
+			protected function onResize():void
+			{
+				if (!quad)
+				{
+					quad = new Quad(100, 100, 0);
+					bg.addChild(quad);
+				}
+				quad.width = bg.width;
+				quad.height = bg.height;
+			}
+			
+		]]>
+	</fx:Script>
+	<ns:layout>
+		<ns:AnchorLayout/>
+	</ns:layout>
+	<ns:layoutData>
+		<ns:AnchorLayoutData left="0" right="0"/>
+	</ns:layoutData>
+	
+	<ns:LayoutGroup id="bg">
+		<ns:layoutData>
+			<ns:AnchorLayoutData left="0" right="0" bottom="0" top="0"/>
+		</ns:layoutData>
+	</ns:LayoutGroup>
+	
+	<ns:ImageLoader id="loader" width="70">
+		<ns:layoutData>
+			<ns:AnchorLayoutData left="0" top="0" bottom="0"/>
+		</ns:layoutData>
+	</ns:ImageLoader>
+	
+	<ns:LayoutGroup>
+		<ns:layoutData>
+			<ns:AnchorLayoutData left="70" right="0" top="0" bottom="0"/>
+		</ns:layoutData>
+		<ns:layout>
+			<ns:VerticalLayout gap="10"/>
+		</ns:layout>
+		<renderers:StarRenderer id="starContainer"/>
+		<ns:Label id="desc" text="description"/>
+	</ns:LayoutGroup>
+</ns:LayoutGroup>

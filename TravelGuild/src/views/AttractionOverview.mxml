@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ns:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:ns="library://ns.feathersui.com/mxml"
+				height="160">
+	<ns:layout>
+		<ns:AnchorLayout/>
+	</ns:layout>
+	<ns:layoutData>
+		<ns:AnchorLayoutData left="0" right="0" top="0"/>
+	</ns:layoutData>
+	
+	<ns:ImageLoader id="loader" scaleMode="noBorder" maintainAspectRatio="true">
+		<ns:layoutData>
+			<ns:AnchorLayoutData left="0" right="0" top="0" bottom="0"/>
+		</ns:layoutData>
+	</ns:ImageLoader>
+	
+	<ns:LayoutGroup id="text" width="240">
+		<ns:layoutData>
+			<ns:AnchorLayoutData right="0" top="30" bottom="0"/>
+		</ns:layoutData>
+		<ns:layout>
+			<ns:VerticalLayout gap="10"/>
+		</ns:layout>
+		<ns:Label text="title"/>
+		<ns:Label paddingLeft="10" text="description" wordWrap="true"/>
+	</ns:LayoutGroup>
+</ns:LayoutGroup>

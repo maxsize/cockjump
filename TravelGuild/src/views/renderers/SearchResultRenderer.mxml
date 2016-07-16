@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ns:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:ns="library://ns.feathersui.com/mxml"
+				implements="feathers.controls.renderers.IListItemRenderer"
+				height="100" xmlns:renderers="views.renderers.*"
+				creationComplete="onCreation(event)">
+	<fx:Script>
+		<![CDATA[
+			import feathers.controls.List;
+			
+			import max.utils.TouchMediator;
+			
+			import starling.events.Event;
+			import starling.utils.ScaleMode;
+			
+			private var _data:Object;
+			private var _factoryID:String;
+			private var _index:int;
+			private var _owner:List;
+
+			private var mediator:TouchMediator;
+			
+			public function get data():Object
+			{
+				return _data;
+			}
+			
+			public function set data(value:Object):void
+			{
+				_data = value;
+				invalidate(INVALIDATION_FLAG_DATA);
+			}
+			
+			public function get factoryID():String
+			{
+				return _factoryID;
+			}
+			
+			public function set factoryID(value:String):void
+			{
+				_factoryID = value;
+			}
+			
+			public function get index():int
+			{
+				return _index;
+			}
+			
+			public function set index(value:int):void
+			{
+				_index = value;
+			}
+			
+			public function get owner():List
+			{
+				return _owner;
+			}
+			
+			public function set owner(value:List):void
+			{
+				_owner = value;
+			}
+			
+			public function get isSelected():Boolean
+			{
+				return false;
+			}
+			
+			public function set isSelected(value:Boolean):void
+			{
+				
+			}
+			
+			override protected function draw():void
+			{
+				super.draw();
+				if (isInvalid(INVALIDATION_FLAG_DATA))
+				{
+					if (_data)
+					{
+						title.text = _data.name;
+						desc.text = _data.desc;
+						loader.source = _data.pic;
+					}
+				}
+			}
+			
+			protected function onCreation(event:starling.events.Event):void
+			{
+				mediator = TouchMediator.mediate(this);
+			}
+			
+			override public function dispose():void
+			{
+				super.dispose();
+				mediator.dispose();
+				mediator = null;
+			}
+			
+		]]>
+	</fx:Script>
+	<ns:layout>
+		<ns:AnchorLayout/>
+	</ns:layout>
+	<ns:layoutData>
+		<ns:AnchorLayoutData left="0" right="0"/>
+	</ns:layoutData>
+	
+	<ns:ImageLoader id="loader" width="100" scaleMode="{ScaleMode.NO_BORDER}" maintainAspectRatio="true">
+		<ns:layoutData>
+			<ns:AnchorLayoutData left="0" top="0" bottom="0"/>
+		</ns:layoutData>
+	</ns:ImageLoader>
+	
+	<ns:LayoutGroup>
+		<ns:layoutData>
+			<ns:AnchorLayoutData left="100" top="0" bottom="0"/>
+		</ns:layoutData>
+		<ns:layout>
+			<ns:VerticalLayout paddingLeft="10" paddingRight="10" gap="10"/>
+		</ns:layout>
+		<ns:Label id="title" text="Musee du Louvre"/>
+		<ns:Label id="desc" text="xxx"/>
+	</ns:LayoutGroup>
+</ns:LayoutGroup>

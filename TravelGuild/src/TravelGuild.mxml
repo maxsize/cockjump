@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<f:StackScreenNavigatorApplication xmlns:f="library://ns.feathersui.com/mxml"
+								   xmlns:fx="http://ns.adobe.com/mxml/2009" 
+								   xmlns:s="library://ns.adobe.com/flex/spark"
+								   theme="feathers.themes.MetalWorksMobileTheme"
+								   xmlns:views="views.*"
+								   rootScreenID="home"
+								   addedToStage="onAdded(event)" xmlns:model="model.*" xmlns:client="model.client.*">
+	<fx:Script>
+		<![CDATA[
+			import resource.Assets;
+			
+			import starling.events.Event;
+			
+			protected function onAdded(event:starling.events.Event):void
+			{
+				Assets.init();
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<client:SearchOptionsVO id="searchOptions"/>
+	</fx:Declarations>
+	
+	<f:StackScreenNavigatorItem id="home">
+		<f:screen>
+			<views:HomeView/>
+		</f:screen>
+		<f:replaceEvents>
+			<fx:Object>
+				<fx:searchResultView>result</fx:searchResultView>
+			</fx:Object>
+		</f:replaceEvents>
+		<f:properties>
+			<fx:Object>
+				<fx:options>{searchOptions}</fx:options>
+			</fx:Object>
+		</f:properties>
+	</f:StackScreenNavigatorItem>
+	
+	<f:StackScreenNavigatorItem id="result">
+		<f:screen>
+			<views:SearchResultView/>
+		</f:screen>
+		<f:replaceEvents>
+			<fx:Object>
+				<fx:attractionView>attraction</fx:attractionView>
+			</fx:Object>
+		</f:replaceEvents>
+		<f:properties>
+			<fx:Object>
+				<fx:options>{searchOptions}</fx:options>
+			</fx:Object>
+		</f:properties>
+	</f:StackScreenNavigatorItem>
+	
+	<f:StackScreenNavigatorItem id="attraction">
+		<f:screen>
+			<views:AttractionView/>
+		</f:screen>
+		<f:properties>
+			<fx:Object>
+				<fx:options>{searchOptions}</fx:options>
+			</fx:Object>
+		</f:properties>
+	</f:StackScreenNavigatorItem>
+</f:StackScreenNavigatorApplication>

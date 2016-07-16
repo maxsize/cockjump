@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ns:Screen xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark"
+		   xmlns:ns="library://ns.feathersui.com/mxml"
+		   addedToStage="onAdded(event)"
+		   resize="onResize(event)">
+	<fx:Script>
+		<![CDATA[
+			import events.ScreenChangeEvent;
+			
+			import model.client.SearchOptionsVO;
+			
+			import starling.events.Event;
+			
+			private var _options:SearchOptionsVO;
+			
+			public function get options():SearchOptionsVO
+			{
+				return _options;
+			}
+
+			public function set options(value:SearchOptionsVO):void
+			{
+				_options = value;
+			}
+
+			protected function onResize(event:starling.events.Event):void
+			{
+			}
+			
+			protected function onAdded(event:starling.events.Event):void
+			{
+			}
+			
+			protected function onEnter(event:starling.events.Event):void
+			{
+				if (options)
+					options.keyword = txt.text;
+				dispatchEventWith(ScreenChangeEvent.SEARCH_RESULT_VIEW);
+			}
+			
+		]]>
+	</fx:Script>
+	<ns:layout>
+		<ns:AnchorLayout/>
+	</ns:layout>
+	<ns:TextInput id="txt" prompt="Search your destination" enter="onEnter(event)">
+		<ns:layoutData>
+			<ns:AnchorLayoutData horizontalCenter="0" verticalCenter="0" left="10" right="10"/>
+		</ns:layoutData>
+	</ns:TextInput>
+	<ns:Label text="TravelGuild">
+		<ns:layoutData>
+			<ns:AnchorLayoutData bottom="10" horizontalCenter="0"/>
+		</ns:layoutData>
+	</ns:Label>
+</ns:Screen>

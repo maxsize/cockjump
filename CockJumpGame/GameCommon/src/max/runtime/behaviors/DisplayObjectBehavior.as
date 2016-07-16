@@ -4,7 +4,6 @@ package max.runtime.behaviors
 	
 	import max.runtime.behaviors.entity.IEntity;
 	
-	import starling.core.Starling;
 	import starling.display.DisplayObject;
 	import starling.events.Event;
 

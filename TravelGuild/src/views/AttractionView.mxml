@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ns:Screen xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark"
+		   xmlns:ns="library://ns.feathersui.com/mxml"
+		   xmlns:views="views.*">
+	<ns:layout>
+		<ns:AnchorLayout/>
+	</ns:layout>
+	
+	<fx:Script>
+		<![CDATA[
+			import feathers.controls.renderers.IListItemRenderer;
+			import feathers.data.ListCollection;
+			
+			import http.Remote;
+			
+			import model.client.SearchOptionsVO;
+			
+			import starling.events.Event;
+			
+			import views.renderers.VoiceRenderer;
+			
+			private var _options:SearchOptionsVO;
+			
+			public function get options():SearchOptionsVO
+			{
+				return _options;
+			}
+
+			public function set options(value:SearchOptionsVO):void
+			{
+				_options = value;
+				invalidate(INVALIDATION_FLAG_DATA);
+			}
+			
+			override protected function draw():void
+			{
+				super.draw();
+				if (INVALIDATION_FLAG_DATA)
+				{
+					search(_options.keyword);
+				}
+			}
+
+			private function factory():IListItemRenderer
+			{
+				var renderer:IListItemRenderer = new VoiceRenderer();
+				return renderer;
+			}
+			
+			private function search(_attraction:String):void
+			{
+				var remote:Remote = Remote.call("listVoices", _attraction);
+				remote.onData = function onData(value:Object):void
+				{
+					list.dataProvider = new ListCollection(value);
+				};
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<views:AttractionOverview height="160"/>
+	
+	<ns:List id="list" itemRendererFactory="{factory}" verticalScrollPolicy="on">
+		<ns:layoutData>
+			<ns:AnchorLayoutData left="0" top="160" bottom="0" right="0"/>
+		</ns:layoutData>
+		<ns:layout>
+			<ns:VerticalLayout gap="10"/>
+		</ns:layout>
+	</ns:List>
+</ns:Screen>

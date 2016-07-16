@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ns:Screen xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark"
+		   xmlns:ns="library://ns.feathersui.com/mxml"
+		   creationComplete="onCreation(event)">
+	<ns:layout>
+		<ns:AnchorLayout/>
+	</ns:layout>
+	
+	<fx:Script>
+		<![CDATA[
+			import events.ScreenChangeEvent;
+			
+			import feathers.controls.ScrollPolicy;
+			import feathers.controls.renderers.IListItemRenderer;
+			import feathers.data.ListCollection;
+			
+			import http.Remote;
+			
+			import model.client.SearchOptionsVO;
+			
+			import starling.events.Event;
+			
+			import views.renderers.SearchResultRenderer;
+			
+			private var _options:SearchOptionsVO;
+			
+			public function get options():SearchOptionsVO
+			{
+				return _options;
+			}
+
+			public function set options(value:SearchOptionsVO):void
+			{
+				_options = value;
+				invalidate(INVALIDATION_FLAG_DATA);
+			}
+			
+			override protected function draw():void
+			{
+				super.draw();
+				if (_options)
+				{
+					txt.text = _options.keyword;
+					search();
+				}
+			}
+			
+			private function listFactory():IListItemRenderer
+			{
+				var renderer:SearchResultRenderer = new SearchResultRenderer();
+				return renderer;
+			}
+			
+			private function search():void
+			{
+				var remote:Remote = Remote.call("search", txt.text);
+				remote.onData = function onData(value:Object):void
+				{
+					list.dataProvider = new ListCollection(value);
+				};
+			}
+			
+			protected function onTriggered(event:starling.events.Event):void
+			{
+				event.stopImmediatePropagation();
+				options.keyword = (event.target as IListItemRenderer).data.name;
+				dispatchEventWith(ScreenChangeEvent.ATTRACTION_VIEW);
+			}
+			
+			protected function onCreation(event:starling.events.Event):void
+			{
+				addEventListener(starling.events.Event.TRIGGERED, onTriggered);
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<ns:TextInput id="txt" height="40">
+		<ns:layoutData>
+			<ns:AnchorLayoutData top="10" left="10" right="10"/>
+		</ns:layoutData>
+	</ns:TextInput>
+	
+	<ns:List id="list" itemRendererFactory="{listFactory}" verticalScrollPolicy="{ScrollPolicy.ON}">
+		<ns:layoutData>
+			<ns:AnchorLayoutData top="60" bottom="10" left="10" right="10"/>
+		</ns:layoutData>
+		<ns:layout>
+			<ns:VerticalLayout gap="10"/>
+		</ns:layout>
+	</ns:List>
+</ns:Screen>
