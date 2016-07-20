@@ -3,7 +3,7 @@
 		   xmlns:s="library://ns.adobe.com/flex/spark"
 		   xmlns:ns="library://ns.feathersui.com/mxml"
 		   addedToStage="onAdded(event)"
-		   resize="onResize(event)">
+		   resize="onResize(event)" xmlns:views="views.*">
 	<fx:Script>
 		<![CDATA[
 			import events.ScreenChangeEvent;
@@ -44,11 +44,19 @@
 	<ns:layout>
 		<ns:AnchorLayout/>
 	</ns:layout>
+	
+	<views:AttractionsWaterfall>
+		<views:layoutData>
+			<ns:AnchorLayoutData left="0" right="0" top="40" bottom="30"/>
+		</views:layoutData>
+	</views:AttractionsWaterfall>
+	
 	<ns:TextInput id="txt" prompt="Search your destination" enter="onEnter(event)">
 		<ns:layoutData>
-			<ns:AnchorLayoutData horizontalCenter="0" verticalCenter="0" left="10" right="10"/>
+			<ns:AnchorLayoutData left="10" right="10" top="10"/>
 		</ns:layoutData>
 	</ns:TextInput>
+	
 	<ns:Label text="TravelGuild">
 		<ns:layoutData>
 			<ns:AnchorLayoutData bottom="10" horizontalCenter="0"/>

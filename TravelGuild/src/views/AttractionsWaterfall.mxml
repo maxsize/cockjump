@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ns:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:ns="library://ns.feathersui.com/mxml"
+				creationComplete="onCreation(event)">
+	<fx:Script>
+		<![CDATA[
+			import feathers.controls.renderers.IListItemRenderer;
+			import feathers.data.ListCollection;
+			
+			import model.FakeData;
+			
+			import starling.events.Event;
+			
+			protected function onCreation(event:starling.events.Event):void
+			{
+				list.dataProvider = new ListCollection(FakeData.ATTRACTIONS);
+			}
+			
+			private function factory():IListItemRenderer
+			{
+				var renderer:WaterfallRenderer = new WaterfallRenderer();
+				return renderer;
+			}
+			
+		]]>
+	</fx:Script>
+	<ns:layout>
+		<ns:AnchorLayout/>
+	</ns:layout>
+	<ns:List id="list" itemRendererFactory="{factory}">
+		<ns:layoutData>
+			<ns:AnchorLayoutData left="0" right="0" top="0" bottom="0"/>
+		</ns:layoutData>
+		<ns:layout>
+			<ns:WaterfallLayout useVirtualLayout="true" gap="5" requestedColumnCount="3"/>
+		</ns:layout>
+	</ns:List>
+</ns:LayoutGroup>
